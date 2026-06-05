@@ -20,6 +20,8 @@ CPU smoke job `ba2bbb9d-f93` completed end-to-end in the managed container and w
 
 This supports the paper's core claim on the scaled substitute: adding view-informed and negation-aware contrastive terms improves the CLIP-style baseline while also improving the negation constraint.
 
+Final verification job `c7aeba82-eb7` reran the restored 20-epoch default and reproduced the same core-claim scores. `python validate.py --compare` passed inside the managed container, and `scoring/scores.json` contains the verified 20-epoch results.
+
 Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthened the negation constraint and recall but did not improve the primary disease AUC relative to the CLIP-only baseline, so the reusable default is kept at the 20-epoch setting for the core-claim reproduction.
 
 | 80-epoch check | Metric | CLIP-only | EchoVLM full | Direction |
@@ -31,7 +33,7 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 
 ## Remaining
 
-- Rerun the 20-epoch default once after reverting the long-run setting so `scoring/scores.json` again contains the verified core-claim numbers.
+- No required work remains for `core_claim`.
 - Higher milestones would require a better non-private substitute dataset or access to EchoGround-MIMIC/private TTE view data.
 
 ## Issues
@@ -39,6 +41,7 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 - Fixed after job `9d0e4379-6f3`: changed method execution to `python -m method.train` and updated the CLIP-only baseline wrapper to invoke the same module entry point so top-level packages such as `data` are importable.
 - Fixed after job `ba2bbb9d-f93`: replaced deprecated `torch.ByteStorage.from_buffer` image conversion with a NumPy-backed tensor conversion.
 - Job `0bdf5f04-439` showed that 80 epochs overfits the tiny substitute differently for the two objectives: EchoVLM retained the negation/retrieval advantage, but CLIP-only had higher disease AUC. The default reproduction was reverted to 20 epochs.
+- Final job `c7aeba82-eb7` verified that the restored 20-epoch default regenerates the core-claim scores and passes validation.
 - EchoGround-MIMIC is described as a future release in the paper and is not present here.
 - The paper's view-classification experiment uses private multi-site TTE data.
 - The paper initializes from internal echo-pretrained vision weights and EchoCLIP text weights; those exact weights are not available here.

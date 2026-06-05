@@ -27,8 +27,6 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: submit
-gpus: 0
-test: true
+action: done
 milestone: core_claim
-notes: "Final CPU verification: rerun the verified 20-epoch core-claim setting after reverting the overtraining-prone 80-epoch default, evaluate artifacts, and validate scores."
+notes: "Reproduced the EchoVLM core claim on the scaled substitute, verified scores with the final 20-epoch CPU job, and packaged the reusable environment."

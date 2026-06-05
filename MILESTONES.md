@@ -24,5 +24,10 @@
 - EchoVLM still improved recall, retrieval@10, and the negation constraint, but CLIP-only had higher disease AUC on the tiny substitute.
 - Kept the milestone at `core_claim` and restored the default reproduction to the verified 20-epoch setting rather than claiming an expanded milestone.
 
+### [2026-06-05 03:34] - core_claim
+- Final CPU verification job `c7aeba82-eb7` reran the restored 20-epoch default successfully.
+- `scoring/scores.json` again contains the verified core-claim numbers, and `python validate.py --compare` passed in the managed container.
+- Packaged environment, scripts, method implementation, baseline, data generator, and evaluator are reusable for future agents.
+
 ## Stop Justification
-- Not stopped.
+- Stopped at `core_claim`. The original EchoGround-MIMIC data, private TTE view dataset, and internal/EchoCLIP initializations are unavailable, so higher milestones would require either access to those assets or a stronger public substitute dataset.

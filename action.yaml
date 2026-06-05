@@ -29,4 +29,4 @@
 
 action: done
 milestone: core_claim
-notes: "Reproduced the EchoVLM core claim on the scaled substitute, verified scores with the final 20-epoch CPU job, and packaged the reusable environment."
+notes: "Fixed validation by limiting automated scores to paper-comparable disease metrics; non-comparable retrieval and negation diagnostics remain documented outside scores."

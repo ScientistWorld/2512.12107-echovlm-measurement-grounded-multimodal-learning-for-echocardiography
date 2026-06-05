@@ -4,6 +4,8 @@ Future agents must use the fixed data split under `data/echo_toy` for the includ
 
 The benchmark is intentionally scaled because the paper's EchoGround-MIMIC data, private TTE view-classification data, and internal initializations are unavailable in this workspace. Do not claim comparison on the original private data unless those resources are actually acquired and wired into the same method-agnostic evaluation pipeline.
 
+The scored constraint surface is the full disease metric triplet from the paper: AUC, precision, and recall. The paper does not report a direct negation embedding margin, and this toy retrieval split has a much smaller candidate pool than the paper's retrieval benchmark, so those quantities are diagnostics only and must not be optimized as if they were paper-comparable scores.
+
 Do not use labels from the test split during training, generate extra test examples, or tune the evaluator. Larger external pretrained models are allowed only if they are documented in `PROGRESS.md`, downloaded through `scripts/download.sh`, and evaluated on the unchanged test split; model size and external data use must be reported as deviations.
 
 ## Compliance Checklist

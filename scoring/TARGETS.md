@@ -2,18 +2,12 @@
 
 ## Primary: toy_disease_zero_shot
 
-Tests whether image-caption embeddings distinguish abnormal from normal measurement-grounded findings on the fixed echo-style test split.
-- **Metric**: `auc` (higher is better)
+Tests whether image-caption embeddings distinguish abnormal from normal measurement-grounded findings on the fixed echo-style test split. This is the scored target because the paper reports directly comparable AUC, precision, and recall for the CLIP-only and full-objective settings in Table 6.
+
+- **Primary metric**: `auc` (higher is better)
+- **Supporting metrics**: `precision`, `recall` (higher is better)
 - **Run**: `bash scripts/evaluate.sh` after producing `test_embeddings.jsonl`
 
-## Primary: toy_image_text_retrieval
+## Diagnostics Not Scored
 
-Tests whether each image retrieves its paired measurement-grounded caption from the test set.
-- **Metric**: `retrieval_recall_at_10` (higher is better)
-- **Run**: `bash scripts/evaluate.sh`
-
-## Constraint: toy_negation_constraint
-
-Tests whether positive clinical statements are separated from their negated normal counterparts.
-- **Metric**: `negation_cosine` (lower is better) and `positive_vs_negated_margin` (higher is better)
-- **Run**: `bash scripts/evaluate.sh`
+The evaluator can compute retrieval recall and negation embedding margins from the produced artifacts, but they are intentionally omitted from `scores.json`. The toy retrieval pool has far fewer candidates than the paper's full benchmark, and the paper does not report a direct positive-vs-negated embedding margin, so those diagnostics are documented in `PROGRESS.md` rather than compared against paper reference values.

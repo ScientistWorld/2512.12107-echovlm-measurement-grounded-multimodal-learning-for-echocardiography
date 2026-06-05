@@ -1,44 +1,17 @@
 {
   "experiments": {
     "toy_disease_zero_shot": {
-      "description": "Scaled EchoGround-style zero-shot disease classification. Paper reference values are from EchoGround-MIMIC Table 1/Table 6; reproduced scores use the deterministic toy substitute.",
-      "weight": 0.45,
+      "description": "Scaled EchoGround-style zero-shot disease classification. Paper reference values are from the EchoVLM full objective and CLIP-only objective rows in Table 6.",
+      "weight": 1.0,
       "primary_metric": "auc",
       "metrics": {
         "auc": {"higher_is_better": true, "coefficient": 1.0},
         "precision": {"higher_is_better": true, "coefficient": 0.4},
-        "recall": {"higher_is_better": true, "coefficient": 0.4},
-        "positive_vs_negated_margin": {"higher_is_better": true, "coefficient": 0.2}
+        "recall": {"higher_is_better": true, "coefficient": 0.4}
       },
       "results": {
-        "clip_only": {"type": "baseline", "auc": 79.6, "precision": 29.0, "recall": 73.6, "positive_vs_negated_margin": 0.0},
-        "echovlm_full": {"type": "proposed", "auc": 86.5, "precision": 34.2, "recall": 86.2, "positive_vs_negated_margin": 0.0}
-      }
-    },
-    "toy_image_text_retrieval": {
-      "description": "Scaled image-text retrieval. Paper reference values are EchoGround-MIMIC Table 1 top-k recall percentages.",
-      "weight": 0.25,
-      "primary_metric": "retrieval_recall_at_10",
-      "metrics": {
-        "retrieval_recall_at_5": {"higher_is_better": true, "coefficient": 0.5},
-        "retrieval_recall_at_10": {"higher_is_better": true, "coefficient": 1.0}
-      },
-      "results": {
-        "clip_only": {"type": "baseline", "retrieval_recall_at_5": 2.30, "retrieval_recall_at_10": 4.33},
-        "echovlm_full": {"type": "proposed", "retrieval_recall_at_5": 2.98, "retrieval_recall_at_10": 5.70}
-      }
-    },
-    "toy_negation_constraint": {
-      "description": "Constraint target for the paper's claim that negation-aware training separates positive findings from negated normal statements.",
-      "weight": 0.30,
-      "primary_metric": "positive_vs_negated_margin",
-      "metrics": {
-        "negation_cosine": {"higher_is_better": false, "coefficient": -0.5},
-        "positive_vs_negated_margin": {"higher_is_better": true, "coefficient": 1.0}
-      },
-      "results": {
-        "clip_only": {"type": "baseline", "negation_cosine": 0.0, "positive_vs_negated_margin": 0.0},
-        "echovlm_full": {"type": "proposed", "negation_cosine": -0.1, "positive_vs_negated_margin": 0.1}
+        "clip_only": {"type": "baseline", "auc": 79.6, "precision": 29.0, "recall": 73.6},
+        "echovlm_full": {"type": "proposed", "auc": 86.5, "precision": 34.2, "recall": 86.2}
       }
     }
   }

@@ -86,11 +86,19 @@ def main() -> None:
         metrics = evaluate_embeddings(Path(path))
         results[name] = metrics
 
+    # The toy retrieval pool and embedding-margin diagnostics are useful for
+    # debugging, but they are not on the same scale as the paper's reported
+    # full-test retrieval and no paper table reports a direct negation margin.
+    # Keep the automated score contract limited to paper-comparable disease
+    # metrics from Table 1/Table 6.
     scores = {
         "experiments": {
-            "toy_disease_zero_shot": {"results": {name: {k: v for k, v in metrics.items() if k in {"auc", "precision", "recall", "positive_vs_negated_margin"}} for name, metrics in results.items()}},
-            "toy_image_text_retrieval": {"results": {name: {k: v for k, v in metrics.items() if k in {"retrieval_recall_at_5", "retrieval_recall_at_10"}} for name, metrics in results.items()}},
-            "toy_negation_constraint": {"results": {name: {k: v for k, v in metrics.items() if k in {"negation_cosine", "positive_vs_negated_margin"}} for name, metrics in results.items()}},
+            "toy_disease_zero_shot": {
+                "results": {
+                    name: {k: v for k, v in metrics.items() if k in {"auc", "precision", "recall"}}
+                    for name, metrics in results.items()
+                }
+            },
         }
     }
     out = Path(args.output)

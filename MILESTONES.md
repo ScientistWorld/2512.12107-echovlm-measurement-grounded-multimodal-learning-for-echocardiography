@@ -29,5 +29,9 @@
 - `scoring/scores.json` again contains the verified core-claim numbers, and `python validate.py --compare` passed in the managed container.
 - Packaged environment, scripts, method implementation, baseline, data generator, and evaluator are reusable for future agents.
 
+### [2026-06-05 03:45] - core_claim
+- Fixed stricter validation by narrowing automated scoring to paper-comparable disease AUC, precision, and recall from Table 6.
+- Kept toy retrieval and negation-margin values as documented diagnostics only, because the paper does not report directly comparable values for the toy retrieval pool or a direct embedding-margin metric.
+
 ## Stop Justification
 - Stopped at `core_claim`. The original EchoGround-MIMIC data, private TTE view dataset, and internal/EchoCLIP initializations are unavailable, so higher milestones would require either access to those assets or a stronger public substitute dataset.

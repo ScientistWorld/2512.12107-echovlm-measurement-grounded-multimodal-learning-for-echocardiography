@@ -57,11 +57,11 @@ Primary multimodal metrics are disease classification AUC, precision, and recall
 
 ## Baselines and Targets
 
-The paper reports EchoGround-MIMIC disease AUC of 86.5 for the proposed model and 79.6 for the CLIP-only ablation, with corresponding precision/recall of 34.2/86.2 versus 29.0/73.6. For retrieval, the paper reports Recall@5/Recall@10 of 2.98/5.70 for the proposed model and 2.30/4.33 for the CLIP-only curated-caption ablation.
+The original study reports disease AUC, precision, and recall for a strong measurement-grounded multimodal model and several comparison systems. This reduced gym keeps the same metric family and compares methods by the embeddings they produce on a fixed substitute split. Published reference values are recorded in `scoring/reference.json`; reproduced values are recorded in `scoring/scores.json`.
 
 ## Evaluation Protocol
 
-Run the method to produce `test_embeddings.jsonl` artifacts containing image, caption, and negated-caption embeddings for the fixed test split. `scripts/evaluate.sh` reads only these artifacts and writes `scoring/scores.json`; it does not import or execute code from `method/`. The paper's exact MIMIC-derived data are unavailable here, so the included runnable protocol uses a deterministic measurement-grounded substitute generated from paper images with fixed seed 7.
+Run a system to produce `test_embeddings.jsonl` artifacts containing image, caption, and negated-caption embeddings for the fixed test split. `scripts/evaluate.sh` reads only these artifacts and writes `scoring/scores.json`; it does not import or execute solution code. The original MIMIC-derived data are unavailable here, so the included runnable protocol uses a deterministic measurement-grounded substitute generated from paper images with fixed seed 7.
 
 ---
 
@@ -225,6 +225,35 @@ Run the method to produce `test_embeddings.jsonl` artifacts containing image, ca
 - Managed job `bac0f013-33c` completed successfully and regenerated baseline plus EchoVLM artifacts with the compact Transformer implementation.
 - Reproduced the core claim on the scaled substitute: EchoVLM improved disease AUC from 43.75 to 75.00 and recall from 83.33 to 100.00 while improving the negation constraint cosine from 0.471 to -0.772.
 - `python validate.py --compare` passed, including artifact-only evaluation and import-separation checks.
+
+</details>
+
+### Iteration 8: gpt-5.5 (verifier)
+- **Milestone**: `core_claim` | **Status**: done
+- **Working time**: 6m | **GPU**: 0.0h
+- **Jobs**: 7 total (6 completed, 1 failed)
+
+<details>
+<summary>Progress Log</summary>
+
+### [2026-06-05 03:49] - method_runs
+- Audited the existing EchoVLM reproduction against the paper.
+- Replaced the scaled backbone with compact Transformer encoders and aligned the view-informed loss averaging with Algorithm 1.
+- Prepared a fresh managed run to regenerate scores before reclaiming `core_claim`.
+
+### [2026-06-05 03:55] - core_claim
+- Managed job `bac0f013-33c` completed successfully and regenerated baseline plus EchoVLM artifacts with the compact Transformer implementation.
+- Reproduced the core claim on the scaled substitute: EchoVLM improved disease AUC from 43.75 to 75.00 and recall from 83.33 to 100.00 while improving the negation constraint cosine from 0.471 to -0.772.
+- `python validate.py --compare` passed, including artifact-only evaluation and import-separation checks.
+
+### [2026-06-05 04:35] - core_claim
+- Added first-class runners and reference entries for the Table 6 single-objective ablations.
+- Prepared a managed job to regenerate `clip_only`, `echovlm_view`, `echovlm_negation`, and `echovlm_full` artifacts from scratch before claiming `core_claim_plus`.
+
+### [2026-06-05 05:05] - core_claim
+- Final verification passed with `python validate.py --compare`.
+- Cleaned method-specific wording from method-agnostic evaluation and scoring documents.
+- Kept milestone at `core_claim` because the validated `scores.json` contains the baseline and full method only; optional ablation runners are present but their results are not claimed.
 
 </details>
 

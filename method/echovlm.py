@@ -1,4 +1,9 @@
-"""Small CLIP-style model and the EchoVLM losses from the paper."""
+"""Compact CLIP-style EchoVLM model and losses from the paper.
+
+The paper uses a ViT-B image encoder and CLIP/EchoCLIP text encoder.  This
+workspace keeps the same transformer-based CLIP computation at a smaller scale
+so it can run on the available benchmark data.
+"""
 
 from __future__ import annotations
 
@@ -37,38 +42,83 @@ def encode_texts(texts: list[str], vocab: dict[str, int], max_len: int = 48) -> 
 
 
 class ImageEncoder(nn.Module):
-    def __init__(self, embed_dim: int = 128):
+    def __init__(
+        self,
+        embed_dim: int = 128,
+        image_size: int = 112,
+        patch_size: int = 16,
+        width: int = 128,
+        layers: int = 2,
+        heads: int = 4,
+    ):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Conv2d(3, 32, 5, stride=2, padding=2),
-            nn.BatchNorm2d(32),
-            nn.GELU(),
-            nn.Conv2d(32, 64, 3, stride=2, padding=1),
-            nn.BatchNorm2d(64),
-            nn.GELU(),
-            nn.Conv2d(64, 128, 3, stride=2, padding=1),
-            nn.BatchNorm2d(128),
-            nn.GELU(),
-            nn.AdaptiveAvgPool2d(1),
+        if image_size % patch_size != 0:
+            raise ValueError("image_size must be divisible by patch_size")
+        num_patches = (image_size // patch_size) ** 2
+        self.patch = nn.Conv2d(3, width, kernel_size=patch_size, stride=patch_size)
+        self.cls = nn.Parameter(torch.zeros(1, 1, width))
+        self.pos = nn.Parameter(torch.zeros(1, num_patches + 1, width))
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=width,
+            nhead=heads,
+            dim_feedforward=width * 4,
+            dropout=0.0,
+            activation="gelu",
+            batch_first=True,
+            norm_first=True,
         )
-        self.proj = nn.Linear(128, embed_dim)
+        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=layers)
+        self.norm = nn.LayerNorm(width)
+        self.proj = nn.Linear(width, embed_dim)
+        nn.init.trunc_normal_(self.cls, std=0.02)
+        nn.init.trunc_normal_(self.pos, std=0.01)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        z = self.net(x).flatten(1)
-        return F.normalize(self.proj(z), dim=-1)
+        patches = self.patch(x).flatten(2).transpose(1, 2)
+        cls = self.cls.expand(patches.shape[0], -1, -1)
+        tokens = torch.cat([cls, patches], dim=1) + self.pos[:, : patches.shape[1] + 1]
+        tokens = self.transformer(tokens)
+        return F.normalize(self.proj(self.norm(tokens[:, 0])), dim=-1)
 
 
 class TextEncoder(nn.Module):
-    def __init__(self, vocab_size: int, embed_dim: int = 128, width: int = 128):
+    def __init__(
+        self,
+        vocab_size: int,
+        embed_dim: int = 128,
+        width: int = 128,
+        max_len: int = 48,
+        layers: int = 2,
+        heads: int = 4,
+    ):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, width, padding_idx=0)
-        self.mlp = nn.Sequential(nn.Linear(width, width), nn.GELU(), nn.Linear(width, embed_dim))
+        self.cls = nn.Parameter(torch.zeros(1, 1, width))
+        self.pos = nn.Parameter(torch.zeros(1, max_len + 1, width))
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=width,
+            nhead=heads,
+            dim_feedforward=width * 4,
+            dropout=0.0,
+            activation="gelu",
+            batch_first=True,
+            norm_first=True,
+        )
+        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=layers)
+        self.norm = nn.LayerNorm(width)
+        self.proj = nn.Linear(width, embed_dim)
+        nn.init.trunc_normal_(self.cls, std=0.02)
+        nn.init.trunc_normal_(self.pos, std=0.01)
 
     def forward(self, tokens: torch.Tensor) -> torch.Tensor:
-        mask = tokens.ne(0).float().unsqueeze(-1)
-        emb = self.embedding(tokens) * mask
-        pooled = emb.sum(dim=1) / mask.sum(dim=1).clamp_min(1.0)
-        return F.normalize(self.mlp(pooled), dim=-1)
+        padding = tokens.eq(0)
+        emb = self.embedding(tokens)
+        cls = self.cls.expand(tokens.shape[0], -1, -1)
+        seq = torch.cat([cls, emb], dim=1) + self.pos[:, : emb.shape[1] + 1]
+        cls_padding = torch.zeros(tokens.shape[0], 1, device=tokens.device, dtype=torch.bool)
+        key_padding = torch.cat([cls_padding, padding], dim=1)
+        seq = self.transformer(seq, src_key_padding_mask=key_padding)
+        return F.normalize(self.proj(self.norm(seq[:, 0])), dim=-1)
 
 
 class EchoVLM(nn.Module):
@@ -109,11 +159,8 @@ def view_informed_loss(image_z: torch.Tensor, views: torch.Tensor, logit_scale: 
     same_view = views[:, None].eq(views[None, :])
     same_view.fill_diagonal_(False)
     positives = same_view.float()
-    denom = positives.sum(dim=1)
-    valid = denom > 0
-    if not valid.any():
-        return image_z.new_tensor(0.0)
-    per_row = -(log_probs * positives).sum(dim=1)[valid] / denom[valid]
+    denom = positives.sum(dim=1).clamp_min(1.0)
+    per_row = -(log_probs * positives).sum(dim=1) / denom
     return per_row.mean()
 
 

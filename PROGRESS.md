@@ -5,6 +5,7 @@
 - Paper analysis and briefings are filled.
 - `data/make_echo_toy.py` creates a deterministic echo-style dataset with views, structured measurements, captions, negated captions, and disease labels.
 - `method/echovlm.py` implements the paper's actual loss structure: symmetric CLIP loss, view-informed image contrast, and negation-aware text separation.
+- Continuation audit fixed a fidelity gap by replacing the earlier compact CNN/pooled-text model with a compact ViT-style image encoder and Transformer text encoder, preserving the paper's architecture family at reduced scale.
 - `scripts/reproduce.sh` runs a CLIP-only baseline, the full EchoVLM objective, and artifact-only evaluation.
 
 ## Results
@@ -33,7 +34,7 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 
 ## Remaining
 
-- No required work remains for `core_claim`.
+- Regenerate baseline and EchoVLM scores for the compact Transformer implementation in the managed container before reclaiming `core_claim`.
 - Higher milestones would require a better non-private substitute dataset or access to EchoGround-MIMIC/private TTE view data.
 
 ## Issues
@@ -44,6 +45,7 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 - Final job `c7aeba82-eb7` verified that the restored 20-epoch default regenerates the core-claim scores and passes validation.
 - Fixed after final validation: removed toy retrieval and direct negation-margin diagnostics from automated scoring because their scales are not reported by the paper. They remain documented as development diagnostics, while `scores.json` now contains only Table 6-comparable disease AUC, precision, and recall.
 - Fixed during continuation audit: restored a scored negation constraint by adding artifact-derived `negation_cosine` to `scores.json` and `reference.json` metric definitions without inventing a paper reference value. Also removed the evaluator's Torch dependency so `scripts/evaluate.sh` works standalone in a plain Python environment.
+- Continuation audit on 2026-06-05 found the scaled backbone was too far from the paper architecture. The method now uses compact Transformer encoders and the view loss now averages over the full batch as in Algorithm 1. A fresh managed job is required before claiming the updated implementation's `core_claim`.
 - EchoGround-MIMIC is described as a future release in the paper and is not present here.
 - The paper's view-classification experiment uses private multi-site TTE data.
 - The paper initializes from internal echo-pretrained vision weights and EchoCLIP text weights; those exact weights are not available here.
@@ -51,5 +53,5 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 ## Deviations from Paper
 
 - **Data**: The paper uses EchoGround-MIMIC with 19,065 image-text pairs from MIMIC-IV-ECHO. This workspace uses a deterministic substitute generated from paper figure images because the dataset is unavailable.
-- **Scale**: The paper trains ViT-B/CLIP for 20 epochs with global batch size 512. This reproduction uses a compact CNN/text encoder and small batch sizes so the algorithm can be smoke-tested within the available environment.
+- **Scale**: The paper trains ViT-B/CLIP for 20 epochs with global batch size 512. This reproduction uses compact Transformer image/text encoders and small batch sizes so the algorithm can be smoke-tested within the available environment.
 - **Initialization**: The paper uses internal echo-pretrained vision weights and EchoCLIP text weights. This reproduction trains the compact model from scratch because those weights are unavailable.

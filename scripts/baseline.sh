@@ -25,3 +25,5 @@ python baseline/random_clip.py \
   --output-dir checkpoints/clip_only \
   --epochs "${EPOCHS:-20}" \
   --batch-size "${BATCH_SIZE:-32}"
+
+bash scripts/evaluate.sh "clip_only=checkpoints/clip_only/test_embeddings.jsonl"

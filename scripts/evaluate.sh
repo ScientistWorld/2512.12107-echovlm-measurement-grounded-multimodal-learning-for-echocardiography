@@ -26,12 +26,14 @@ cd /home/user
 
 mkdir -p scoring
 
-inputs=()
-if [ -f checkpoints/clip_only/test_embeddings.jsonl ]; then
-  inputs+=("clip_only=checkpoints/clip_only/test_embeddings.jsonl")
-fi
-if [ -f checkpoints/echovlm_full/test_embeddings.jsonl ]; then
-  inputs+=("echovlm_full=checkpoints/echovlm_full/test_embeddings.jsonl")
+inputs=("$@")
+if [ "${#inputs[@]}" -eq 0 ]; then
+  if [ -f checkpoints/clip_only/test_embeddings.jsonl ]; then
+    inputs+=("clip_only=checkpoints/clip_only/test_embeddings.jsonl")
+  fi
+  if [ -f checkpoints/echovlm_full/test_embeddings.jsonl ]; then
+    inputs+=("echovlm_full=checkpoints/echovlm_full/test_embeddings.jsonl")
+  fi
 fi
 
 if [ "${#inputs[@]}" -eq 0 ]; then

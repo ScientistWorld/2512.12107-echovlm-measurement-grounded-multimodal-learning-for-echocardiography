@@ -21,4 +21,4 @@ python -m method.train \
   --lambda-view 0.5 \
   --lambda-neg 0.1
 
-bash scripts/evaluate.sh
+bash scripts/evaluate.sh "echovlm_full=checkpoints/echovlm_full/test_embeddings.jsonl"

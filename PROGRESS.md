@@ -9,16 +9,17 @@
 
 ## Results
 
-No reproduced scores yet. The next submitted CPU smoke job will run the full pipeline and write `scoring/scores.json`.
+No reproduced scores yet. CPU smoke job `9d0e4379-6f3` failed before training because `method/train.py` was invoked as a file path, which hid the workspace root from Python imports inside the container.
 
 ## Remaining
 
-- Run the pipeline inside the managed job/container.
+- Rerun the pipeline inside the managed job/container after the module-entrypoint fix.
 - Inspect `scoring/scores.json` and compare against the CLIP-only baseline.
 - If the full objective does not improve the negation or disease metrics, tune the scaled experiment and resubmit.
 
 ## Issues
 
+- Fixed after job `9d0e4379-6f3`: changed method execution to `python -m method.train` and updated the CLIP-only baseline wrapper to invoke the same module entry point so top-level packages such as `data` are importable.
 - EchoGround-MIMIC is described as a future release in the paper and is not present here.
 - The paper's view-classification experiment uses private multi-site TTE data.
 - The paper initializes from internal echo-pretrained vision weights and EchoCLIP text weights; those exact weights are not available here.

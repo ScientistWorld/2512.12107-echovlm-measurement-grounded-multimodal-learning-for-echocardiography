@@ -13,7 +13,7 @@ cd /home/user
 if [ ! -f data/echo_toy/train.jsonl ]; then
   python -m data.make_echo_toy --output data/echo_toy --seed 7 --size 112
 fi
-python method/train.py \
+python -m method.train \
   --data-root data/echo_toy \
   --output-dir checkpoints/echovlm_full \
   --epochs "${EPOCHS:-20}" \

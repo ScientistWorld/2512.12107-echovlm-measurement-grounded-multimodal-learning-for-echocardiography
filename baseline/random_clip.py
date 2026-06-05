@@ -16,7 +16,8 @@ def main() -> None:
     args = parser.parse_args()
     cmd = [
         sys.executable,
-        "method/train.py",
+        "-m",
+        "method.train",
         "--data-root",
         args.data_root,
         "--output-dir",

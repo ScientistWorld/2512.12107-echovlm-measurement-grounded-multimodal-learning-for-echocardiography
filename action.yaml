@@ -31,4 +31,4 @@ action: submit
 gpus: 0
 test: true
 milestone: none
-notes: "CPU smoke job: install deps, run CLIP-only baseline and EchoVLM full loss on toy echo data, evaluate artifacts, and validate scores."
+notes: "Retry CPU smoke after fixing Python module entry points and adding numpy to setup; run CLIP-only baseline, EchoVLM full loss, artifact evaluation, and validate scores."

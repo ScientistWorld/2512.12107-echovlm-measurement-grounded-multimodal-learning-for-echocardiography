@@ -16,4 +16,4 @@
 
 set -e
 
-uv pip install --system torch pillow
+uv pip install --system torch pillow numpy

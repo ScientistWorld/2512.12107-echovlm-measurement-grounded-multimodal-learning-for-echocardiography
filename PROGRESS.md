@@ -48,7 +48,8 @@ The current run restores `core_claim`: the full EchoVLM objective substantially 
 ## Remaining
 
 - No required work remains for `core_claim`; the environment is usable as a research gym.
-- Higher milestones would require completing and validating additional ablations, adding a better non-private substitute dataset, or obtaining access to EchoGround-MIMIC/private TTE view data.
+- A managed CPU job is queued to complete and validate the Table 6-style objective ablations (`clip_only`, `echovlm_view`, `echovlm_negation`, `echovlm_full`) before deciding whether the workspace supports `core_claim_plus`.
+- Higher milestones after that would require adding a better non-private substitute dataset or obtaining access to EchoGround-MIMIC/private TTE view data.
 
 ## Issues
 

@@ -1,5 +1,5 @@
-action: done
+action: submit
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Final verification passed; workspace is ready as a core_claim scaled substitute-data gym."
+notes: "Run CPU reproduction with CLIP baseline, view-only ablation, negation-only ablation, full EchoVLM, slice diagnostics, and validation to assess core_claim_plus."

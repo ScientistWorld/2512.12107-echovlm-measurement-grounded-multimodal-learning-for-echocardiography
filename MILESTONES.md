@@ -22,3 +22,7 @@
 - Final verification passed with `python validate.py --compare`.
 - Cleaned method-specific wording from method-agnostic evaluation and scoring documents.
 - Kept milestone at `core_claim` because the validated `scores.json` contains the baseline and full method only; optional ablation runners are present but their results are not claimed.
+
+### [2026-06-05 04:24] - core_claim
+- Current package validates at `core_claim`.
+- Prepared a CPU managed job to regenerate the CLIP-only baseline, view-only ablation, negation-only ablation, and full EchoVLM objective from scratch before deciding whether `core_claim_plus` is supported.

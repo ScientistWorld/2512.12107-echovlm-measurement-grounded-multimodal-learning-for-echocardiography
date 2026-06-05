@@ -1,5 +1,5 @@
-action: done
+action: submit
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Packaging audit passed; tracked data is reproducible/generated locally and data/downloads keeps a tracked placeholder."
+notes: "Regenerate CLIP-only, view-only, negation-only, and full EchoVLM artifacts, then evaluate and validate to extend the reproduction toward core_claim_plus."

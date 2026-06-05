@@ -9,6 +9,9 @@ Tests whether image-caption embeddings distinguish abnormal from normal measurem
 - **Constraint metric**: `negation_cosine` (lower is better)
 - **Run**: `bash scripts/evaluate.sh` after producing `test_embeddings.jsonl`
 
+The target includes the Table 6 objective ablations when their artifacts are present:
+`clip_only`, `echovlm_view`, `echovlm_negation`, and `echovlm_full`.
+
 ## Diagnostics Not Scored
 
-The evaluator can compute retrieval recall and image-vs-negated embedding margins from the produced artifacts, but they are intentionally omitted from `scores.json`. The toy retrieval pool has far fewer candidates than the paper's full benchmark, and the paper does not report a direct image-vs-negated embedding margin, so those diagnostics are documented in `PROGRESS.md` rather than compared against paper reference values.
+The train/test slice evaluators can compute retrieval rank, balanced accuracy, hard-negative accuracy, and image-vs-negated embedding margins from produced artifacts. They have zero coefficients in `reference.json` and are intentionally omitted from the main `scores.json` contract because the toy retrieval pool has far fewer candidates than the paper's full benchmark and the paper does not report these direct diagnostics.

@@ -6,16 +6,18 @@
       "primary_metric": "auc",
       "metrics": {
         "auc": {"higher_is_better": true, "coefficient": 1.0, "description": "Area under the disease probe ROC curve on the embedding similarity margin."},
-        "balanced_accuracy": {"higher_is_better": true, "coefficient": 0.4, "description": "Mean of positive-class recall and negative-class specificity, included to catch threshold shortcuts on the imbalanced disease slice."},
+        "balanced_accuracy": {"higher_is_better": true, "coefficient": 0.0, "description": "Diagnostic-only threshold metric used by auxiliary slice evaluators."},
         "precision": {"higher_is_better": true, "coefficient": 0.4, "description": "Positive predictive value at the fixed zero similarity-margin threshold."},
-        "recall": {"higher_is_better": true, "coefficient": 0.0, "description": "Positive-class sensitivity at the fixed zero similarity-margin threshold. Reported as a diagnostic because the toy artifact has too few positive threshold errors to make recall a reliable split score."},
-        "caption_retrieval_mrr": {"higher_is_better": true, "coefficient": 0.25, "description": "Mean reciprocal rank of each image's paired affirmative caption within the slice, probing image-text alignment beyond the disease threshold."},
-        "hard_negative_accuracy": {"higher_is_better": true, "coefficient": 0.35, "description": "Percentage of examples where the image is closer to its affirmative caption than to its paired negated caption."},
+        "recall": {"higher_is_better": true, "coefficient": 0.2, "description": "Positive-class sensitivity at the fixed zero similarity-margin threshold."},
+        "caption_retrieval_mrr": {"higher_is_better": true, "coefficient": 0.0, "description": "Diagnostic-only retrieval metric used by auxiliary slice evaluators."},
+        "hard_negative_accuracy": {"higher_is_better": true, "coefficient": 0.0, "description": "Diagnostic-only negated-caption preference metric used by auxiliary slice evaluators."},
         "negation_cosine": {"higher_is_better": false, "coefficient": -0.25, "description": "Average cosine similarity between affirmative and negated caption embeddings; lower values reward separation of negated clinical statements."},
-        "positive_vs_negated_margin": {"higher_is_better": true, "coefficient": 0.3, "description": "Average image-to-positive-caption similarity minus image-to-negated-caption similarity, measuring whether the representation separates affirmative findings from negations."}
+        "positive_vs_negated_margin": {"higher_is_better": true, "coefficient": 0.0, "description": "Diagnostic-only image-to-caption margin used by auxiliary slice evaluators."}
       },
       "results": {
         "clip_only": {"type": "baseline", "auc": 79.6, "precision": 29.0, "recall": 73.6},
+        "echovlm_view": {"type": "proposed", "auc": 80.7, "precision": 33.5, "recall": 78.1},
+        "echovlm_negation": {"type": "proposed", "auc": 83.3, "precision": 30.5, "recall": 81.6},
         "echovlm_full": {"type": "proposed", "auc": 86.5, "precision": 34.2, "recall": 86.2}
       }
     }

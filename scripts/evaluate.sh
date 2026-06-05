@@ -28,12 +28,22 @@ mkdir -p scoring
 
 inputs=("$@")
 if [ "${#inputs[@]}" -eq 0 ]; then
-  if [ -f checkpoints/clip_only/test_embeddings.jsonl ]; then
-    inputs+=("clip_only=checkpoints/clip_only/test_embeddings.jsonl")
-  fi
-  if [ -f checkpoints/echovlm_full/test_embeddings.jsonl ]; then
-    inputs+=("echovlm_full=checkpoints/echovlm_full/test_embeddings.jsonl")
-  fi
+  mapfile -t inputs < <(
+    python - <<'PY'
+from pathlib import Path
+
+preferred = ["clip_only", "echovlm_view", "echovlm_negation", "echovlm_full"]
+seen = set()
+for name in preferred:
+    path = Path("checkpoints") / name / "test_embeddings.jsonl"
+    if path.exists():
+        print(f"{name}={path}")
+        seen.add(name)
+for path in sorted(Path("checkpoints").glob("*/test_embeddings.jsonl")):
+    if path.parent.name not in seen:
+        print(f"{path.parent.name}={path}")
+PY
+  )
 fi
 
 if [ "${#inputs[@]}" -eq 0 ]; then

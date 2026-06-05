@@ -19,12 +19,14 @@
 - [x] Evaluation code in `eval/`
 - [x] Method implementation in `method/`
 - [x] Baseline implementation in `baseline/`
+- [x] Objective ablation runner in `scripts/ablations.sh`
 
 ## Scripts
 - [x] `scripts/evaluate.sh`
 - [x] `scripts/reproduce.sh`
 - [x] `scripts/download.sh`
 - [x] `scripts/baseline.sh`
+- [x] `scripts/ablations.sh`
 
 ## Environment
 - [x] `environment/container.def` + `environment/setup.sh`

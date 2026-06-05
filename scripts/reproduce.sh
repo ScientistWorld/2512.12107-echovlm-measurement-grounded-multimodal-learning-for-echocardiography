@@ -19,5 +19,6 @@ set -e
 cd /home/user
 
 EPOCHS="${EPOCHS:-20}" BATCH_SIZE="${BATCH_SIZE:-32}" bash scripts/baseline.sh
+EPOCHS="${EPOCHS:-20}" BATCH_SIZE="${BATCH_SIZE:-32}" bash scripts/ablations.sh
 EPOCHS="${EPOCHS:-20}" BATCH_SIZE="${BATCH_SIZE:-32}" bash scripts/method.sh
 bash scripts/evaluate.sh

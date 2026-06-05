@@ -13,3 +13,7 @@
 - Managed job `bac0f013-33c` completed successfully and regenerated baseline plus EchoVLM artifacts with the compact Transformer implementation.
 - Reproduced the core claim on the scaled substitute: EchoVLM improved disease AUC from 43.75 to 75.00 and recall from 83.33 to 100.00 while improving the negation constraint cosine from 0.471 to -0.772.
 - `python validate.py --compare` passed, including artifact-only evaluation and import-separation checks.
+
+### [2026-06-05 04:35] - core_claim
+- Added first-class runners and reference entries for the Table 6 single-objective ablations.
+- Prepared a managed job to regenerate `clip_only`, `echovlm_view`, `echovlm_negation`, and `echovlm_full` artifacts from scratch before claiming `core_claim_plus`.

@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Rerun split scoring after rebalancing fixed train/test IDs and demoting saturated recall to a diagnostic."
+notes: "Fixed-ID 7/7 split; 16 train metrics, 16 test metrics; proposed AUC 75.0/75.0 train/test with stable constraint margins; recall is diagnostic-only due toy-slice saturation."

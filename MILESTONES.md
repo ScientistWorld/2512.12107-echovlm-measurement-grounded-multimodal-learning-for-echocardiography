@@ -21,4 +21,4 @@
 - `scripts/reproduce.sh` runs data generation, CLIP-only baseline training, full EchoVLM training, and evaluation.
 
 ## Stop Justification
-- Completed at milestone `core_claim`. Higher milestones require access to EchoGround-MIMIC, the private downstream TTE view data, or a stronger non-private substitute dataset.
+- Completed at milestone `core_claim`.

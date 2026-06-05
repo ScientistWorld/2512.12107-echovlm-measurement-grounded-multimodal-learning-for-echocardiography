@@ -31,4 +31,4 @@ action: submit
 gpus: 0
 test: true
 milestone: core_claim
-notes: "Longer CPU reproduction: rerun CLIP-only baseline and EchoVLM full objective for 80 epochs after the image-loader cleanup, evaluate artifacts, and validate score stability."
+notes: "Final CPU verification: rerun the verified 20-epoch core-claim setting after reverting the overtraining-prone 80-epoch default, evaluate artifacts, and validate scores."

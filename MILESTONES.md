@@ -19,5 +19,10 @@
 - The CLIP-only baseline and EchoVLM full objective both trained and wrote embedding artifacts.
 - On the scaled toy substitute, EchoVLM improved disease AUC (47.92 to 54.17), disease recall (50.00 to 66.67), retrieval@5 (28.57 to 35.71), and negation cosine separation (0.745 to 0.471, lower is better).
 
+### [2026-06-05 03:30] - core_claim
+- Longer CPU job `0bdf5f04-439` completed at 80 epochs.
+- EchoVLM still improved recall, retrieval@10, and the negation constraint, but CLIP-only had higher disease AUC on the tiny substitute.
+- Kept the milestone at `core_claim` and restored the default reproduction to the verified 20-epoch setting rather than claiming an expanded milestone.
+
 ## Stop Justification
 - Not stopped.

@@ -7,6 +7,7 @@
 - `method/echovlm.py` implements the paper's actual loss structure: symmetric CLIP loss, view-informed image contrast, and negation-aware text separation.
 - Continuation audit fixed a fidelity gap by replacing the earlier compact CNN/pooled-text model with a compact ViT-style image encoder and Transformer text encoder, preserving the paper's architecture family at reduced scale.
 - `scripts/reproduce.sh` runs a CLIP-only baseline, the full EchoVLM objective, and artifact-only evaluation.
+- Managed job `bac0f013-33c` regenerated the current scores with the compact Transformer implementation and passed `python validate.py --compare`.
 
 ## Results
 
@@ -32,9 +33,20 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 | Toy retrieval | Recall@10 | 50.00 | 64.29 | higher better |
 | Toy negation constraint | Negation cosine | 0.575 | -0.349 | lower better |
 
+Continuation verification job `bac0f013-33c` reran the baseline and compact-Transformer EchoVLM implementation after the architecture audit. This is the current scored result in `scoring/scores.json`.
+
+| Current scored experiment | Metric | CLIP-only | EchoVLM full | Direction |
+| --- | ---: | ---: | ---: | --- |
+| Toy disease zero-shot | AUC | 43.75 | 75.00 | higher better |
+| Toy disease zero-shot | Precision | 45.45 | 42.86 | higher better |
+| Toy disease zero-shot | Recall | 83.33 | 100.00 | higher better |
+| Toy negation constraint | Negation cosine | 0.471 | -0.772 | lower better |
+
+The current run restores `core_claim`: the full EchoVLM objective substantially improves the primary disease AUC over the CLIP-only baseline on a non-trivial scaled substitute, improves recall, and preserves the paper's negation-sensitivity constraint through lower original-vs-negated caption similarity. Precision is slightly lower than the local CLIP baseline, so the result supports the central claim but not every Table 6 metric direction.
+
 ## Remaining
 
-- Regenerate baseline and EchoVLM scores for the compact Transformer implementation in the managed container before reclaiming `core_claim`.
+- No required work remains for `core_claim`; the environment is usable as a research gym.
 - Higher milestones would require a better non-private substitute dataset or access to EchoGround-MIMIC/private TTE view data.
 
 ## Issues
@@ -45,7 +57,8 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 - Final job `c7aeba82-eb7` verified that the restored 20-epoch default regenerates the core-claim scores and passes validation.
 - Fixed after final validation: removed toy retrieval and direct negation-margin diagnostics from automated scoring because their scales are not reported by the paper. They remain documented as development diagnostics, while `scores.json` now contains only Table 6-comparable disease AUC, precision, and recall.
 - Fixed during continuation audit: restored a scored negation constraint by adding artifact-derived `negation_cosine` to `scores.json` and `reference.json` metric definitions without inventing a paper reference value. Also removed the evaluator's Torch dependency so `scripts/evaluate.sh` works standalone in a plain Python environment.
-- Continuation audit on 2026-06-05 found the scaled backbone was too far from the paper architecture. The method now uses compact Transformer encoders and the view loss now averages over the full batch as in Algorithm 1. A fresh managed job is required before claiming the updated implementation's `core_claim`.
+- Continuation audit on 2026-06-05 found the scaled backbone was too far from the paper architecture. The method now uses compact Transformer encoders and the view loss now averages over the full batch as in Algorithm 1. Job `bac0f013-33c` verified that this implementation reaches `core_claim`.
+- Job `bac0f013-33c` emitted only harmless PyTorch Transformer nested-tensor warnings; it exited successfully and validation passed.
 - EchoGround-MIMIC is described as a future release in the paper and is not present here.
 - The paper's view-classification experiment uses private multi-site TTE data.
 - The paper initializes from internal echo-pretrained vision weights and EchoCLIP text weights; those exact weights are not available here.

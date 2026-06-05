@@ -1,8 +1,8 @@
 # IMPORTANT: Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends. Sleeping blocks the entire pipeline.
-action: submit
+action: done
 gpus: 0
 test: true
-milestone: method_runs
-notes: "Regenerate baseline and EchoVLM scores after replacing the scaled backbone with compact Transformer encoders and fixing view-loss averaging."
+milestone: core_claim
+notes: "Reproduced the core EchoVLM claim on the scaled substitute with compact Transformer encoders; job bac0f013-33c passed validation."

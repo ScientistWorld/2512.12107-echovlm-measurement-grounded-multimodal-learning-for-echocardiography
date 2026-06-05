@@ -4,6 +4,12 @@
 
 ## Progress Log
 
+### [2026-06-05 03:43] - core_claim
+- Continued from the previous `core_claim` claim with the milestone reset to `method_runs` for audit.
+- Verified that `method/echovlm.py` implements the paper's actual computation at reduced scale: symmetric CLIP alignment, view-informed image contrast, and negation-aware text separation.
+- Fixed the scoring contract to include the negation constraint metric (`negation_cosine`) from saved artifacts and made `eval/metrics.py` standalone without a Torch dependency.
+- Reran `bash scripts/evaluate.sh` and `python validate.py --compare`; validation passes and EchoVLM improves over CLIP-only on AUC, recall, and negated-caption separation.
+
 ### [2026-06-05 03:40] - core_claim
 - Implemented and validated the paper's actual EchoVLM objective at reduced scale: symmetric CLIP loss plus view-informed image contrast and negation-aware text separation.
 - Ran the CLIP-only baseline and full EchoVLM method through the artifact-only evaluator on the fixed substitute EchoGround-style dataset.

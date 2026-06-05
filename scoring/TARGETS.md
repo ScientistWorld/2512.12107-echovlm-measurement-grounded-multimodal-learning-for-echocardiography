@@ -6,8 +6,9 @@ Tests whether image-caption embeddings distinguish abnormal from normal measurem
 
 - **Primary metric**: `auc` (higher is better)
 - **Supporting metrics**: `precision`, `recall` (higher is better)
+- **Constraint metric**: `negation_cosine` (lower is better)
 - **Run**: `bash scripts/evaluate.sh` after producing `test_embeddings.jsonl`
 
 ## Diagnostics Not Scored
 
-The evaluator can compute retrieval recall and negation embedding margins from the produced artifacts, but they are intentionally omitted from `scores.json`. The toy retrieval pool has far fewer candidates than the paper's full benchmark, and the paper does not report a direct positive-vs-negated embedding margin, so those diagnostics are documented in `PROGRESS.md` rather than compared against paper reference values.
+The evaluator can compute retrieval recall and image-vs-negated embedding margins from the produced artifacts, but they are intentionally omitted from `scores.json`. The toy retrieval pool has far fewer candidates than the paper's full benchmark, and the paper does not report a direct image-vs-negated embedding margin, so those diagnostics are documented in `PROGRESS.md` rather than compared against paper reference values.

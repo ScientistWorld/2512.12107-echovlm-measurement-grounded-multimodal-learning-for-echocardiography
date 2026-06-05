@@ -16,8 +16,9 @@ CPU smoke job `ba2bbb9d-f93` completed end-to-end in the managed container and w
 | Toy disease zero-shot | AUC | 47.92 | 54.17 | higher better |
 | Toy disease zero-shot | Precision | 50.00 | 50.00 | higher better |
 | Toy disease zero-shot | Recall | 50.00 | 66.67 | higher better |
+| Toy negation constraint | Negation cosine | 0.745 | 0.471 | lower better |
 
-This supports the paper's core claim on the scaled substitute: adding view-informed and negation-aware contrastive terms improves the CLIP-style baseline on disease AUC and recall while preserving precision. The evaluator also computed useful local diagnostics during development, including retrieval@5 improvement from 28.57 to 35.71 and negation cosine reduction from 0.745 to 0.471, but those are not in `scores.json` because they are not directly paper-comparable reference metrics.
+This supports the paper's core claim on the scaled substitute: adding view-informed and negation-aware contrastive terms improves the CLIP-style baseline on disease AUC and recall while preserving precision and explicitly improving negated-caption separation. The evaluator also computed useful local diagnostics during development, including retrieval@5 improvement from 28.57 to 35.71, but toy retrieval is not in `scores.json` because it is not directly paper-comparable.
 
 Final verification job `c7aeba82-eb7` reran the restored 20-epoch default and reproduced the same core-claim scores. After stricter paper-consistency validation, `scoring/scores.json` was narrowed to the paper-comparable disease metrics from Table 6.
 
@@ -42,6 +43,7 @@ Longer CPU job `0bdf5f04-439` also completed cleanly at 80 epochs. It strengthen
 - Job `0bdf5f04-439` showed that 80 epochs overfits the tiny substitute differently for the two objectives: EchoVLM retained the negation/retrieval advantage, but CLIP-only had higher disease AUC. The default reproduction was reverted to 20 epochs.
 - Final job `c7aeba82-eb7` verified that the restored 20-epoch default regenerates the core-claim scores and passes validation.
 - Fixed after final validation: removed toy retrieval and direct negation-margin diagnostics from automated scoring because their scales are not reported by the paper. They remain documented as development diagnostics, while `scores.json` now contains only Table 6-comparable disease AUC, precision, and recall.
+- Fixed during continuation audit: restored a scored negation constraint by adding artifact-derived `negation_cosine` to `scores.json` and `reference.json` metric definitions without inventing a paper reference value. Also removed the evaluator's Torch dependency so `scripts/evaluate.sh` works standalone in a plain Python environment.
 - EchoGround-MIMIC is described as a future release in the paper and is not present here.
 - The paper's view-classification experiment uses private multi-site TTE data.
 - The paper initializes from internal echo-pretrained vision weights and EchoCLIP text weights; those exact weights are not available here.

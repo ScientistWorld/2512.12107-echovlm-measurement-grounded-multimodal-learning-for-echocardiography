@@ -5,4 +5,4 @@ action: done
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Core claim reproduced on the documented substitute dataset: the implemented EchoVLM objective improves over CLIP-only on disease AUC and recall, validation passes, and the environment is packaged."
+notes: "Continuation audit restored core_claim. EchoVLM improves over CLIP-only on AUC, recall, and the scored negation_cosine constraint; standalone evaluation and validation pass."

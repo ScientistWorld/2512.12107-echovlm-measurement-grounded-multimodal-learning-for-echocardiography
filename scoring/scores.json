@@ -4,11 +4,13 @@
       "results": {
         "clip_only": {
           "auc": 47.91666666666667,
+          "negation_cosine": 0.7451714259364858,
           "precision": 50.0,
           "recall": 50.0
         },
         "echovlm_full": {
           "auc": 54.166666666666664,
+          "negation_cosine": 0.4707287731338575,
           "precision": 50.0,
           "recall": 66.66666666666666
         }

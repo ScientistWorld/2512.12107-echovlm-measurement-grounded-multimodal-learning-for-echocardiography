@@ -6,8 +6,6 @@ import argparse
 import json
 from pathlib import Path
 
-import torch
-
 
 def load_jsonl(path: Path) -> list[dict]:
     with path.open("r", encoding="utf-8") as f:
@@ -42,26 +40,32 @@ def pr_metrics(labels: list[int], scores: list[float]) -> tuple[float, float]:
     return precision, recall
 
 
-def recall_at_k(image_z: torch.Tensor, text_z: torch.Tensor, k: int) -> float:
-    sims = image_z @ text_z.T
-    topk = sims.topk(min(k, sims.shape[1]), dim=1).indices
-    target = torch.arange(sims.shape[0], device=sims.device)[:, None]
-    return topk.eq(target).any(dim=1).float().mean().item()
+def dot(a: list[float], b: list[float]) -> float:
+    return sum(x * y for x, y in zip(a, b))
+
+
+def recall_at_k(image_z: list[list[float]], text_z: list[list[float]], k: int) -> float:
+    hits = 0
+    for i, image_vec in enumerate(image_z):
+        scores = [(dot(image_vec, text_vec), j) for j, text_vec in enumerate(text_z)]
+        topk = sorted(scores, reverse=True)[: min(k, len(scores))]
+        hits += int(any(j == i for _, j in topk))
+    return hits / max(1, len(image_z))
 
 
 def evaluate_embeddings(path: Path) -> dict[str, float]:
     rows = load_jsonl(path)
-    image_z = torch.tensor([r["image_embedding"] for r in rows], dtype=torch.float32)
-    text_z = torch.tensor([r["text_embedding"] for r in rows], dtype=torch.float32)
-    neg_z = torch.tensor([r["neg_text_embedding"] for r in rows], dtype=torch.float32)
+    image_z = [r["image_embedding"] for r in rows]
+    text_z = [r["text_embedding"] for r in rows]
+    neg_z = [r["neg_text_embedding"] for r in rows]
     labels = [int(r["label"]) for r in rows]
 
-    pos_sim = (image_z * text_z).sum(dim=1)
-    neg_sim = (image_z * neg_z).sum(dim=1)
-    scores = (pos_sim - neg_sim).tolist()
+    pos_sim = [dot(image_vec, text_vec) for image_vec, text_vec in zip(image_z, text_z)]
+    neg_sim = [dot(image_vec, neg_vec) for image_vec, neg_vec in zip(image_z, neg_z)]
+    scores = [pos - neg for pos, neg in zip(pos_sim, neg_sim)]
     precision, recall = pr_metrics(labels, scores)
-    neg_margin = (text_z * neg_z).sum(dim=1).mean().item()
-    align_margin = (pos_sim - neg_sim).mean().item()
+    neg_margin = sum(dot(text_vec, neg_vec) for text_vec, neg_vec in zip(text_z, neg_z)) / max(1, len(text_z))
+    align_margin = sum(scores) / max(1, len(scores))
     return {
         "auc": 100.0 * binary_auc(labels, scores),
         "precision": 100.0 * precision,
@@ -86,16 +90,17 @@ def main() -> None:
         metrics = evaluate_embeddings(Path(path))
         results[name] = metrics
 
-    # The toy retrieval pool and embedding-margin diagnostics are useful for
-    # debugging, but they are not on the same scale as the paper's reported
-    # full-test retrieval and no paper table reports a direct negation margin.
-    # Keep the automated score contract limited to paper-comparable disease
-    # metrics from Table 1/Table 6.
+    # The toy retrieval pool is useful for debugging, but it is not on the
+    # same scale as the paper's full-test retrieval benchmark. The negation
+    # cosine is retained as a scored constraint because EchoVLM's second
+    # paper-specific objective explicitly separates original and negated
+    # captions; reference.json defines the metric but intentionally has no
+    # paper value for it because no table reports this direct diagnostic.
     scores = {
         "experiments": {
             "toy_disease_zero_shot": {
                 "results": {
-                    name: {k: v for k, v in metrics.items() if k in {"auc", "precision", "recall"}}
+                    name: {k: v for k, v in metrics.items() if k in {"auc", "precision", "recall", "negation_cosine"}}
                     for name, metrics in results.items()
                 }
             },

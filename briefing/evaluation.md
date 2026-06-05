@@ -2,7 +2,7 @@
 
 ## Metrics
 
-Primary multimodal metrics are disease classification AUC, precision, and recall, reported as percentages. Retrieval is measured by image-to-text Recall@5 and Recall@10. The negation constraint is measured by the cosine similarity between positive and negated caption embeddings, where lower is better, and the margin between image-positive and image-negated similarity, where higher is better.
+Primary multimodal metrics are disease classification AUC, precision, and recall, reported as percentages. The scored negation constraint is the cosine similarity between positive and negated caption embeddings, where lower is better. Retrieval can be computed as a local diagnostic, but it is not scored in this reduced benchmark because the paper's retrieval pool is much larger and not directly comparable.
 
 ## Baselines and Targets
 

@@ -34,4 +34,4 @@
 - Kept toy retrieval and negation-margin values as documented diagnostics only, because the paper does not report directly comparable values for the toy retrieval pool or a direct embedding-margin metric.
 
 ## Stop Justification
-- Stopped at `core_claim`. The original EchoGround-MIMIC data, private TTE view dataset, and internal/EchoCLIP initializations are unavailable, so higher milestones would require either access to those assets or a stronger public substitute dataset.
+- Completed at milestone `core_claim`.

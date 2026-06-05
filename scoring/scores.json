@@ -3,40 +3,40 @@
     "toy_disease_zero_shot": {
       "results": {
         "clip_only": {
-          "auc": 64.58333333333334,
-          "positive_vs_negated_margin": 0.010850362479686737,
+          "auc": 47.91666666666667,
+          "positive_vs_negated_margin": -0.018490957096219063,
           "precision": 50.0,
-          "recall": 66.66666666666666
+          "recall": 50.0
         },
         "echovlm_full": {
-          "auc": 56.25,
-          "positive_vs_negated_margin": 0.0771956667304039,
-          "precision": 41.66666666666667,
-          "recall": 83.33333333333334
+          "auc": 54.166666666666664,
+          "positive_vs_negated_margin": -0.01193582359701395,
+          "precision": 50.0,
+          "recall": 66.66666666666666
         }
       }
     },
     "toy_image_text_retrieval": {
       "results": {
         "clip_only": {
-          "retrieval_recall_at_10": 50.0,
+          "retrieval_recall_at_10": 71.42857313156128,
           "retrieval_recall_at_5": 28.57142984867096
         },
         "echovlm_full": {
-          "retrieval_recall_at_10": 64.28571343421936,
-          "retrieval_recall_at_5": 28.57142984867096
+          "retrieval_recall_at_10": 71.42857313156128,
+          "retrieval_recall_at_5": 35.71428656578064
         }
       }
     },
     "toy_negation_constraint": {
       "results": {
         "clip_only": {
-          "negation_cosine": 0.5745100975036621,
-          "positive_vs_negated_margin": 0.010850362479686737
+          "negation_cosine": 0.7451714277267456,
+          "positive_vs_negated_margin": -0.018490957096219063
         },
         "echovlm_full": {
-          "negation_cosine": -0.34869447350502014,
-          "positive_vs_negated_margin": 0.0771956667304039
+          "negation_cosine": 0.4707288146018982,
+          "positive_vs_negated_margin": -0.01193582359701395
         }
       }
     }

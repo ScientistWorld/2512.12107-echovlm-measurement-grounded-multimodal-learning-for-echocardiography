@@ -27,8 +27,8 @@
 #   milestone: core_claim
 #   notes: "Reproduced the core claim. Environment packaged."
 
-action: done
+action: submit
 gpus: 0
-test: false
+test: true
 milestone: none
-notes: "Implemented the lightweight EchoVLM toy data generator and generated deterministic data/echo_toy splits."
+notes: "CPU smoke job: install deps, run CLIP-only baseline and EchoVLM full loss on toy echo data, evaluate artifacts, and validate scores."

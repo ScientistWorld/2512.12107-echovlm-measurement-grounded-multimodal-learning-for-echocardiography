@@ -5,11 +5,13 @@
       "weight": 1.0,
       "primary_metric": "auc",
       "metrics": {
-        "auc": {"higher_is_better": true, "coefficient": 1.0},
+        "auc": {"higher_is_better": true, "coefficient": 1.0, "description": "Area under the disease probe ROC curve on the embedding similarity margin."},
         "balanced_accuracy": {"higher_is_better": true, "coefficient": 0.4, "description": "Mean of positive-class recall and negative-class specificity, included to catch threshold shortcuts on the imbalanced disease slice."},
-        "precision": {"higher_is_better": true, "coefficient": 0.4},
-        "recall": {"higher_is_better": true, "coefficient": 0.4},
-        "negation_cosine": {"higher_is_better": false, "coefficient": -0.25},
+        "precision": {"higher_is_better": true, "coefficient": 0.4, "description": "Positive predictive value at the fixed zero similarity-margin threshold."},
+        "recall": {"higher_is_better": true, "coefficient": 0.4, "description": "Positive-class sensitivity at the fixed zero similarity-margin threshold."},
+        "caption_retrieval_mrr": {"higher_is_better": true, "coefficient": 0.25, "description": "Mean reciprocal rank of each image's paired affirmative caption within the slice, probing image-text alignment beyond the disease threshold."},
+        "hard_negative_accuracy": {"higher_is_better": true, "coefficient": 0.35, "description": "Percentage of examples where the image is closer to its affirmative caption than to its paired negated caption."},
+        "negation_cosine": {"higher_is_better": false, "coefficient": -0.25, "description": "Average cosine similarity between affirmative and negated caption embeddings; lower values reward separation of negated clinical statements."},
         "positive_vs_negated_margin": {"higher_is_better": true, "coefficient": 0.3, "description": "Average image-to-positive-caption similarity minus image-to-negated-caption similarity, measuring whether the representation separates affirmative findings from negations."}
       },
       "results": {

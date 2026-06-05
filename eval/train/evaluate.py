@@ -75,6 +75,18 @@ def dot(a: list[float], b: list[float]) -> float:
     return sum(x * y for x, y in zip(a, b))
 
 
+def retrieval_mrr(image_z: list[list[float]], text_z: list[list[float]]) -> float:
+    reciprocal_ranks = []
+    for i, image_vec in enumerate(image_z):
+        ranked = sorted(
+            ((dot(image_vec, text_vec), j) for j, text_vec in enumerate(text_z)),
+            reverse=True,
+        )
+        rank = next(rank for rank, (_, j) in enumerate(ranked, start=1) if j == i)
+        reciprocal_ranks.append(1.0 / rank)
+    return sum(reciprocal_ranks) / len(reciprocal_ranks)
+
+
 def evaluate_embeddings(path: Path) -> dict[str, float]:
     rows = select_slice(load_jsonl(path))
     if not rows:
@@ -89,12 +101,15 @@ def evaluate_embeddings(path: Path) -> dict[str, float]:
     scores = [pos - neg for pos, neg in zip(pos_sim, neg_sim)]
     precision, recall, balanced_accuracy = threshold_metrics(labels, scores)
     negation_cosine = sum(dot(text_vec, neg_vec) for text_vec, neg_vec in zip(text_z, neg_z)) / len(rows)
+    hard_negative_accuracy = sum(1 for score in scores if score > 0.0) / len(rows)
     margin = sum(scores) / len(rows)
     return {
         "auc": 100.0 * binary_auc(labels, scores),
         "precision": 100.0 * precision,
         "recall": 100.0 * recall,
         "balanced_accuracy": 100.0 * balanced_accuracy,
+        "caption_retrieval_mrr": 100.0 * retrieval_mrr(image_z, text_z),
+        "hard_negative_accuracy": 100.0 * hard_negative_accuracy,
         "negation_cosine": negation_cosine,
         "positive_vs_negated_margin": margin,
     }

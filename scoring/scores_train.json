@@ -3,22 +3,22 @@
     "toy_disease_zero_shot": {
       "results": {
         "clip_only": {
-          "auc": 8.333333333333332,
-          "balanced_accuracy": 50.0,
-          "caption_retrieval_mrr": 39.76190476190476,
-          "hard_negative_accuracy": 100.0,
-          "negation_cosine": 0.4247348580317329,
-          "positive_vs_negated_margin": 0.10999656141043486,
-          "precision": 42.857142857142854,
-          "recall": 100.0
+          "auc": 41.66666666666667,
+          "balanced_accuracy": 45.83333333333333,
+          "caption_retrieval_mrr": 29.047619047619044,
+          "hard_negative_accuracy": 71.42857142857143,
+          "negation_cosine": 0.4871850342528646,
+          "positive_vs_negated_margin": 0.05069783728255624,
+          "precision": 40.0,
+          "recall": 66.66666666666666
         },
         "echovlm_full": {
-          "auc": 41.66666666666667,
+          "auc": 75.0,
           "balanced_accuracy": 50.0,
-          "caption_retrieval_mrr": 37.04081632653061,
+          "caption_retrieval_mrr": 33.12925170068027,
           "hard_negative_accuracy": 100.0,
-          "negation_cosine": -0.7661299042818775,
-          "positive_vs_negated_margin": 0.2631157085448299,
+          "negation_cosine": -0.7803342946199682,
+          "positive_vs_negated_margin": 0.25112460116935587,
           "precision": 42.857142857142854,
           "recall": 100.0
         }
@@ -27,12 +27,12 @@
       "split": {
         "ids": [
           "echo_toy_0004",
-          "echo_toy_0006",
-          "echo_toy_0007",
           "echo_toy_0009",
+          "echo_toy_0012",
+          "echo_toy_0019",
+          "echo_toy_0027",
           "echo_toy_0041",
-          "echo_toy_0046",
-          "echo_toy_0068"
+          "echo_toy_0074"
         ],
         "input_paths": {
           "clip_only": "checkpoints/clip_only/test_embeddings.jsonl",

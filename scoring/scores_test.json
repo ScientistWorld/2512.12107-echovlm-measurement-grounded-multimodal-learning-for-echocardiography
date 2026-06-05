@@ -3,22 +3,22 @@
     "toy_disease_zero_shot": {
       "results": {
         "clip_only": {
-          "auc": 66.66666666666666,
-          "balanced_accuracy": 58.33333333333333,
-          "caption_retrieval_mrr": 25.27210884353741,
-          "hard_negative_accuracy": 57.14285714285714,
-          "negation_cosine": 0.5177499214413964,
-          "positive_vs_negated_margin": 0.02835483305133683,
+          "auc": 50.0,
+          "balanced_accuracy": 62.5,
+          "caption_retrieval_mrr": 26.802721088435373,
+          "hard_negative_accuracy": 85.71428571428571,
+          "negation_cosine": 0.4552997452202648,
+          "positive_vs_negated_margin": 0.08765355717921544,
           "precision": 50.0,
-          "recall": 66.66666666666666
+          "recall": 100.0
         },
         "echovlm_full": {
-          "auc": 100.0,
+          "auc": 75.0,
           "balanced_accuracy": 50.0,
-          "caption_retrieval_mrr": 27.653061224489793,
+          "caption_retrieval_mrr": 32.755102040816325,
           "hard_negative_accuracy": 100.0,
-          "negation_cosine": -0.7788045678120449,
-          "positive_vs_negated_margin": 0.23324608572888986,
+          "negation_cosine": -0.7646001774739544,
+          "positive_vs_negated_margin": 0.24523719310436384,
           "precision": 42.857142857142854,
           "recall": 100.0
         }
@@ -26,12 +26,12 @@
       "slice": "test",
       "split": {
         "ids": [
-          "echo_toy_0012",
-          "echo_toy_0019",
-          "echo_toy_0027",
+          "echo_toy_0006",
+          "echo_toy_0007",
+          "echo_toy_0046",
           "echo_toy_0050",
           "echo_toy_0064",
-          "echo_toy_0074",
+          "echo_toy_0068",
           "echo_toy_0083"
         ],
         "input_paths": {

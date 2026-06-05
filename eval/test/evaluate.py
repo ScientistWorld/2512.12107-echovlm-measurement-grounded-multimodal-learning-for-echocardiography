@@ -14,12 +14,12 @@ from pathlib import Path
 SLICE = "test"
 EXPERIMENT_NAME = "toy_disease_zero_shot"
 SLICE_IDS = {
-    "echo_toy_0012",
-    "echo_toy_0019",
-    "echo_toy_0027",
+    "echo_toy_0006",
+    "echo_toy_0007",
+    "echo_toy_0046",
     "echo_toy_0050",
     "echo_toy_0064",
-    "echo_toy_0074",
+    "echo_toy_0068",
     "echo_toy_0083",
 }
 

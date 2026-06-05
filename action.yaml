@@ -2,4 +2,4 @@ action: submit
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Run evaluate_train.sh and evaluate_test.sh over all checkpoint embedding artifacts; populate split scores."
+notes: "Rerun split scoring after rebalancing fixed train/test IDs and demoting saturated recall to a diagnostic."

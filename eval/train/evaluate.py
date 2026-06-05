@@ -15,12 +15,12 @@ SLICE = "train"
 EXPERIMENT_NAME = "toy_disease_zero_shot"
 TRAIN_IDS = {
     "echo_toy_0004",
-    "echo_toy_0006",
-    "echo_toy_0007",
     "echo_toy_0009",
+    "echo_toy_0012",
+    "echo_toy_0019",
+    "echo_toy_0027",
     "echo_toy_0041",
-    "echo_toy_0046",
-    "echo_toy_0068",
+    "echo_toy_0074",
 }
 SLICE_IDS = TRAIN_IDS
 

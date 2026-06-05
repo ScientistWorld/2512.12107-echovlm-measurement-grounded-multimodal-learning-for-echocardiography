@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import numpy as np
 import torch
 from PIL import Image
 from torch.utils.data import Dataset
@@ -39,8 +40,7 @@ class EchoToyDataset(Dataset):
     def __getitem__(self, idx: int) -> dict:
         row = self.rows[idx]
         image = Image.open(self.root / row["image"]).convert("RGB").resize((112, 112))
-        pixels = torch.ByteTensor(torch.ByteStorage.from_buffer(image.tobytes())).float()
-        pixels = pixels.view(image.height, image.width, 3).permute(2, 0, 1) / 255.0
+        pixels = torch.from_numpy(np.asarray(image, dtype=np.float32)).permute(2, 0, 1) / 255.0
         disease, label = disease_probe(row)
         return {
             "id": row["id"],

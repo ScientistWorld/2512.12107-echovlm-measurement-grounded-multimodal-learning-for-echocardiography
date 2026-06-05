@@ -30,5 +30,5 @@
 action: submit
 gpus: 0
 test: true
-milestone: none
-notes: "Retry CPU smoke after fixing Python module entry points and adding numpy to setup; run CLIP-only baseline, EchoVLM full loss, artifact evaluation, and validate scores."
+milestone: core_claim
+notes: "Longer CPU reproduction: rerun CLIP-only baseline and EchoVLM full objective for 80 epochs after the image-loader cleanup, evaluate artifacts, and validate score stability."

@@ -13,5 +13,5 @@ set -e
 
 cd /home/user
 
-EPOCHS="${EPOCHS:-20}" BATCH_SIZE="${BATCH_SIZE:-32}" bash scripts/reproduce.sh
+EPOCHS="${EPOCHS:-80}" BATCH_SIZE="${BATCH_SIZE:-32}" bash scripts/reproduce.sh
 python validate.py --compare

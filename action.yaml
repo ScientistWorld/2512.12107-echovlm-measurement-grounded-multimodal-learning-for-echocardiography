@@ -1,9 +1,5 @@
-# This iteration writes files only — do NOT submit compute jobs.
-# Once you set action to 'done', STOP immediately.
-# Do NOT sleep, poll, or wait. The system reads this file
-# only after your turn ends.
-action: done
+action: submit
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Improvements: added caption retrieval MRR and hard-negative accuracy to train/test slices; completed metric descriptions; made held-out test enumerate checkpoint artifacts directly. Notes: seven-example slices may be noisy; runner should inspect saturation/gaps."
+notes: "Run evaluate_train.sh and evaluate_test.sh over all checkpoint embedding artifacts; populate split scores."

@@ -1,15 +1,13 @@
 # Evaluation
 
-How success is measured. Describe only the metrics, targets, and evaluation procedure — do NOT describe the paper's method or how they achieved these results. Think of this as a general evaluation protocal for other scientists trying to solve the same problem, where they should not see this paper's solution.
-
 ## Metrics
 
-<!-- What metrics are used? How are they computed? What does higher/lower mean? -->
+Primary multimodal metrics are disease classification AUC, precision, and recall, reported as percentages. Retrieval is measured by image-to-text Recall@5 and Recall@10. The negation constraint is measured by the cosine similarity between positive and negated caption embeddings, where lower is better, and the margin between image-positive and image-negated similarity, where higher is better.
 
 ## Baselines and Targets
 
-<!-- What performance levels exist as reference points? Include the paper's reported numbers as targets, and any standard baselines. A scientist agent should know what "good" looks like. -->
+The paper reports EchoGround-MIMIC disease AUC of 86.5 for the proposed model and 79.6 for the CLIP-only ablation, with corresponding precision/recall of 34.2/86.2 versus 29.0/73.6. For retrieval, the paper reports Recall@5/Recall@10 of 2.98/5.70 for the proposed model and 2.30/4.33 for the CLIP-only curated-caption ablation.
 
 ## Evaluation Protocol
 
-<!-- How should evaluation be run? What data split, what conditions? Any important details about how to compare fairly (e.g., fixed seeds, specific test sets, averaging over runs). -->
+Run the method to produce `test_embeddings.jsonl` artifacts containing image, caption, and negated-caption embeddings for the fixed test split. `scripts/evaluate.sh` reads only these artifacts and writes `scoring/scores.json`; it does not import or execute code from `method/`. The paper's exact MIMIC-derived data are unavailable here, so the included runnable protocol uses a deterministic measurement-grounded substitute generated from paper images with fixed seed 7.

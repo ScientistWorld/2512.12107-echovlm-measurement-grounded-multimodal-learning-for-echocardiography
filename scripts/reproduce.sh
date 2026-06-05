@@ -18,7 +18,6 @@ set -e
 
 cd /home/user
 
-# TODO: implement full reproduction pipeline
-# e.g.:
-#   bash scripts/baseline.sh
-#   bash scripts/method.sh
+EPOCHS="${EPOCHS:-20}" BATCH_SIZE="${BATCH_SIZE:-32}" bash scripts/baseline.sh
+EPOCHS="${EPOCHS:-20}" BATCH_SIZE="${BATCH_SIZE:-32}" bash scripts/method.sh
+bash scripts/evaluate.sh

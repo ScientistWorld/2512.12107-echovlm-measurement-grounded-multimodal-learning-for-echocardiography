@@ -26,5 +26,17 @@ cd /home/user
 
 mkdir -p scoring
 
-# TODO: implement evaluation using code in eval/
-# Must write scoring/scores.json at the end
+inputs=()
+if [ -f checkpoints/clip_only/test_embeddings.jsonl ]; then
+  inputs+=("clip_only=checkpoints/clip_only/test_embeddings.jsonl")
+fi
+if [ -f checkpoints/echovlm_full/test_embeddings.jsonl ]; then
+  inputs+=("echovlm_full=checkpoints/echovlm_full/test_embeddings.jsonl")
+fi
+
+if [ "${#inputs[@]}" -eq 0 ]; then
+  echo "No embedding artifacts found. Run scripts/method.sh or scripts/baseline.sh first." >&2
+  exit 1
+fi
+
+python -m eval.metrics --inputs "${inputs[@]}" --output scoring/scores.json

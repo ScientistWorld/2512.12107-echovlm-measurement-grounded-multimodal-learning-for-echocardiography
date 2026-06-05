@@ -2,36 +2,29 @@
 
 ## What Works
 
-<!-- What has been successfully reproduced so far. -->
+- Paper analysis and briefings are filled.
+- `data/make_echo_toy.py` creates a deterministic echo-style dataset with views, structured measurements, captions, negated captions, and disease labels.
+- `method/echovlm.py` implements the paper's actual loss structure: symmetric CLIP loss, view-informed image contrast, and negation-aware text separation.
+- `scripts/reproduce.sh` runs a CLIP-only baseline, the full EchoVLM objective, and artifact-only evaluation.
 
 ## Results
 
-<!-- Reproduced numbers compared to the paper's reported numbers. -->
+No reproduced scores yet. The next submitted CPU smoke job will run the full pipeline and write `scoring/scores.json`.
 
 ## Remaining
 
-<!-- What still needs to be done to reach higher milestones. -->
+- Run the pipeline inside the managed job/container.
+- Inspect `scoring/scores.json` and compare against the CLIP-only baseline.
+- If the full objective does not improve the negation or disease metrics, tune the scaled experiment and resubmit.
 
 ## Issues
 
-<!-- Blockers, bugs, or difficulties encountered. -->
+- EchoGround-MIMIC is described as a future release in the paper and is not present here.
+- The paper's view-classification experiment uses private multi-site TTE data.
+- The paper initializes from internal echo-pretrained vision weights and EchoCLIP text weights; those exact weights are not available here.
 
 ## Deviations from Paper
 
-<!-- Do not edit this section unless you deviated from the paper's original setup.
-     For each deviation, document: what the paper used, what you substituted, and why.
-
-     ACCEPTABLE deviations (data/resource/scale substitutions — milestones still valid):
-       - Replaced a proprietary dataset with a public one
-       - Used a smaller model of the same architecture
-       - Scaled down training (fewer epochs, smaller batch)
-       - Used a different library for the same algorithm
-
-     UNACCEPTABLE deviations (algorithm substitutions — milestones above 'none' are void):
-       - Replaced the paper's algorithm with a fundamentally different one
-       - Wrote a generic model trained to approximate the method's outputs
-         instead of implementing the method's computational steps
-
-     The test: could someone reading your code identify which algorithm from
-     the paper you implemented? If not, you replaced the method. -->
-
+- **Data**: The paper uses EchoGround-MIMIC with 19,065 image-text pairs from MIMIC-IV-ECHO. This workspace uses a deterministic substitute generated from paper figure images because the dataset is unavailable.
+- **Scale**: The paper trains ViT-B/CLIP for 20 epochs with global batch size 512. This reproduction uses a compact CNN/text encoder and small batch sizes so the algorithm can be smoke-tested within the available environment.
+- **Initialization**: The paper uses internal echo-pretrained vision weights and EchoCLIP text weights. This reproduction trains the compact model from scratch because those weights are unavailable.

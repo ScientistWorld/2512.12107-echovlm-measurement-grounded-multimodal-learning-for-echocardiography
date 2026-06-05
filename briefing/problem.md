@@ -1,17 +1,13 @@
 # Problem Definition
 
-What problem does this paper address? Write this so that someone with no knowledge of the paper can understand what needs to be solved and how success is measured.
-
-Do NOT describe the paper's method or solution here — only the problem itself. Think about if a future scientist agent try to solve this problem from scratch without knowing what approach the paper took. If you leak the solution, you compromise the benchmark.
-
 ## Research Question
 
-<!-- What problem or challenge does this paper tackle? What gap in existing work does it address? -->
+Can an echocardiography image-text model learn visual representations that support clinically grounded interpretation across multimodal tasks? The benchmark centers on image-caption alignment, disease finding discrimination, and view-aware transfer for echo images with structured clinical measurements and standardized views.
 
 ## Why It Matters
 
-<!-- Why is this problem important? What would a good solution enable? Make it short -->
+Echocardiography interpretation combines image view recognition, quantitative measurements, and textual diagnostic findings. A useful model should align images with clinically meaningful statements, distinguish abnormal from normal or negated findings, and provide transferable features for downstream echo workflows.
 
 ## Success Criteria
 
-<!-- What would a successful solution look like? What properties should it have? This is about the goal, not the paper's specific approach. Make it short -->
+A successful system retrieves the matching clinical caption for an echo image, assigns disease findings better than generic image-text alignment, and maintains explicit separation between positive findings and normal/negated statements. Evaluation must include both benefit metrics, such as AUC and retrieval recall, and a constraint metric for negation behavior.

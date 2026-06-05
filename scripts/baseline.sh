@@ -17,4 +17,11 @@ set -e
 
 cd /home/user
 
-# TODO: run baseline
+if [ ! -f data/echo_toy/train.jsonl ]; then
+  python -m data.make_echo_toy --output data/echo_toy --seed 7 --size 112
+fi
+python baseline/random_clip.py \
+  --data-root data/echo_toy \
+  --output-dir checkpoints/clip_only \
+  --epochs "${EPOCHS:-20}" \
+  --batch-size "${BATCH_SIZE:-32}"

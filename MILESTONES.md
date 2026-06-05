@@ -26,3 +26,8 @@
 ### [2026-06-05 04:24] - core_claim
 - Current package validates at `core_claim`.
 - Prepared a CPU managed job to regenerate the CLIP-only baseline, view-only ablation, negation-only ablation, and full EchoVLM objective from scratch before deciding whether `core_claim_plus` is supported.
+
+### [2026-06-05 04:27] - core_claim
+- Final verifier reran `python validate.py --compare`; all scoring, structure, import-separation, and train/test checks passed.
+- Kept the milestone at `core_claim` because the current scored artifacts contain the CLIP-only baseline and full method, but no validated ablation artifacts for `core_claim_plus`.
+- Confirmed the main limitation is the intentionally scaled substitute data; EchoGround-MIMIC, private downstream data, and original initialization weights are unavailable.

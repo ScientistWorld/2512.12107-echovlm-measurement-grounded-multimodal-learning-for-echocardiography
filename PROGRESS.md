@@ -48,8 +48,8 @@ The current run restores `core_claim`: the full EchoVLM objective substantially 
 ## Remaining
 
 - No required work remains for `core_claim`; the environment is usable as a research gym.
-- A managed CPU job is queued to complete and validate the Table 6-style objective ablations (`clip_only`, `echovlm_view`, `echovlm_negation`, `echovlm_full`) before deciding whether the workspace supports `core_claim_plus`.
-- Higher milestones after that would require adding a better non-private substitute dataset or obtaining access to EchoGround-MIMIC/private TTE view data.
+- The optional Table 6-style objective ablation runner is present, but the current validated scored artifacts include only `clip_only` and `echovlm_full`; therefore `core_claim_plus` is not claimed.
+- Higher milestones would require validating additional ablations, adding a better non-private substitute dataset, or obtaining access to EchoGround-MIMIC/private TTE view data.
 
 ## Issues
 
@@ -61,6 +61,7 @@ The current run restores `core_claim`: the full EchoVLM objective substantially 
 - Fixed during continuation audit: restored a scored negation constraint by adding artifact-derived `negation_cosine` to `scores.json` and `reference.json` metric definitions without inventing a paper reference value. Also removed the evaluator's Torch dependency so `scripts/evaluate.sh` works standalone in a plain Python environment.
 - Continuation audit on 2026-06-05 found the scaled backbone was too far from the paper architecture. The method now uses compact Transformer encoders and the view loss now averages over the full batch as in Algorithm 1. Job `bac0f013-33c` verified that this implementation reaches `core_claim`.
 - Job `bac0f013-33c` emitted only harmless PyTorch Transformer nested-tensor warnings; it exited successfully and validation passed.
+- Final verifier on 2026-06-05 reran `python validate.py --compare`; all checks passed. No code changes were needed.
 - EchoGround-MIMIC is described as a future release in the paper and is not present here.
 - The paper's view-classification experiment uses private multi-site TTE data.
 - The paper initializes from internal echo-pretrained vision weights and EchoCLIP text weights; those exact weights are not available here.

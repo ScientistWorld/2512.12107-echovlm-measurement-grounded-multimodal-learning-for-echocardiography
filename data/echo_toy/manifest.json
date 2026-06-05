@@ -1,0 +1,18 @@
+{
+  "description": "Deterministic synthetic/derived echo-style dataset built from paper/images frames.",
+  "image_size": 224,
+  "name": "echo_toy",
+  "num_records": 93,
+  "schema": {
+    "caption": "Measurement-grounded positive caption.",
+    "disease_labels": "Threshold labels derived from synthetic measurements assigned by source filename order.",
+    "negated_caption": "Caption with complementary disease-label assertions."
+  },
+  "seed": 7,
+  "source": "paper/images",
+  "splits": {
+    "test": 14,
+    "train": 65,
+    "val": 14
+  }
+}

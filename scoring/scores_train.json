@@ -1,0 +1,45 @@
+{
+  "experiments": {
+    "toy_disease_zero_shot": {
+      "results": {
+        "clip_only": {
+          "auc": 8.333333333333332,
+          "balanced_accuracy": 50.0,
+          "caption_retrieval_mrr": 39.76190476190476,
+          "hard_negative_accuracy": 100.0,
+          "negation_cosine": 0.4247348580317329,
+          "positive_vs_negated_margin": 0.10999656141043486,
+          "precision": 42.857142857142854,
+          "recall": 100.0
+        },
+        "echovlm_full": {
+          "auc": 41.66666666666667,
+          "balanced_accuracy": 50.0,
+          "caption_retrieval_mrr": 37.04081632653061,
+          "hard_negative_accuracy": 100.0,
+          "negation_cosine": -0.7661299042818775,
+          "positive_vs_negated_margin": 0.2631157085448299,
+          "precision": 42.857142857142854,
+          "recall": 100.0
+        }
+      },
+      "slice": "train",
+      "split": {
+        "ids": [
+          "echo_toy_0004",
+          "echo_toy_0006",
+          "echo_toy_0007",
+          "echo_toy_0009",
+          "echo_toy_0041",
+          "echo_toy_0046",
+          "echo_toy_0068"
+        ],
+        "input_paths": {
+          "clip_only": "checkpoints/clip_only/test_embeddings.jsonl",
+          "echovlm_full": "checkpoints/echovlm_full/test_embeddings.jsonl"
+        },
+        "style": "fixed_id_half_split"
+      }
+    }
+  }
+}

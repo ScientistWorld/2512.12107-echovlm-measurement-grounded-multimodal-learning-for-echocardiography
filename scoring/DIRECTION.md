@@ -6,11 +6,11 @@ The benchmark studies measurement-grounded multimodal representation learning fo
 
 ## Core Contribution
 
-The paper's contribution is not just generic image-text pretraining; it is echo-specific multimodal learning that uses structured view labels and negated clinical statements as training signals. Future improvements should stay within this problem family: better clinical image-text alignment for echocardiography under measurement-grounded and negation-sensitive evaluation.
+The target research direction is echo-specific multimodal learning that improves clinically grounded image-language alignment while handling normal or absent findings correctly. Future improvements should stay within this problem family: better clinical image-text representations for echocardiography under measurement-grounded and negation-sensitive evaluation.
 
 ## Approach Scope
 
-Agents may change encoders, text processing, augmentation, loss weighting, batching, or optimization. They may add related clinical contrastive signals if those signals are derived from the fixed training data. Improvements should still produce image, positive-caption, and negated-caption embeddings for evaluation.
+Agents may change model internals, text processing, augmentation, batching, or optimization. They may add related clinical supervision if it is derived from the fixed training data. Improvements should still produce image, positive-caption, and negated-caption embeddings for evaluation.
 
 ## Out of Bounds
 

@@ -1,1 +1,1 @@
-"""Evaluation utilities for the EchoVLM gym."""
+"""Evaluation utilities for the echo image-text gym."""

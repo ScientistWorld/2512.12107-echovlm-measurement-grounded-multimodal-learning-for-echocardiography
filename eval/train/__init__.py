@@ -1,1 +1,1 @@
-"""Visible train-slice evaluator for the EchoVLM toy benchmark."""
+"""Visible train-slice evaluator for the echo image-text benchmark."""

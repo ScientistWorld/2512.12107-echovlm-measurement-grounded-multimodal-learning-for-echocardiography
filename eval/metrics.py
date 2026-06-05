@@ -1,4 +1,4 @@
-"""Artifact-only evaluator for EchoVLM-style outputs."""
+"""Artifact-only evaluator for echo image-text embedding outputs."""
 
 from __future__ import annotations
 
@@ -91,11 +91,9 @@ def main() -> None:
         results[name] = metrics
 
     # The toy retrieval pool is useful for debugging, but it is not on the
-    # same scale as the paper's full-test retrieval benchmark. The negation
-    # cosine is retained as a scored constraint because EchoVLM's second
-    # paper-specific objective explicitly separates original and negated
-    # captions; reference.json defines the metric but intentionally has no
-    # paper value for it because no table reports this direct diagnostic.
+    # same scale as the original full-test retrieval benchmark. The negation
+    # cosine is retained as a scored constraint because clinical systems should
+    # separate affirmative findings from paired normal/negated statements.
     scores = {
         "experiments": {
             "toy_disease_zero_shot": {

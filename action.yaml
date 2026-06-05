@@ -1,5 +1,5 @@
-action: submit
+action: done
 gpus: 0
 test: false
 milestone: core_claim
-notes: "Regenerate CLIP-only, view-only, negation-only, and full EchoVLM artifacts, then evaluate and validate to extend the reproduction toward core_claim_plus."
+notes: "Final verification passed; workspace is ready as a core_claim scaled substitute-data gym."

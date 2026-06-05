@@ -7,7 +7,7 @@
 - `method/echovlm.py` implements the paper's actual loss structure: symmetric CLIP loss, view-informed image contrast, and negation-aware text separation.
 - Continuation audit fixed a fidelity gap by replacing the earlier compact CNN/pooled-text model with a compact ViT-style image encoder and Transformer text encoder, preserving the paper's architecture family at reduced scale.
 - `scripts/reproduce.sh` runs a CLIP-only baseline, the full EchoVLM objective, and artifact-only evaluation.
-- `scripts/ablations.sh` runs the single-objective Table 6 ablations (`CLIP + view` and `CLIP + negation`) using the same method implementation and artifact-only evaluator.
+- `scripts/ablations.sh` can run optional single-component objective ablations using the same method implementation and artifact-only evaluator.
 - Managed job `bac0f013-33c` regenerated the current scores with the compact Transformer implementation and passed `python validate.py --compare`.
 
 ## Results
@@ -48,8 +48,7 @@ The current run restores `core_claim`: the full EchoVLM objective substantially 
 ## Remaining
 
 - No required work remains for `core_claim`; the environment is usable as a research gym.
-- A queued `core_claim_plus` extension will regenerate scores for the two single-objective ablations on the same scaled substitute.
-- Higher milestones beyond `core_claim_plus` would require a better non-private substitute dataset or access to EchoGround-MIMIC/private TTE view data.
+- Higher milestones would require completing and validating additional ablations, adding a better non-private substitute dataset, or obtaining access to EchoGround-MIMIC/private TTE view data.
 
 ## Issues
 

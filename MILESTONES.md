@@ -17,3 +17,8 @@
 ### [2026-06-05 04:35] - core_claim
 - Added first-class runners and reference entries for the Table 6 single-objective ablations.
 - Prepared a managed job to regenerate `clip_only`, `echovlm_view`, `echovlm_negation`, and `echovlm_full` artifacts from scratch before claiming `core_claim_plus`.
+
+### [2026-06-05 05:05] - core_claim
+- Final verification passed with `python validate.py --compare`.
+- Cleaned method-specific wording from method-agnostic evaluation and scoring documents.
+- Kept milestone at `core_claim` because the validated `scores.json` contains the baseline and full method only; optional ablation runners are present but their results are not claimed.

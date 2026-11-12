@@ -1,27 +1,11 @@
 #!/bin/bash
-# Evaluate the held-out test slice from precomputed method artifacts.
-
+# Hidden-test evaluation: scores every method directory under checkpoints/
+# (each must contain export/) on the 150 held-out patients in eval/test/.
+# Writes scoring/scores_test.json. Runs with no arguments.
 set -e
-
-cd /home/user
-
+cd "$(dirname "$0")/.."
 mkdir -p scoring
-
-inputs=("$@")
-if [ "${#inputs[@]}" -eq 0 ]; then
-  mapfile -t inputs < <(
-    python - <<'PY'
-from pathlib import Path
-
-for path in sorted(Path("checkpoints").glob("*/test_embeddings.jsonl")):
-    print(f"{path.parent.name}={path}")
-PY
-  )
+if [ ! -f eval/test/test_meta.json ]; then
+  python eval/test/prepare_test.py
 fi
-
-if [ "${#inputs[@]}" -eq 0 ]; then
-  echo "No embedding artifacts found. Run scripts/method.sh or scripts/baseline.sh first." >&2
-  exit 1
-fi
-
-python eval/test/evaluate.py --inputs "${inputs[@]}" --output scoring/scores_test.json
+python eval/test/evaluate.py "$@"

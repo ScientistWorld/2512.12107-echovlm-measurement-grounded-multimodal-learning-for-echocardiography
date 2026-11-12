@@ -234,3 +234,11 @@ core.[0-9]*
 
 # Auto-added by swarm
 data/downloads/
+
+# Hardened gym (iteration 11): raw CAMUS downloads for the hidden test, run
+# outputs of the hardening audit. The preprocessed hidden test set is small and
+# committed so the hidden test runs offline.
+eval/test/downloads/
+redteam/hardening/runs/
+!eval/test/test_images.npz
+.claude.json

@@ -1,146 +1,253 @@
-"""Train the reproduced EchoVLM objective on the lightweight echo dataset."""
+"""Pretrain EchoVLM on the CAMUS measurement-grounded image-caption pairs and export it.
+
+Paper settings (Sec. 3.2, App. Table 15): AdamW (0.9, 0.999), lr 1e-4,
+weight decay 0.005 (Table 15; the main text says 0.05), global batch 512,
+cosine decay with 200 linear warm-up steps, 20 epochs, 112x112 images,
+lambda_view = 0.5, lambda_neg = 0.1. Setting a lambda to 0 gives the
+paper's Table 6 ablations (0/0 = L_CLIP only).
+
+Outputs (in --output-dir):
+    export/                 TorchScript encoders + tokenizer (the evaluator's input)
+    run_config.json, history.json
+
+Usage:
+    python -m method.train --output-dir checkpoints/echovlm_full
+"""
 
 from __future__ import annotations
 
 import argparse
 import json
 import math
+import random
+import shutil
+import time
 from pathlib import Path
 
+import numpy as np
 import torch
-from torch.utils.data import DataLoader
+from torch import nn
+from torch.nn import functional as F
 
-from data.make_echo_toy import main as make_data_main
-from method.dataset import EchoToyDataset, load_jsonl
-from method.echovlm import EchoVLM, build_vocab, echovlm_loss
+from method.losses import echovlm_loss
+from method.model import EchoVLM, build_pretrained_echovlm
 
-
-def ensure_data(data_root: Path) -> None:
-    if not (data_root / "train.jsonl").exists():
-        import sys
-
-        old_argv = sys.argv
-        sys.argv = ["make_echo_toy", "--output", str(data_root)]
-        try:
-            make_data_main()
-        finally:
-            sys.argv = old_argv
+VIEW_IDS = {"A2C": 0, "A4C": 1}
 
 
-def collate(batch: list[dict]) -> dict:
-    return {
-        "id": [b["id"] for b in batch],
-        "image": torch.stack([b["image"] for b in batch]),
-        "text": torch.stack([b["text"] for b in batch]),
-        "neg_text": torch.stack([b["neg_text"] for b in batch]),
-        "view": torch.stack([b["view"] for b in batch]),
-        "disease": [b["disease"] for b in batch],
-        "label": torch.stack([b["label"] for b in batch]),
-        "caption": [b["caption"] for b in batch],
-    }
+# ----------------------------------------------------------------------------- data
 
 
-def cosine_lr(step: int, total_steps: int, warmup_steps: int, base_lr: float) -> float:
-    if warmup_steps and step < warmup_steps:
-        return base_lr * float(step + 1) / float(warmup_steps)
-    progress = (step - warmup_steps) / max(1, total_steps - warmup_steps)
-    return base_lr * 0.5 * (1.0 + math.cos(math.pi * progress))
+def load_split(data_dir: Path, split: str) -> tuple[np.ndarray, list[dict]]:
+    images = np.load(data_dir / f"{split}_images.npy")
+    records = [json.loads(line) for line in (data_dir / f"{split}.jsonl").read_text().splitlines() if line.strip()]
+    assert len(images) == len(records), (images.shape, len(records))
+    return images, records
 
 
-def save_embeddings(model: EchoVLM, loader: DataLoader, device: torch.device, out_path: Path) -> None:
-    model.eval()
-    rows = []
+def make_tokenizer(path: Path, max_length: int, pad_id: int):
+    from tokenizers import Tokenizer
+
+    tok = Tokenizer.from_file(str(path))
+    tok.enable_truncation(max_length=max_length)
+    tok.enable_padding(pad_id=pad_id, length=max_length)
+    return tok
+
+
+def tokenize(tok, texts: list[str]) -> torch.Tensor:
+    return torch.tensor([e.ids for e in tok.encode_batch(texts)], dtype=torch.long)
+
+
+# ----------------------------------------------------------------------------- export
+
+
+class ImageExport(nn.Module):
+    """float[B,3,112,112] in [0,1] -> L2-normalised float[B,512] (only the vision tower)."""
+
+    def __init__(self, model: EchoVLM):
+        super().__init__()
+        self.visual = model.visual
+        self.register_buffer("pixel_mean", model.pixel_mean.clone())
+        self.register_buffer("pixel_std", model.pixel_std.clone())
+
+    def forward(self, images01: torch.Tensor) -> torch.Tensor:
+        return F.normalize(self.visual((images01 - self.pixel_mean) / self.pixel_std), dim=-1)
+
+
+class TextExport(nn.Module):
+    """(input_ids, attention_mask) -> L2-normalised float[B,512] (only the text tower; causal, EOT-pooled)."""
+
+    def __init__(self, model: EchoVLM):
+        super().__init__()
+        self.text = model.text
+
+    def forward(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+        return F.normalize(self.text(input_ids), dim=-1)
+
+
+def export_model(model: EchoVLM, out_dir: Path, tokenizer_json: Path, max_length: int, pad_id: int, tok) -> None:
+    """Trace the encoders on CPU in float32 and write the evaluator interface."""
+    export = out_dir / "export"
+    export.mkdir(parents=True, exist_ok=True)
+    model = model.to("cpu", torch.float32).eval()
+    model.set_grad_checkpointing(False)
+    gen = torch.Generator().manual_seed(0)
+    example_img = torch.rand(2, 3, 112, 112, generator=gen)
+    ids = tokenize(tok, ["Apical four-chamber view.", "Normal LV size, no LA enlargement, LVEF 60%."])
+    mask = (ids != pad_id).long()
     with torch.no_grad():
-        for batch in loader:
-            image = batch["image"].to(device)
-            text = batch["text"].to(device)
-            neg_text = batch["neg_text"].to(device)
-            image_z, text_z, neg_z = model(image, text, neg_text)
-            for i, sample_id in enumerate(batch["id"]):
-                rows.append(
-                    {
-                        "id": sample_id,
-                        "disease": batch["disease"][i],
-                        "label": int(batch["label"][i].item()),
-                        "caption": batch["caption"][i],
-                        "image_embedding": image_z[i].cpu().tolist(),
-                        "text_embedding": text_z[i].cpu().tolist(),
-                        "neg_text_embedding": neg_z[i].cpu().tolist(),
-                    }
-                )
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with out_path.open("w", encoding="utf-8") as f:
-        for row in rows:
-            f.write(json.dumps(row) + "\n")
+        img_ts = torch.jit.trace(ImageExport(model), example_img, check_trace=False)
+        txt_ts = torch.jit.trace(TextExport(model), (ids, mask), check_trace=False)
+        # Sanity: traced == eager for a different batch size.
+        probe_img = torch.rand(3, 3, 112, 112, generator=gen)
+        probe_ids = tokenize(tok, ["Severely dilated left atrium.", "A2C view, end-systolic frame.", "x"])
+        probe_mask = (probe_ids != pad_id).long()
+        assert torch.allclose(img_ts(probe_img), model.encode_image(probe_img), atol=1e-4)
+        assert torch.allclose(txt_ts(probe_ids, probe_mask), model.encode_text(probe_ids), atol=1e-4)
+        assert torch.allclose(img_ts(probe_img[:1]), model.encode_image(probe_img[:1]), atol=1e-4)
+    img_ts.save(str(export / "image_encoder.pt"))
+    txt_ts.save(str(export / "text_encoder.pt"))
+    shutil.copyfile(tokenizer_json, export / "tokenizer.json")
+    (export / "export.json").write_text(
+        json.dumps({"max_length": max_length, "pad_id": pad_id, "image_size": 112, "embed_dim": 512}, indent=2)
+    )
+
+
+# ----------------------------------------------------------------------------- training
+
+
+def lr_at(step: int, total: int, warmup: int, base: float) -> float:
+    if step < warmup:
+        return base * (step + 1) / warmup
+    progress = (step - warmup) / max(1, total - warmup)
+    return base * 0.5 * (1.0 + math.cos(math.pi * min(1.0, progress)))
+
+
+def param_groups(model: nn.Module, weight_decay: float):
+    decay, no_decay = [], []
+    for name, p in model.named_parameters():
+        if not p.requires_grad:
+            continue
+        if p.ndim < 2 or "embedding" in name or "logit_scale" in name or name.endswith(".bias"):
+            no_decay.append(p)
+        else:
+            decay.append(p)
+    return [{"params": decay, "weight_decay": weight_decay}, {"params": no_decay, "weight_decay": 0.0}]
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--data-root", default="data/echo_toy")
-    parser.add_argument("--output-dir", default="checkpoints/echovlm_full")
-    parser.add_argument("--epochs", type=int, default=20)
-    parser.add_argument("--batch-size", type=int, default=32)
-    parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--weight-decay", type=float, default=0.005)
-    parser.add_argument("--warmup-steps", type=int, default=20)
-    parser.add_argument("--lambda-view", type=float, default=0.5)
-    parser.add_argument("--lambda-neg", type=float, default=0.1)
-    parser.add_argument("--embed-dim", type=int, default=128)
-    parser.add_argument("--seed", type=int, default=7)
-    args = parser.parse_args()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--data-dir", default="data/downloads/camus_vlm")
+    ap.add_argument("--weights-dir", default="data/downloads/models")
+    ap.add_argument("--output-dir", default="checkpoints/echovlm_full")
+    ap.add_argument("--train-splits", nargs="+", default=["train"])
+    ap.add_argument("--epochs", type=int, default=20)
+    ap.add_argument("--batch-size", type=int, default=512)
+    ap.add_argument("--lr", type=float, default=1e-4)
+    ap.add_argument("--weight-decay", type=float, default=0.005)
+    ap.add_argument("--warmup-steps", type=int, default=200)
+    ap.add_argument("--lambda-view", type=float, default=0.5)
+    ap.add_argument("--lambda-neg", type=float, default=0.1)
+    ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--max-length", type=int, default=77)
+    ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    ap.add_argument("--limit-images", type=int, default=0, help="debug: subsample the training set")
+    ap.add_argument("--no-grad-checkpointing", action="store_true")
+    args = ap.parse_args()
 
+    random.seed(args.seed)
+    np.random.seed(args.seed)
     torch.manual_seed(args.seed)
-    data_root = Path(args.data_root)
-    ensure_data(data_root)
-    train_rows = load_jsonl(data_root / "train.jsonl")
-    vocab = build_vocab([r["caption"] for r in train_rows] + [r["negated_caption"] for r in train_rows])
+    device = torch.device(args.device)
+    data_dir, weights_dir, out_dir = Path(args.data_dir), Path(args.weights_dir), Path(args.output_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    tokenizer_json = weights_dir / "echo-clip" / "tokenizer.json"
+    pad_id = 0
+    tok = make_tokenizer(tokenizer_json, args.max_length, pad_id)
 
-    train_ds = EchoToyDataset(data_root, "train", vocab)
-    test_ds = EchoToyDataset(data_root, "test", vocab)
-    train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, collate_fn=collate, drop_last=True)
-    test_loader = DataLoader(test_ds, batch_size=args.batch_size, shuffle=False, collate_fn=collate)
+    images, records = [], []
+    for split in args.train_splits:
+        im, rec = load_split(data_dir, split)
+        images.append(im)
+        records.extend(rec)
+    images = np.concatenate(images)
+    if args.limit_images:
+        keep = np.random.RandomState(args.seed).permutation(len(records))[: args.limit_images]
+        images, records = images[keep], [records[i] for i in keep]
+    n = len(records)
+    caption_ids = tokenize(tok, [r["caption"] for r in records])
+    negated_ids = tokenize(tok, [r["negated_caption"] for r in records])
+    cap_len = (caption_ids != pad_id).sum(dim=1).float()
+    neg_len = (negated_ids != pad_id).sum(dim=1).float()
+    print(
+        json.dumps(
+            {
+                "caption_tokens_mean": round(float(cap_len.mean()), 1),
+                "caption_tokens_max": int(cap_len.max()),
+                "captions_truncated": int((cap_len >= args.max_length).sum()),
+                "negated_tokens_max": int(neg_len.max()),
+            }
+        ),
+        flush=True,
+    )
+    views =torch.tensor([VIEW_IDS[r["view"]] for r in records], dtype=torch.long)
+    images_t = torch.from_numpy(images)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = EchoVLM(vocab_size=len(vocab), embed_dim=args.embed_dim).to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay, betas=(0.9, 0.999))
-    total_steps = max(1, args.epochs * len(train_loader))
-    global_step = 0
-    history = []
+    model = build_pretrained_echovlm(weights_dir).to(device)
+    model.set_grad_checkpointing(not args.no_grad_checkpointing and device.type == "cuda")
+    opt = torch.optim.AdamW(param_groups(model, args.weight_decay), lr=args.lr, betas=(0.9, 0.999), eps=1e-6)
+    steps_per_epoch = n // args.batch_size if n >= args.batch_size else 1
+    total_steps = max(1, args.epochs * steps_per_epoch)
+    batch = min(args.batch_size, n)
+    use_amp = device.type == "cuda"
+    images_dev = images_t.to(device)
+    caption_dev, negated_dev, views_dev = caption_ids.to(device), negated_ids.to(device), views.to(device)
+    gen = torch.Generator().manual_seed(args.seed)
+
+    history, step, t0 = [], 0, time.time()
+    print(json.dumps({"train_images": n, "steps_per_epoch": steps_per_epoch, "total_steps": total_steps}), flush=True)
     for epoch in range(args.epochs):
         model.train()
-        totals = {"loss": 0.0, "clip": 0.0, "view": 0.0, "neg": 0.0}
-        for batch in train_loader:
-            lr = cosine_lr(global_step, total_steps, args.warmup_steps, args.lr)
+        perm = torch.randperm(n, generator=gen)
+        sums = {"loss": 0.0, "clip": 0.0, "view": 0.0, "neg": 0.0}
+        for b in range(steps_per_epoch):
+            idx = perm[b * batch : (b + 1) * batch].to(device)
             for group in opt.param_groups:
-                group["lr"] = lr
-            image_z, text_z, neg_z = model(batch["image"].to(device), batch["text"].to(device), batch["neg_text"].to(device))
-            losses = echovlm_loss(
-                image_z,
-                text_z,
-                neg_z,
-                batch["view"].to(device),
+                group["lr"] = lr_at(step, total_steps, args.warmup_steps, args.lr)
+            x = images_dev[idx].float().div_(255.0).unsqueeze(1).expand(-1, 3, -1, -1)
+            with torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=use_amp):
+                zi = model.encode_image(x)
+                zt = model.encode_text(caption_dev[idx])
+                zn = model.encode_text(negated_dev[idx]) if args.lambda_neg > 0 else None
+            parts = echovlm_loss(
+                zi.float(),
+                zt.float(),
+                zn.float() if zn is not None else None,
+                views_dev[idx],
                 model.logit_scale,
                 args.lambda_view,
                 args.lambda_neg,
             )
             opt.zero_grad(set_to_none=True)
-            losses.total.backward()
+            parts.total.backward()
             opt.step()
-            totals["loss"] += float(losses.total.detach().cpu())
-            totals["clip"] += float(losses.clip.detach().cpu())
-            totals["view"] += float(losses.view.detach().cpu())
-            totals["neg"] += float(losses.negation.detach().cpu())
-            global_step += 1
-        denom = max(1, len(train_loader))
-        entry = {"epoch": epoch + 1, **{k: v / denom for k, v in totals.items()}}
-        print(json.dumps(entry), flush=True)
+            with torch.no_grad():
+                model.logit_scale.clamp_(0, math.log(100))
+            step += 1
+            sums["loss"] += float(parts.total.detach())
+            sums["clip"] += float(parts.clip.detach())
+            sums["view"] += float(parts.view.detach())
+            sums["neg"] += float(parts.negation.detach())
+        entry = {"epoch": epoch + 1, "step": step, "seconds": round(time.time() - t0, 1)}
+        entry.update({k: round(v / max(1, steps_per_epoch), 5) for k, v in sums.items()})
+        entry["logit_scale"] = round(float(model.logit_scale.exp()), 3)
         history.append(entry)
+        print(json.dumps(entry), flush=True)
 
-    out_dir = Path(args.output_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    torch.save({"model": model.state_dict(), "vocab": vocab, "args": vars(args), "history": history}, out_dir / "model.pt")
-    save_embeddings(model, test_loader, device, out_dir / "test_embeddings.jsonl")
-    (out_dir / "run_config.json").write_text(json.dumps(vars(args), indent=2, sort_keys=True), encoding="utf-8")
+    export_model(model, out_dir, tokenizer_json, args.max_length, pad_id, tok)
+    (out_dir / "run_config.json").write_text(json.dumps(vars(args), indent=2, sort_keys=True))
+    (out_dir / "history.json").write_text(json.dumps(history, indent=2))
+    print(json.dumps({"exported": str(out_dir / "export"), "seconds": round(time.time() - t0, 1)}), flush=True)
 
 
 if __name__ == "__main__":

@@ -1,2 +1,8 @@
-action: done
-notes: "Audit committed in REDTEAM.md and redteam/: 23 runs, AUC seed spread 0–75, exposed answers and scoring shortcuts; original task files restored."
+# Once you set action to 'submit' or 'done', STOP immediately.
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
+test: false
+milestone: core_claim
+notes: ""

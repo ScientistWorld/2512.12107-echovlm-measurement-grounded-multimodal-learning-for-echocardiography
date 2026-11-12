@@ -1,0 +1,36 @@
+{
+  "case_count": 23,
+  "successful_hidden_tests": [
+    "reference_cached",
+    "reference_seed7",
+    "reference_seed17",
+    "reference_seed27",
+    "stronger_training100",
+    "stronger_training200",
+    "weaker_untrained",
+    "weaker_clip_only",
+    "shortcut_visible_answers",
+    "shortcut_generator_answers",
+    "shortcut_text_only",
+    "shortcut_bruteforce_answers",
+    "shortcut_forged_labels",
+    "shortcut_norm_scaling",
+    "shortcut_constant_antipodes",
+    "shortcut_constant_scaled_failure",
+    "shortcut_empty_vectors",
+    "shortcut_forged_scores",
+    "shortcut_baseline_degradation",
+    "shortcut_row_selection",
+    "shortcut_missing_artifact"
+  ],
+  "failed_hidden_tests": [
+    "shortcut_empty_artifact",
+    "shortcut_null_vectors"
+  ],
+  "omitted_candidates": [
+    "shortcut_missing_artifact"
+  ],
+  "all_evaluator_hashes_unchanged": true,
+  "all_successful_method_results_have_all_four_scored_metrics": true,
+  "all_present_discovered_input_paths_are_in_results": true
+}

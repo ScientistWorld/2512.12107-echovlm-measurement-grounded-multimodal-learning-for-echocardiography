@@ -39,20 +39,25 @@ def plan(smoke: bool) -> list[tuple[str, list[str]]]:
         ]
     runs = []
     # Reference reproduction (paper Table 6 rows, paper settings: 20 epochs, batch 512).
-    for s in (0, 1, 2):
-        runs.append((f"echovlm_full_s{s}", M + ["--seed", str(s)]))
-        runs.append((f"clip_only_s{s}", B + ["--seed", str(s)]))
+    runs.append(("echovlm_full_s0", M + ["--seed", "0"]))
+    runs.append(("clip_only_s0", B + ["--seed", "0"]))
     runs.append(("echovlm_view_s0", M + ["--lambda-view", "0.5", "--lambda-neg", "0", "--seed", "0"]))
     runs.append(("echovlm_negation_s0", M + ["--lambda-view", "0", "--lambda-neg", "0.1", "--seed", "0"]))
+    # Seed replicates of the reference and the baseline.
+    for s in (1, 2):
+        runs.append((f"echovlm_full_s{s}", M + ["--seed", str(s)]))
+        runs.append((f"clip_only_s{s}", B + ["--seed", str(s)]))
     # Weaker controls.
     runs.append(("untrained", M + ["--epochs", "0"]))
     runs.append(("echovlm_full_ep5_s0", M + ["--epochs", "5", "--seed", "0"]))
     # Candidate improvements (same objective, better optimisation / more data).
-    for s in (0, 1, 2):
-        runs.append((f"echovlm_full_ep50_s{s}", M + ["--epochs", "50", "--seed", str(s)]))
-        runs.append((f"clip_only_ep50_s{s}", B + ["--epochs", "50", "--seed", str(s)]))
+    runs.append(("echovlm_full_ep50_s0", M + ["--epochs", "50", "--seed", "0"]))
+    runs.append(("clip_only_ep50_s0", B + ["--epochs", "50", "--seed", "0"]))
     runs.append(("echovlm_full_bs128_s0", M + ["--batch-size", "128", "--seed", "0"]))
     runs.append(("echovlm_full_trainval_s0", M + ["--train-splits", "train", "val", "--seed", "0"]))
+    for s in (1, 2):
+        runs.append((f"echovlm_full_ep50_s{s}", M + ["--epochs", "50", "--seed", str(s)]))
+        runs.append((f"clip_only_ep50_s{s}", B + ["--epochs", "50", "--seed", str(s)]))
     return runs
 
 

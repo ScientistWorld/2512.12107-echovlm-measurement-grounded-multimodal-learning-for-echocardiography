@@ -1,4 +1,2 @@
-action: submit
-gpus: 0
-test: false
-notes: "Bundled gym audit: three seeds, training-strength controls, and fifteen artifact shortcuts; saves hidden-test evidence under redteam."
+action: done
+notes: "Audit committed in REDTEAM.md and redteam/: 23 runs, AUC seed spread 0–75, exposed answers and scoring shortcuts; original task files restored."

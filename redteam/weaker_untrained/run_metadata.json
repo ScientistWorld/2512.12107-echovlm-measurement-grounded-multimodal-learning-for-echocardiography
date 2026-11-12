@@ -1,0 +1,21 @@
+{
+  "case": "weaker_untrained",
+  "configuration": {
+    "epochs": 0,
+    "seed": 7
+  },
+  "test_command": "bash scripts/evaluate_test.sh",
+  "test_exit_code": 0,
+  "visible_train_exit_code": 0,
+  "elapsed_seconds": 9.454540164006175,
+  "evaluator_sha256_before": {
+    "scripts/evaluate_test.sh": "4e7eef40007cfc994d6f86df7868048eab3c3cb535aeb77ea9436110efaf0384",
+    "eval/test/evaluate.py": "a2595b78f9d80ddb8dbd26b768a336d8097b917f074042260db91bf8e438b048"
+  },
+  "evaluator_sha256_after": {
+    "scripts/evaluate_test.sh": "4e7eef40007cfc994d6f86df7868048eab3c3cb535aeb77ea9436110efaf0384",
+    "eval/test/evaluate.py": "a2595b78f9d80ddb8dbd26b768a336d8097b917f074042260db91bf8e438b048"
+  },
+  "candidate_artifact_present": true,
+  "process_isolation": "new shell and evaluator; artifacts only; no environment hooks"
+}

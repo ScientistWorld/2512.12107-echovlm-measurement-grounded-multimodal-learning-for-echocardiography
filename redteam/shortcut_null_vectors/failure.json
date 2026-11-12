@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "evaluator_output": "Traceback (most recent call last):\n  File \"/home/user/eval/test/evaluate.py\", line 153, in <module>\n    main()\n  File \"/home/user/eval/test/evaluate.py\", line 130, in main\n    results[name] = evaluate_embeddings(path)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/eval/test/evaluate.py\", line 98, in evaluate_embeddings\n    pos_sim = [dot(image_vec, text_vec) for image_vec, text_vec in zip(image_z, text_z)]\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/eval/test/evaluate.py\", line 98, in <listcomp>\n    pos_sim = [dot(image_vec, text_vec) for image_vec, text_vec in zip(image_z, text_z)]\n               ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/eval/test/evaluate.py\", line 74, in dot\n    return sum(x * y for x, y in zip(a, b))\n                                 ^^^^^^^^^\nTypeError: 'NoneType' object is not iterable\n"
+}

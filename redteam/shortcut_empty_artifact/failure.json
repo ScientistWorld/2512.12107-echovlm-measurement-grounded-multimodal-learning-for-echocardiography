@@ -1,0 +1,4 @@
+{
+  "exit_code": 1,
+  "evaluator_output": "Traceback (most recent call last):\n  File \"/home/user/eval/test/evaluate.py\", line 153, in <module>\n    main()\n  File \"/home/user/eval/test/evaluate.py\", line 130, in main\n    results[name] = evaluate_embeddings(path)\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/eval/test/evaluate.py\", line 92, in evaluate_embeddings\n    raise ValueError(f\"{path} has no rows for the {SLICE} slice\")\nValueError: checkpoints/shortcut_empty_artifact/test_embeddings.jsonl has no rows for the test slice\n"
+}

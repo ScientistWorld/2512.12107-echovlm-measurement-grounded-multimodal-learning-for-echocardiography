@@ -1,0 +1,525 @@
+{
+  "normalization": {
+    "cohort": [
+      "reference",
+      "original_clip_only",
+      "reference_seed17",
+      "reference_seed27",
+      "reference_seed7",
+      "shortcut_baseline_degradation",
+      "shortcut_bruteforce_answers",
+      "shortcut_constant_antipodes",
+      "shortcut_constant_scaled_failure",
+      "shortcut_empty_vectors",
+      "shortcut_forged_labels",
+      "shortcut_forged_scores",
+      "shortcut_generator_answers",
+      "shortcut_missing_artifact",
+      "shortcut_norm_scaling",
+      "shortcut_row_selection",
+      "shortcut_text_only",
+      "shortcut_visible_answers",
+      "stronger_training100",
+      "stronger_training200",
+      "weaker_clip_only",
+      "weaker_untrained"
+    ],
+    "note": "Actual future ranks depend on their cohort; metric-wise dominance does not.",
+    "population_standard_deviation": {
+      "auc": 26.28650025663364,
+      "negation_cosine": 2.1295884685862314e+17,
+      "precision": 25.145930286350755,
+      "recall": 9.78478413169679
+    }
+  },
+  "ranked": {
+    "original_clip_only": {
+      "contributions": {
+        "auc": -0.9510585188566903,
+        "negation_cosine": -1.4320841100159522e-18,
+        "precision": 0.11362247586814156,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 50.0,
+        "balanced_accuracy": 62.5,
+        "caption_retrieval_mrr": 26.802721088435373,
+        "hard_negative_accuracy": 85.71428571428571,
+        "negation_cosine": 0.4552997452202648,
+        "positive_vs_negated_margin": 0.08765355717921544,
+        "precision": 50.0,
+        "recall": 100.0
+      },
+      "score": -0.8374360429885488
+    },
+    "reference": {
+      "contributions": {
+        "auc": 0.0,
+        "negation_cosine": -0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 75.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 32.755102040816325,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -0.7646001774739544,
+        "positive_vs_negated_margin": 0.24523719310436384,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": 0.0
+    },
+    "reference_seed17": {
+      "contributions": {
+        "auc": -0.3170195062855638,
+        "negation_cosine": -2.702154413398307e-19,
+        "precision": -0.04544899034725655,
+        "recall": -0.6813299687492027
+      },
+      "metrics": {
+        "auc": 66.66666666666666,
+        "balanced_accuracy": 45.83333333333333,
+        "caption_retrieval_mrr": 45.51020408163266,
+        "hard_negative_accuracy": 71.42857142857143,
+        "negation_cosine": -0.5344211023094573,
+        "positive_vs_negated_margin": 0.04249200199116409,
+        "precision": 40.0,
+        "recall": 66.66666666666666
+      },
+      "score": -1.043798465382023
+    },
+    "reference_seed27": {
+      "contributions": {
+        "auc": -2.8531755565700707,
+        "negation_cosine": 3.9445914546078747e-20,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 0.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 39.795918367346935,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -0.7982016033740212,
+        "positive_vs_negated_margin": 0.2835441533479398,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": -2.8531755565700707
+    },
+    "reference_seed7": {
+      "contributions": {
+        "auc": 0.0,
+        "negation_cosine": -3.598282934987103e-26,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 75.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 32.755102040816325,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -0.764600146822507,
+        "positive_vs_negated_margin": 0.24523734475346007,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": -3.598282934987103e-26
+    },
+    "shortcut_baseline_degradation": {
+      "contributions": {
+        "auc": 0.0,
+        "negation_cosine": -0.0,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 75.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 32.755102040816325,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -0.7646001774739544,
+        "positive_vs_negated_margin": 0.24523719310436384,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": 0.0
+    },
+    "shortcut_bruteforce_answers": {
+      "contributions": {
+        "auc": 0.9510585188566903,
+        "negation_cosine": 2.7634426322086585e-19,
+        "precision": 0.9089798069451321,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 100.0,
+        "balanced_accuracy": 100.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 42.857142857142854,
+        "negation_cosine": -1.0,
+        "positive_vs_negated_margin": -0.2857142857142857,
+        "precision": 100.0,
+        "recall": 100.0
+      },
+      "score": 1.8600383258018225
+    },
+    "shortcut_constant_antipodes": {
+      "contributions": {
+        "auc": -0.9510585188566903,
+        "negation_cosine": 2.7634426322086585e-19,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 50.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -1.0,
+        "positive_vs_negated_margin": 2.0,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": -0.9510585188566903
+    },
+    "shortcut_constant_scaled_failure": {
+      "contributions": {
+        "auc": -0.9510585188566903,
+        "negation_cosine": 1.173935733066621,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 50.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 0.0,
+        "negation_cosine": -1e+18,
+        "positive_vs_negated_margin": 0.0,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": 0.22287721420993056
+    },
+    "shortcut_empty_vectors": {
+      "contributions": {
+        "auc": -0.9510585188566903,
+        "negation_cosine": -8.97591469845755e-19,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 50.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 0.0,
+        "negation_cosine": 0.0,
+        "positive_vs_negated_margin": 0.0,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": -0.9510585188566903
+    },
+    "shortcut_forged_labels": {
+      "contributions": {
+        "auc": 0.9510585188566903,
+        "negation_cosine": 2.7634426322086585e-19,
+        "precision": 0.9089798069451321,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 100.0,
+        "balanced_accuracy": 100.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 57.14285714285714,
+        "negation_cosine": -1.0,
+        "positive_vs_negated_margin": 0.2857142857142857,
+        "precision": 100.0,
+        "recall": 100.0
+      },
+      "score": 1.8600383258018225
+    },
+    "shortcut_forged_scores": {
+      "contributions": {
+        "auc": -0.9510585188566903,
+        "negation_cosine": 2.7634426322086585e-19,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 50.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -1.0,
+        "positive_vs_negated_margin": 2.0,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": -0.9510585188566903
+    },
+    "shortcut_generator_answers": {
+      "contributions": {
+        "auc": 0.9510585188566903,
+        "negation_cosine": 2.7634426322086585e-19,
+        "precision": 0.9089798069451321,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 100.0,
+        "balanced_accuracy": 100.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 42.857142857142854,
+        "negation_cosine": -1.0,
+        "positive_vs_negated_margin": -0.2857142857142857,
+        "precision": 100.0,
+        "recall": 100.0
+      },
+      "score": 1.8600383258018225
+    },
+    "shortcut_missing_artifact": {
+      "contributions": {},
+      "metrics": {},
+      "score": 0.0
+    },
+    "shortcut_norm_scaling": {
+      "contributions": {
+        "auc": 0.0,
+        "negation_cosine": 8.975914698448575e-07,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 75.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 32.755102040816325,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -764600177473.9545,
+        "positive_vs_negated_margin": 245237.19310436383,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": 8.975914698448575e-07
+    },
+    "shortcut_row_selection": {
+      "contributions": {
+        "auc": 0.9510585188566903,
+        "negation_cosine": 5.206369529396671e-21,
+        "precision": 0.8332314896997042,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 100.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 17.358850975060616,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": -0.7690351472791551,
+        "positive_vs_negated_margin": 0.2913159226204214,
+        "precision": 95.23809523809523,
+        "recall": 100.0
+      },
+      "score": 1.7842900085563946
+    },
+    "shortcut_text_only": {
+      "contributions": {
+        "auc": 0.9510585188566903,
+        "negation_cosine": 2.7634426322086585e-19,
+        "precision": 0.9089798069451321,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 100.0,
+        "balanced_accuracy": 100.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 42.857142857142854,
+        "negation_cosine": -1.0,
+        "positive_vs_negated_margin": -0.2857142857142857,
+        "precision": 100.0,
+        "recall": 100.0
+      },
+      "score": 1.8600383258018225
+    },
+    "shortcut_visible_answers": {
+      "contributions": {
+        "auc": 0.9510585188566903,
+        "negation_cosine": 2.7634426322086585e-19,
+        "precision": 0.9089798069451321,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 100.0,
+        "balanced_accuracy": 100.0,
+        "caption_retrieval_mrr": 37.04081632653061,
+        "hard_negative_accuracy": 42.857142857142854,
+        "negation_cosine": -1.0,
+        "positive_vs_negated_margin": -0.2857142857142857,
+        "precision": 100.0,
+        "recall": 100.0
+      },
+      "score": 1.8600383258018225
+    },
+    "stronger_training100": {
+      "contributions": {
+        "auc": -0.6340390125711268,
+        "negation_cosine": -6.513607068889009e-19,
+        "precision": 0.11362247586814156,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 58.333333333333336,
+        "balanced_accuracy": 62.5,
+        "caption_retrieval_mrr": 40.95238095238095,
+        "hard_negative_accuracy": 85.71428571428571,
+        "negation_cosine": -0.2097480773616425,
+        "positive_vs_negated_margin": 0.17246456469964852,
+        "precision": 50.0,
+        "recall": 100.0
+      },
+      "score": -0.5204165367029853
+    },
+    "stronger_training200": {
+      "contributions": {
+        "auc": -1.5850975314278173,
+        "negation_cosine": -6.041395451052069e-19,
+        "precision": -0.04544899034725655,
+        "recall": -0.6813299687492027
+      },
+      "metrics": {
+        "auc": 33.33333333333333,
+        "balanced_accuracy": 45.83333333333333,
+        "caption_retrieval_mrr": 33.469387755102034,
+        "hard_negative_accuracy": 71.42857142857143,
+        "negation_cosine": -0.2499727340047624,
+        "positive_vs_negated_margin": 0.10085041941997279,
+        "precision": 40.0,
+        "recall": 66.66666666666666
+      },
+      "score": -2.3118764905242766
+    },
+    "weaker_clip_only": {
+      "contributions": {
+        "auc": -0.9510585188566903,
+        "negation_cosine": -1.4320841146591869e-18,
+        "precision": 0.11362247586814156,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 50.0,
+        "balanced_accuracy": 62.5,
+        "caption_retrieval_mrr": 26.802721088435373,
+        "hard_negative_accuracy": 85.71428571428571,
+        "negation_cosine": 0.45529974917553645,
+        "positive_vs_negated_margin": 0.08765352418955778,
+        "precision": 50.0,
+        "recall": 100.0
+      },
+      "score": -0.8374360429885488
+    },
+    "weaker_untrained": {
+      "contributions": {
+        "auc": -0.9510585188566903,
+        "negation_cosine": -1.3863342336585005e-18,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "metrics": {
+        "auc": 50.0,
+        "balanced_accuracy": 50.0,
+        "caption_retrieval_mrr": 36.224489795918366,
+        "hard_negative_accuracy": 100.0,
+        "negation_cosine": 0.41632838156823476,
+        "positive_vs_negated_margin": 0.2061817261638593,
+        "precision": 42.857142857142854,
+        "recall": 100.0
+      },
+      "score": -0.9510585188566903
+    }
+  },
+  "reference": {
+    "auc": 75.0,
+    "balanced_accuracy": 50.0,
+    "caption_retrieval_mrr": 32.755102040816325,
+    "hard_negative_accuracy": 100.0,
+    "negation_cosine": -0.7646001774739544,
+    "positive_vs_negated_margin": 0.24523719310436384,
+    "precision": 42.857142857142854,
+    "recall": 100.0
+  },
+  "reference_rank_spread": {
+    "max": -3.598282934987103e-26,
+    "min": -2.8531755565700707,
+    "range": 2.8531755565700707
+  },
+  "reference_seed_spread": {
+    "auc": {
+      "max": 75.0,
+      "min": 0.0,
+      "range": 75.0
+    },
+    "negation_cosine": {
+      "max": -0.5344211023094573,
+      "min": -0.7982016033740212,
+      "range": 0.26378050106456397
+    },
+    "precision": {
+      "max": 42.857142857142854,
+      "min": 40.0,
+      "range": 2.857142857142854
+    },
+    "recall": {
+      "max": 100.0,
+      "min": 66.66666666666666,
+      "range": 33.33333333333334
+    }
+  },
+  "run_exit_codes": {
+    "reference_cached": 0,
+    "reference_seed17": 0,
+    "reference_seed27": 0,
+    "reference_seed7": 0,
+    "shortcut_baseline_degradation": 0,
+    "shortcut_bruteforce_answers": 0,
+    "shortcut_constant_antipodes": 0,
+    "shortcut_constant_scaled_failure": 0,
+    "shortcut_empty_artifact": 1,
+    "shortcut_empty_vectors": 0,
+    "shortcut_forged_labels": 0,
+    "shortcut_forged_scores": 0,
+    "shortcut_generator_answers": 0,
+    "shortcut_missing_artifact": 0,
+    "shortcut_norm_scaling": 0,
+    "shortcut_null_vectors": 1,
+    "shortcut_row_selection": 0,
+    "shortcut_text_only": 0,
+    "shortcut_visible_answers": 0,
+    "stronger_training100": 0,
+    "stronger_training200": 0,
+    "weaker_clip_only": 0,
+    "weaker_untrained": 0
+  },
+  "weights": {
+    "auc": {
+      "coefficient": 1.0,
+      "description": "Area under the disease probe ROC curve on the embedding similarity margin.",
+      "higher_is_better": true
+    },
+    "negation_cosine": {
+      "coefficient": -0.25,
+      "description": "Average cosine similarity between affirmative and negated caption embeddings; lower values reward separation of negated clinical statements.",
+      "higher_is_better": false
+    },
+    "precision": {
+      "coefficient": 0.4,
+      "description": "Positive predictive value at the fixed zero similarity-margin threshold.",
+      "higher_is_better": true
+    },
+    "recall": {
+      "coefficient": 0.2,
+      "description": "Positive-class sensitivity at the fixed zero similarity-margin threshold.",
+      "higher_is_better": true
+    }
+  }
+}

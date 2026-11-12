@@ -1,0 +1,14 @@
+{
+  "experiments": {
+    "toy_disease_zero_shot": {
+      "results": {
+        "shortcut_forged_scores": {
+          "auc": 100,
+          "precision": 100,
+          "recall": 100,
+          "negation_cosine": -1e+100
+        }
+      }
+    }
+  }
+}

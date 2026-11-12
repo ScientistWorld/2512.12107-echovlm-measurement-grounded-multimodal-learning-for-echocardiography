@@ -1,0 +1,13 @@
+{
+  "batch_size": 32,
+  "data_root": "data/echo_toy",
+  "embed_dim": 128,
+  "epochs": 20,
+  "lambda_neg": 0.1,
+  "lambda_view": 0.5,
+  "lr": 0.0001,
+  "output_dir": "/home/user/redteam/reference_seed7",
+  "seed": 7,
+  "warmup_steps": 20,
+  "weight_decay": 0.005
+}

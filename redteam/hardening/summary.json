@@ -1,0 +1,709 @@
+{
+  "reference": "smoke_full",
+  "scored_metrics": [
+    "disease_zero_shot.auc",
+    "disease_zero_shot.precision",
+    "disease_zero_shot.recall",
+    "image_text_retrieval.recall_at_10",
+    "image_text_retrieval.recall_at_5",
+    "view_knn.f1"
+  ],
+  "test": {
+    "gate_p": {
+      "sc_constant": 1.0,
+      "sc_dim_mismatch": null,
+      "sc_empty_outputs": null,
+      "sc_forged_scores": null,
+      "sc_huge_constant": 1.0,
+      "sc_image_only": 1.0,
+      "sc_missing_export": null,
+      "sc_nan_outputs": null,
+      "sc_norm_scaled": 0.014492753623188406,
+      "sc_text_only": 0.7501249375312344,
+      "sc_wrong_shape": null,
+      "smoke_clip": 0.9985007496251874,
+      "smoke_full": 0.014492753623188406,
+      "smoke_untrained": 0.4012993503248376
+    },
+    "metrics": {
+      "sc_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_dim_mismatch": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_empty_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_forged_scores": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_huge_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_image_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_missing_export": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_nan_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_norm_scaled": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_text_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_wrong_shape": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "smoke_clip": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "smoke_full": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "smoke_untrained": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      }
+    },
+    "paired_ep50_minus_ep20_full": {},
+    "paired_full_minus_clip_ep20": {},
+    "paired_full_minus_clip_ep50": {},
+    "rank_vs_reference_all_sd": {
+      "deltas": {
+        "sc_constant": 0.0,
+        "sc_dim_mismatch": 0.0,
+        "sc_empty_outputs": 0.0,
+        "sc_forged_scores": 0.0,
+        "sc_huge_constant": 0.0,
+        "sc_image_only": 0.0,
+        "sc_missing_export": 0.0,
+        "sc_nan_outputs": 0.0,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": 0.0,
+        "sc_wrong_shape": 0.0,
+        "smoke_clip": 0.0,
+        "smoke_full": 0.0,
+        "smoke_untrained": 0.0
+      },
+      "sd": {
+        "disease_zero_shot.auc": 0.0,
+        "disease_zero_shot.precision": 0.0,
+        "disease_zero_shot.recall": 0.0,
+        "image_text_retrieval.recall_at_10": 0.0,
+        "image_text_retrieval.recall_at_5": 0.0,
+        "view_knn.f1": 0.0
+      }
+    },
+    "rank_vs_reference_genuine_sd": {
+      "deltas": {
+        "sc_constant": 0.0,
+        "sc_dim_mismatch": 0.0,
+        "sc_empty_outputs": 0.0,
+        "sc_forged_scores": 0.0,
+        "sc_huge_constant": 0.0,
+        "sc_image_only": 0.0,
+        "sc_missing_export": 0.0,
+        "sc_nan_outputs": 0.0,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": 0.0,
+        "sc_wrong_shape": 0.0,
+        "smoke_clip": 0.0,
+        "smoke_full": 0.0,
+        "smoke_untrained": 0.0
+      },
+      "sd": {
+        "disease_zero_shot.auc": 0.0,
+        "disease_zero_shot.precision": 0.0,
+        "disease_zero_shot.recall": 0.0,
+        "image_text_retrieval.recall_at_10": 0.0,
+        "image_text_retrieval.recall_at_5": 0.0,
+        "view_knn.f1": 0.0
+      }
+    },
+    "seeds": {
+      "clip_only_ep20": {},
+      "clip_only_ep50": {},
+      "echovlm_full_ep20": {},
+      "echovlm_full_ep50": {}
+    },
+    "status": {
+      "sc_constant": "failed_task_gate",
+      "sc_dim_mismatch": "failed",
+      "sc_empty_outputs": "failed",
+      "sc_forged_scores": "failed",
+      "sc_huge_constant": "failed_task_gate",
+      "sc_image_only": "failed_task_gate",
+      "sc_missing_export": "failed",
+      "sc_nan_outputs": "failed",
+      "sc_norm_scaled": "failed_task_gate",
+      "sc_text_only": "failed_task_gate",
+      "sc_wrong_shape": "failed",
+      "smoke_clip": "failed_task_gate",
+      "smoke_full": "failed_task_gate",
+      "smoke_untrained": "failed_task_gate"
+    }
+  },
+  "train": {
+    "gate_p": {
+      "sc_constant": 1.0,
+      "sc_dim_mismatch": null,
+      "sc_empty_outputs": null,
+      "sc_forged_scores": null,
+      "sc_huge_constant": 1.0,
+      "sc_image_only": 1.0,
+      "sc_missing_export": null,
+      "sc_nan_outputs": null,
+      "sc_norm_scaled": 0.7151424287856072,
+      "sc_text_only": 1.0,
+      "sc_wrong_shape": null,
+      "smoke_clip": 0.12343828085957022,
+      "smoke_full": 0.7151424287856072,
+      "smoke_untrained": 0.5072463768115942
+    },
+    "metrics": {
+      "sc_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_dim_mismatch": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_empty_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_forged_scores": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_huge_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_image_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_missing_export": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_nan_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_norm_scaled": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_text_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_wrong_shape": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "smoke_clip": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "smoke_full": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "smoke_untrained": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      }
+    },
+    "paired_ep50_minus_ep20_full": {},
+    "paired_full_minus_clip_ep20": {},
+    "paired_full_minus_clip_ep50": {},
+    "rank_vs_reference_all_sd": {
+      "deltas": {
+        "sc_constant": 0.0,
+        "sc_dim_mismatch": 0.0,
+        "sc_empty_outputs": 0.0,
+        "sc_forged_scores": 0.0,
+        "sc_huge_constant": 0.0,
+        "sc_image_only": 0.0,
+        "sc_missing_export": 0.0,
+        "sc_nan_outputs": 0.0,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": 0.0,
+        "sc_wrong_shape": 0.0,
+        "smoke_clip": 0.0,
+        "smoke_full": 0.0,
+        "smoke_untrained": 0.0
+      },
+      "sd": {
+        "disease_zero_shot.auc": 0.0,
+        "disease_zero_shot.precision": 0.0,
+        "disease_zero_shot.recall": 0.0,
+        "image_text_retrieval.recall_at_10": 0.0,
+        "image_text_retrieval.recall_at_5": 0.0,
+        "view_knn.f1": 0.0
+      }
+    },
+    "rank_vs_reference_genuine_sd": {
+      "deltas": {
+        "sc_constant": 0.0,
+        "sc_dim_mismatch": 0.0,
+        "sc_empty_outputs": 0.0,
+        "sc_forged_scores": 0.0,
+        "sc_huge_constant": 0.0,
+        "sc_image_only": 0.0,
+        "sc_missing_export": 0.0,
+        "sc_nan_outputs": 0.0,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": 0.0,
+        "sc_wrong_shape": 0.0,
+        "smoke_clip": 0.0,
+        "smoke_full": 0.0,
+        "smoke_untrained": 0.0
+      },
+      "sd": {
+        "disease_zero_shot.auc": 0.0,
+        "disease_zero_shot.precision": 0.0,
+        "disease_zero_shot.recall": 0.0,
+        "image_text_retrieval.recall_at_10": 0.0,
+        "image_text_retrieval.recall_at_5": 0.0,
+        "view_knn.f1": 0.0
+      }
+    },
+    "seeds": {
+      "clip_only_ep20": {},
+      "clip_only_ep50": {},
+      "echovlm_full_ep20": {},
+      "echovlm_full_ep50": {}
+    },
+    "status": {
+      "sc_constant": "failed_task_gate",
+      "sc_dim_mismatch": "failed",
+      "sc_empty_outputs": "failed",
+      "sc_forged_scores": "failed",
+      "sc_huge_constant": "failed_task_gate",
+      "sc_image_only": "failed_task_gate",
+      "sc_missing_export": "failed",
+      "sc_nan_outputs": "failed",
+      "sc_norm_scaled": "failed_task_gate",
+      "sc_text_only": "failed_task_gate",
+      "sc_wrong_shape": "failed",
+      "smoke_clip": "failed_task_gate",
+      "smoke_full": "failed_task_gate",
+      "smoke_untrained": "failed_task_gate"
+    }
+  }
+}

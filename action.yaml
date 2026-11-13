@@ -1,6 +1,8 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
-action: submit
-gpus: 2
+# Do NOT sleep, poll, or wait for jobs. The system reads this file
+# only after your turn ends.
+action: pending
+gpus: 0
 test: false
 milestone: core_claim
-notes: "Hardening audit: reference EchoVLM + Table 6 ablations (seed 0) -> checkpoints + official train/test scoring; then 3-seed reference/CLIP-only, weaker controls, 50-epoch/bs128/train+val candidates, shortcut submissions, all through the hidden evaluator."
+notes: ""

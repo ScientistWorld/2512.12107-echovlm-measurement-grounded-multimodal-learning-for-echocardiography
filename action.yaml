@@ -1,6 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 action: submit
-gpus: 1
-test: true
+gpus: 2
+test: false
 milestone: core_claim
-notes: "Smoke test of the hardened gym: CAMUS data prep (train/val + hidden test), 1-epoch EchoVLM/CLIP runs, TorchScript export, hidden/visible evaluators, shortcut submissions."
+notes: "Hardening audit: reference EchoVLM + Table 6 ablations (seed 0) -> checkpoints + official train/test scoring; then 3-seed reference/CLIP-only, weaker controls, 50-epoch/bs128/train+val candidates, shortcut submissions, all through the hidden evaluator."

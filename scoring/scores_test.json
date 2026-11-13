@@ -1,44 +1,118 @@
 {
+  "_meta": {
+    "method_status": {
+      "clip_only": {
+        "embed_dim": 512,
+        "macro_auc": 0.5516928863555219,
+        "permutation_p_value": 0.011494252873563218,
+        "reason": "macro AUC 55.17 not significantly above chance (p=0.0115 > 0.01)",
+        "seconds": 29.5,
+        "status": "failed_task_gate"
+      },
+      "echovlm_full": {
+        "embed_dim": 512,
+        "macro_auc": 0.5394304113485048,
+        "permutation_p_value": 0.0074962518740629685,
+        "seconds": 28.0,
+        "status": "ok"
+      },
+      "echovlm_negation": {
+        "embed_dim": 512,
+        "macro_auc": 0.553923377889737,
+        "permutation_p_value": 0.011494252873563218,
+        "reason": "macro AUC 55.39 not significantly above chance (p=0.0115 > 0.01)",
+        "seconds": 28.7,
+        "status": "failed_task_gate"
+      },
+      "echovlm_view": {
+        "embed_dim": 512,
+        "macro_auc": 0.5184131862236189,
+        "permutation_p_value": 0.10044977511244378,
+        "reason": "macro AUC 51.84 not significantly above chance (p=0.1004 > 0.01)",
+        "seconds": 32.2,
+        "status": "failed_task_gate"
+      }
+    },
+    "n_images": 1500,
+    "n_patients": 150,
+    "root": "checkpoints",
+    "split": "hidden_test"
+  },
   "experiments": {
-    "toy_disease_zero_shot": {
+    "disease_zero_shot": {
       "results": {
         "clip_only": {
-          "auc": 50.0,
-          "balanced_accuracy": 62.5,
-          "caption_retrieval_mrr": 26.802721088435373,
-          "hard_negative_accuracy": 85.71428571428571,
-          "negation_cosine": 0.4552997452202648,
-          "positive_vs_negated_margin": 0.08765355717921544,
-          "precision": 50.0,
-          "recall": 100.0
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
         },
         "echovlm_full": {
-          "auc": 75.0,
-          "balanced_accuracy": 50.0,
-          "caption_retrieval_mrr": 32.755102040816325,
-          "hard_negative_accuracy": 100.0,
-          "negation_cosine": -0.7646001774739544,
-          "positive_vs_negated_margin": 0.24523719310436384,
-          "precision": 42.857142857142854,
-          "recall": 100.0
-        }
-      },
-      "slice": "test",
-      "split": {
-        "ids": [
-          "echo_toy_0006",
-          "echo_toy_0007",
-          "echo_toy_0046",
-          "echo_toy_0050",
-          "echo_toy_0064",
-          "echo_toy_0068",
-          "echo_toy_0083"
-        ],
-        "input_paths": {
-          "clip_only": "checkpoints/clip_only/test_embeddings.jsonl",
-          "echovlm_full": "checkpoints/echovlm_full/test_embeddings.jsonl"
+          "auc": 53.943041134850475,
+          "auc_la_enlargement": 55.88381491210346,
+          "auc_lv_dilation": 51.953263037902545,
+          "auc_lv_systolic_dysfunction": 53.992045454545455,
+          "precision": 42.42340393948169,
+          "recall": 53.752798925212716
         },
-        "style": "fixed_id_half_split"
+        "echovlm_negation": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "echovlm_view": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      }
+    },
+    "image_text_retrieval": {
+      "results": {
+        "clip_only": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "echovlm_full": {
+          "recall_at_10": 21.266666666666666,
+          "recall_at_5": 11.733333333333333
+        },
+        "echovlm_negation": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "echovlm_view": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        }
+      }
+    },
+    "view_knn": {
+      "results": {
+        "clip_only": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        },
+        "echovlm_full": {
+          "accuracy": 96.86666666666666,
+          "f1": 96.86602034905246
+        },
+        "echovlm_negation": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        },
+        "echovlm_view": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
       }
     }
   }

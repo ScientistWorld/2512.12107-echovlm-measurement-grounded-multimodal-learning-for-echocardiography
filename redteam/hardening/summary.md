@@ -1,0 +1,31 @@
+| run | status | disease_zero_shot.auc | disease_zero_shot.precision | disease_zero_shot.recall | image_text_retrieval.recall_at_10 | image_text_retrieval.recall_at_5 | view_knn.f1 | rank Δ (genuine SD) | rank Δ (all SD) |
+|---|---|---|---|---|---|---|---|---|---|
+| clip_only_ep50_s0 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| clip_only_ep50_s1 | ok | 57.97 | 46.53 | 59.61 | 13.33 | 7.87 | 90.06 | -0.080 | -0.202 |
+| clip_only_ep50_s2 | ok | 55.16 | 44.48 | 54.71 | 12.40 | 6.73 | 89.66 | -0.996 | -0.395 |
+| clip_only_s0 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| clip_only_s1 | ok | 60.20 | 46.85 | 56.49 | 18.20 | 9.60 | 92.73 | +0.791 | +0.057 |
+| clip_only_s2 | ok | 59.46 | 47.60 | 52.17 | 19.80 | 11.53 | 93.33 | +0.937 | +0.134 |
+| echovlm_full_bs128_s0 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_full_ep50_s0 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_full_ep50_s1 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_full_ep50_s2 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_full_ep5_s0 | ok | 68.12 | 51.15 | 67.04 | 16.07 | 9.87 | 96.67 | +2.688 | +0.329 |
+| echovlm_full_s0 | ok | 53.94 | 42.42 | 53.75 | 21.27 | 11.73 | 96.87 | +0.000 | +0.000 |
+| echovlm_full_s1 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_full_s2 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_full_trainval_s0 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_negation_s0 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| echovlm_view_s0 | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_constant | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_dim_mismatch | failed | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_empty_outputs | failed | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_forged_scores | failed | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_huge_constant | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_image_only | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_missing_export | failed | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_nan_outputs | failed | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_norm_scaled | ok | 53.94 | 42.42 | 53.75 | 21.27 | 11.73 | 96.87 | +0.000 | +0.000 |
+| sc_text_only | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| sc_wrong_shape | failed | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |
+| untrained | failed_task_gate | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | -21.004 | -3.662 |

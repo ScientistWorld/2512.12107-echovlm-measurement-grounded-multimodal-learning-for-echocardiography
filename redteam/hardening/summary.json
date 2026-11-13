@@ -1,0 +1,2235 @@
+{
+  "reference": "echovlm_full_s0",
+  "scored_metrics": [
+    "disease_zero_shot.auc",
+    "disease_zero_shot.precision",
+    "disease_zero_shot.recall",
+    "image_text_retrieval.recall_at_10",
+    "image_text_retrieval.recall_at_5",
+    "view_knn.f1"
+  ],
+  "test": {
+    "gate_p": {
+      "clip_only_ep50_s0": 0.06446776611694154,
+      "clip_only_ep50_s1": 0.0004997501249375312,
+      "clip_only_ep50_s2": 0.004497751124437781,
+      "clip_only_s0": 0.011494252873563218,
+      "clip_only_s1": 0.0004997501249375312,
+      "clip_only_s2": 0.0004997501249375312,
+      "echovlm_full_bs128_s0": 0.03248375812093953,
+      "echovlm_full_ep50_s0": 0.09045477261369315,
+      "echovlm_full_ep50_s1": 0.1744127936031984,
+      "echovlm_full_ep50_s2": 0.10794602698650675,
+      "echovlm_full_ep5_s0": 0.0004997501249375312,
+      "echovlm_full_s0": 0.0074962518740629685,
+      "echovlm_full_s1": 0.31084457771114443,
+      "echovlm_full_s2": 0.026986506746626688,
+      "echovlm_full_trainval_s0": 0.17491254372813594,
+      "echovlm_negation_s0": 0.011494252873563218,
+      "echovlm_view_s0": 0.10044977511244378,
+      "sc_constant": 1.0,
+      "sc_dim_mismatch": null,
+      "sc_empty_outputs": null,
+      "sc_forged_scores": null,
+      "sc_huge_constant": 1.0,
+      "sc_image_only": 1.0,
+      "sc_missing_export": null,
+      "sc_nan_outputs": null,
+      "sc_norm_scaled": 0.0074962518740629685,
+      "sc_text_only": 0.3353323338330835,
+      "sc_wrong_shape": null,
+      "untrained": 0.4077961019490255
+    },
+    "metrics": {
+      "clip_only_ep50_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "clip_only_ep50_s1": {
+        "disease_zero_shot": {
+          "auc": 57.96843183222743,
+          "auc_la_enlargement": 59.9333198625985,
+          "auc_lv_dilation": 55.759475634083785,
+          "auc_lv_systolic_dysfunction": 58.2125,
+          "precision": 46.52966173345979,
+          "recall": 59.609728530910786
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 13.333333333333334,
+          "recall_at_5": 7.866666666666666
+        },
+        "view_knn": {
+          "accuracy": 90.06666666666666,
+          "f1": 90.06478254043454
+        }
+      },
+      "clip_only_ep50_s2": {
+        "disease_zero_shot": {
+          "auc": 55.158456495400046,
+          "auc_la_enlargement": 53.258031925641546,
+          "auc_lv_dilation": 53.63892846964947,
+          "auc_lv_systolic_dysfunction": 58.57840909090909,
+          "precision": 44.483167609020605,
+          "recall": 54.707482993197274
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 12.4,
+          "recall_at_5": 6.733333333333334
+        },
+        "view_knn": {
+          "accuracy": 89.66666666666666,
+          "f1": 89.66188468231101
+        }
+      },
+      "clip_only_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "clip_only_s1": {
+        "disease_zero_shot": {
+          "auc": 60.19905524528206,
+          "auc_la_enlargement": 59.29601939785816,
+          "auc_lv_dilation": 60.20319179253348,
+          "auc_lv_systolic_dysfunction": 61.09795454545455,
+          "precision": 46.853380496379835,
+          "recall": 56.487578103341654
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 18.200000000000003,
+          "recall_at_5": 9.600000000000001
+        },
+        "view_knn": {
+          "accuracy": 92.73333333333333,
+          "f1": 92.73075445824692
+        }
+      },
+      "clip_only_s2": {
+        "disease_zero_shot": {
+          "auc": 59.46461674214252,
+          "auc_la_enlargement": 58.31097191351788,
+          "auc_lv_dilation": 58.830151040182386,
+          "auc_lv_systolic_dysfunction": 61.25272727272727,
+          "precision": 47.604578457917576,
+          "recall": 52.17469558356258
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 19.800000000000004,
+          "recall_at_5": 11.533333333333333
+        },
+        "view_knn": {
+          "accuracy": 93.33333333333333,
+          "f1": 93.3314647915152
+        }
+      },
+      "echovlm_full_bs128_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_ep50_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_ep50_s1": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_ep50_s2": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_ep5_s0": {
+        "disease_zero_shot": {
+          "auc": 68.11655695580434,
+          "auc_la_enlargement": 78.63568397656093,
+          "auc_lv_dilation": 69.71216870903392,
+          "auc_lv_systolic_dysfunction": 56.00181818181819,
+          "precision": 51.1464618748495,
+          "recall": 67.04465485253662
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 16.066666666666666,
+          "recall_at_5": 9.866666666666667
+        },
+        "view_knn": {
+          "accuracy": 96.66666666666667,
+          "f1": 96.66630126632295
+        }
+      },
+      "echovlm_full_s0": {
+        "disease_zero_shot": {
+          "auc": 53.943041134850475,
+          "auc_la_enlargement": 55.88381491210346,
+          "auc_lv_dilation": 51.953263037902545,
+          "auc_lv_systolic_dysfunction": 53.992045454545455,
+          "precision": 42.42340393948169,
+          "recall": 53.752798925212716
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 21.266666666666666,
+          "recall_at_5": 11.733333333333333
+        },
+        "view_knn": {
+          "accuracy": 96.86666666666666,
+          "f1": 96.86602034905246
+        }
+      },
+      "echovlm_full_s1": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_s2": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_trainval_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_negation_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_view_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_dim_mismatch": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_empty_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_forged_scores": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_huge_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_image_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_missing_export": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_nan_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_norm_scaled": {
+        "disease_zero_shot": {
+          "auc": 53.943041134850475,
+          "auc_la_enlargement": 55.88381491210346,
+          "auc_lv_dilation": 51.953263037902545,
+          "auc_lv_systolic_dysfunction": 53.992045454545455,
+          "precision": 42.42340393948169,
+          "recall": 53.752798925212716
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 21.266666666666666,
+          "recall_at_5": 11.733333333333333
+        },
+        "view_knn": {
+          "accuracy": 96.86666666666666,
+          "f1": 96.86602034905246
+        }
+      },
+      "sc_text_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_wrong_shape": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "untrained": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      }
+    },
+    "paired_ep50_minus_ep20_full": {
+      "disease_zero_shot.auc": {
+        "all_same_sign": false,
+        "diffs": [
+          -53.943,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -17.981
+      },
+      "disease_zero_shot.precision": {
+        "all_same_sign": false,
+        "diffs": [
+          -42.423,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -14.141
+      },
+      "disease_zero_shot.recall": {
+        "all_same_sign": false,
+        "diffs": [
+          -53.753,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -17.918
+      },
+      "image_text_retrieval.recall_at_10": {
+        "all_same_sign": false,
+        "diffs": [
+          -21.267,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -7.089
+      },
+      "image_text_retrieval.recall_at_5": {
+        "all_same_sign": false,
+        "diffs": [
+          -11.733,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -3.911
+      },
+      "view_knn.f1": {
+        "all_same_sign": false,
+        "diffs": [
+          -96.866,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -32.289
+      }
+    },
+    "paired_full_minus_clip_ep20": {
+      "disease_zero_shot.auc": {
+        "all_same_sign": false,
+        "diffs": [
+          53.943,
+          -60.199,
+          -59.465
+        ],
+        "mean_diff": -21.907
+      },
+      "disease_zero_shot.precision": {
+        "all_same_sign": false,
+        "diffs": [
+          42.423,
+          -46.853,
+          -47.605
+        ],
+        "mean_diff": -17.345
+      },
+      "disease_zero_shot.recall": {
+        "all_same_sign": false,
+        "diffs": [
+          53.753,
+          -56.488,
+          -52.175
+        ],
+        "mean_diff": -18.303
+      },
+      "image_text_retrieval.recall_at_10": {
+        "all_same_sign": false,
+        "diffs": [
+          21.267,
+          -18.2,
+          -19.8
+        ],
+        "mean_diff": -5.578
+      },
+      "image_text_retrieval.recall_at_5": {
+        "all_same_sign": false,
+        "diffs": [
+          11.733,
+          -9.6,
+          -11.533
+        ],
+        "mean_diff": -3.133
+      },
+      "view_knn.f1": {
+        "all_same_sign": false,
+        "diffs": [
+          96.866,
+          -92.731,
+          -93.331
+        ],
+        "mean_diff": -29.732
+      }
+    },
+    "paired_full_minus_clip_ep50": {
+      "disease_zero_shot.auc": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          -57.968,
+          -55.158
+        ],
+        "mean_diff": -37.709
+      },
+      "disease_zero_shot.precision": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          -46.53,
+          -44.483
+        ],
+        "mean_diff": -30.338
+      },
+      "disease_zero_shot.recall": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          -59.61,
+          -54.707
+        ],
+        "mean_diff": -38.106
+      },
+      "image_text_retrieval.recall_at_10": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          -13.333,
+          -12.4
+        ],
+        "mean_diff": -8.578
+      },
+      "image_text_retrieval.recall_at_5": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          -7.867,
+          -6.733
+        ],
+        "mean_diff": -4.867
+      },
+      "view_knn.f1": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          -90.065,
+          -89.662
+        ],
+        "mean_diff": -59.909
+      }
+    },
+    "rank_vs_reference_all_sd": {
+      "deltas": {
+        "clip_only_ep50_s0": -3.6619,
+        "clip_only_ep50_s1": -0.2015,
+        "clip_only_ep50_s2": -0.3948,
+        "clip_only_s0": -3.6619,
+        "clip_only_s1": 0.0565,
+        "clip_only_s2": 0.1344,
+        "echovlm_full_bs128_s0": -3.6619,
+        "echovlm_full_ep50_s0": -3.6619,
+        "echovlm_full_ep50_s1": -3.6619,
+        "echovlm_full_ep50_s2": -3.6619,
+        "echovlm_full_ep5_s0": 0.3289,
+        "echovlm_full_s0": 0.0,
+        "echovlm_full_s1": -3.6619,
+        "echovlm_full_s2": -3.6619,
+        "echovlm_full_trainval_s0": -3.6619,
+        "echovlm_negation_s0": -3.6619,
+        "echovlm_view_s0": -3.6619,
+        "sc_constant": -3.6619,
+        "sc_dim_mismatch": -3.6619,
+        "sc_empty_outputs": -3.6619,
+        "sc_forged_scores": -3.6619,
+        "sc_huge_constant": -3.6619,
+        "sc_image_only": -3.6619,
+        "sc_missing_export": -3.6619,
+        "sc_nan_outputs": -3.6619,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": -3.6619,
+        "sc_wrong_shape": -3.6619,
+        "untrained": -3.6619
+      },
+      "sd": {
+        "disease_zero_shot.auc": 25.0928,
+        "disease_zero_shot.precision": 19.7023,
+        "disease_zero_shot.recall": 24.4129,
+        "image_text_retrieval.recall_at_10": 7.6597,
+        "image_text_retrieval.recall_at_5": 4.3176,
+        "view_knn.f1": 40.1392
+      }
+    },
+    "rank_vs_reference_genuine_sd": {
+      "deltas": {
+        "clip_only_ep50_s0": -21.0038,
+        "clip_only_ep50_s1": -0.0795,
+        "clip_only_ep50_s2": -0.9958,
+        "clip_only_s0": -21.0038,
+        "clip_only_s1": 0.7911,
+        "clip_only_s2": 0.9369,
+        "echovlm_full_bs128_s0": -21.0038,
+        "echovlm_full_ep50_s0": -21.0038,
+        "echovlm_full_ep50_s1": -21.0038,
+        "echovlm_full_ep50_s2": -21.0038,
+        "echovlm_full_ep5_s0": 2.6879,
+        "echovlm_full_s0": 0.0,
+        "echovlm_full_s1": -21.0038,
+        "echovlm_full_s2": -21.0038,
+        "echovlm_full_trainval_s0": -21.0038,
+        "echovlm_negation_s0": -21.0038,
+        "echovlm_view_s0": -21.0038,
+        "sc_constant": -21.0038,
+        "sc_dim_mismatch": -21.0038,
+        "sc_empty_outputs": -21.0038,
+        "sc_forged_scores": -21.0038,
+        "sc_huge_constant": -21.0038,
+        "sc_image_only": -21.0038,
+        "sc_missing_export": -21.0038,
+        "sc_nan_outputs": -21.0038,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": -21.0038,
+        "sc_wrong_shape": -21.0038,
+        "untrained": -21.0038
+      },
+      "sd": {
+        "disease_zero_shot.auc": 4.5833,
+        "disease_zero_shot.precision": 2.6963,
+        "disease_zero_shot.recall": 4.9418,
+        "image_text_retrieval.recall_at_10": 3.2356,
+        "image_text_retrieval.recall_at_5": 1.806,
+        "view_knn.f1": 2.8295
+      }
+    },
+    "seeds": {
+      "clip_only_ep20": {
+        "disease_zero_shot.auc": {
+          "max": 60.199,
+          "mean": 39.888,
+          "min": 0.0,
+          "sd": 34.546,
+          "values": [
+            0.0,
+            60.199,
+            59.465
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 47.605,
+          "mean": 31.486,
+          "min": 0.0,
+          "sd": 27.27,
+          "values": [
+            0.0,
+            46.853,
+            47.605
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 56.488,
+          "mean": 36.221,
+          "min": 0.0,
+          "sd": 31.442,
+          "values": [
+            0.0,
+            56.488,
+            52.175
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 19.8,
+          "mean": 12.667,
+          "min": 0.0,
+          "sd": 10.999,
+          "values": [
+            0.0,
+            18.2,
+            19.8
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 11.533,
+          "mean": 7.044,
+          "min": 0.0,
+          "sd": 6.177,
+          "values": [
+            0.0,
+            9.6,
+            11.533
+          ]
+        },
+        "view_knn.f1": {
+          "max": 93.331,
+          "mean": 62.021,
+          "min": 0.0,
+          "sd": 53.712,
+          "values": [
+            0.0,
+            92.731,
+            93.331
+          ]
+        }
+      },
+      "clip_only_ep50": {
+        "disease_zero_shot.auc": {
+          "max": 57.968,
+          "mean": 37.709,
+          "min": 0.0,
+          "sd": 32.687,
+          "values": [
+            0.0,
+            57.968,
+            55.158
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 46.53,
+          "mean": 30.338,
+          "min": 0.0,
+          "sd": 26.293,
+          "values": [
+            0.0,
+            46.53,
+            44.483
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 59.61,
+          "mean": 38.106,
+          "min": 0.0,
+          "sd": 33.091,
+          "values": [
+            0.0,
+            59.61,
+            54.707
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 13.333,
+          "mean": 8.578,
+          "min": 0.0,
+          "sd": 7.443,
+          "values": [
+            0.0,
+            13.333,
+            12.4
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 7.867,
+          "mean": 4.867,
+          "min": 0.0,
+          "sd": 4.253,
+          "values": [
+            0.0,
+            7.867,
+            6.733
+          ]
+        },
+        "view_knn.f1": {
+          "max": 90.065,
+          "mean": 59.909,
+          "min": 0.0,
+          "sd": 51.883,
+          "values": [
+            0.0,
+            90.065,
+            89.662
+          ]
+        }
+      },
+      "echovlm_full_ep20": {
+        "disease_zero_shot.auc": {
+          "max": 53.943,
+          "mean": 17.981,
+          "min": 0.0,
+          "sd": 31.144,
+          "values": [
+            53.943,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 42.423,
+          "mean": 14.141,
+          "min": 0.0,
+          "sd": 24.493,
+          "values": [
+            42.423,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 53.753,
+          "mean": 17.918,
+          "min": 0.0,
+          "sd": 31.034,
+          "values": [
+            53.753,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 21.267,
+          "mean": 7.089,
+          "min": 0.0,
+          "sd": 12.278,
+          "values": [
+            21.267,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 11.733,
+          "mean": 3.911,
+          "min": 0.0,
+          "sd": 6.774,
+          "values": [
+            11.733,
+            0.0,
+            0.0
+          ]
+        },
+        "view_knn.f1": {
+          "max": 96.866,
+          "mean": 32.289,
+          "min": 0.0,
+          "sd": 55.926,
+          "values": [
+            96.866,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "echovlm_full_ep50": {
+        "disease_zero_shot.auc": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "view_knn.f1": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    "status": {
+      "clip_only_ep50_s0": "failed_task_gate",
+      "clip_only_ep50_s1": "ok",
+      "clip_only_ep50_s2": "ok",
+      "clip_only_s0": "failed_task_gate",
+      "clip_only_s1": "ok",
+      "clip_only_s2": "ok",
+      "echovlm_full_bs128_s0": "failed_task_gate",
+      "echovlm_full_ep50_s0": "failed_task_gate",
+      "echovlm_full_ep50_s1": "failed_task_gate",
+      "echovlm_full_ep50_s2": "failed_task_gate",
+      "echovlm_full_ep5_s0": "ok",
+      "echovlm_full_s0": "ok",
+      "echovlm_full_s1": "failed_task_gate",
+      "echovlm_full_s2": "failed_task_gate",
+      "echovlm_full_trainval_s0": "failed_task_gate",
+      "echovlm_negation_s0": "failed_task_gate",
+      "echovlm_view_s0": "failed_task_gate",
+      "sc_constant": "failed_task_gate",
+      "sc_dim_mismatch": "failed",
+      "sc_empty_outputs": "failed",
+      "sc_forged_scores": "failed",
+      "sc_huge_constant": "failed_task_gate",
+      "sc_image_only": "failed_task_gate",
+      "sc_missing_export": "failed",
+      "sc_nan_outputs": "failed",
+      "sc_norm_scaled": "ok",
+      "sc_text_only": "failed_task_gate",
+      "sc_wrong_shape": "failed",
+      "untrained": "failed_task_gate"
+    }
+  },
+  "train": {
+    "gate_p": {
+      "clip_only_ep50_s0": 0.22138930534732634,
+      "clip_only_ep50_s1": 0.3843078460769615,
+      "clip_only_ep50_s2": 0.4827586206896552,
+      "clip_only_s0": 0.020989505247376312,
+      "clip_only_s1": 0.053973013493253376,
+      "clip_only_s2": 0.06946526736631684,
+      "echovlm_full_bs128_s0": 0.0034982508745627187,
+      "echovlm_full_ep50_s0": 0.09345327336331834,
+      "echovlm_full_ep50_s1": 0.5327336331834083,
+      "echovlm_full_ep50_s2": 0.18940529735132433,
+      "echovlm_full_ep5_s0": 0.0004997501249375312,
+      "echovlm_full_s0": 0.015492253873063468,
+      "echovlm_full_s1": 0.3793103448275862,
+      "echovlm_full_s2": 0.06546726636681659,
+      "echovlm_full_trainval_s0": 0.0004997501249375312,
+      "echovlm_negation_s0": 0.0034982508745627187,
+      "echovlm_view_s0": 0.8655672163918041,
+      "sc_constant": 1.0,
+      "sc_dim_mismatch": null,
+      "sc_empty_outputs": null,
+      "sc_forged_scores": null,
+      "sc_huge_constant": 1.0,
+      "sc_image_only": 1.0,
+      "sc_missing_export": null,
+      "sc_nan_outputs": null,
+      "sc_norm_scaled": 0.015492253873063468,
+      "sc_text_only": 1.0,
+      "sc_wrong_shape": null,
+      "untrained": 0.5082458770614693
+    },
+    "metrics": {
+      "clip_only_ep50_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "clip_only_ep50_s1": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "clip_only_ep50_s2": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "clip_only_s0": {
+        "disease_zero_shot": {
+          "auc": 59.30122307802025,
+          "auc_la_enlargement": 68.51315789473685,
+          "auc_lv_dilation": 50.41463414634146,
+          "auc_lv_systolic_dysfunction": 58.97587719298245,
+          "precision": 43.24495476554901,
+          "recall": 56.32553606237817
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 19.2,
+          "recall_at_5": 12.0
+        },
+        "view_knn": {
+          "accuracy": 90.4,
+          "f1": 90.39984639754236
+        }
+      },
+      "clip_only_s1": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "clip_only_s2": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_bs128_s0": {
+        "disease_zero_shot": {
+          "auc": 56.70506466029573,
+          "auc_la_enlargement": 64.99561403508773,
+          "auc_lv_dilation": 55.66124661246612,
+          "auc_lv_systolic_dysfunction": 49.45833333333333,
+          "precision": 40.97072342591472,
+          "recall": 55.633528265107216
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 30.2,
+          "recall_at_5": 20.4
+        },
+        "view_knn": {
+          "accuracy": 97.0,
+          "f1": 96.99854729689169
+        }
+      },
+      "echovlm_full_ep50_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_ep50_s1": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_ep50_s2": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_ep5_s0": {
+        "disease_zero_shot": {
+          "auc": 70.66229258783817,
+          "auc_la_enlargement": 85.35526315789474,
+          "auc_lv_dilation": 70.42547425474255,
+          "auc_lv_systolic_dysfunction": 56.2061403508772,
+          "precision": 47.26655952901038,
+          "recall": 65.57504873294347
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 18.0,
+          "recall_at_5": 10.0
+        },
+        "view_knn": {
+          "accuracy": 98.2,
+          "f1": 98.19964713083765
+        }
+      },
+      "echovlm_full_s0": {
+        "disease_zero_shot": {
+          "auc": 55.681262777540056,
+          "auc_la_enlargement": 60.486842105263165,
+          "auc_lv_dilation": 54.48238482384824,
+          "auc_lv_systolic_dysfunction": 52.07456140350877,
+          "precision": 41.04986157586397,
+          "recall": 56.642300194931785
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 22.2,
+          "recall_at_5": 12.6
+        },
+        "view_knn": {
+          "accuracy": 97.39999999999999,
+          "f1": 97.39824121105866
+        }
+      },
+      "echovlm_full_s1": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_s2": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "echovlm_full_trainval_s0": {
+        "disease_zero_shot": {
+          "auc": 68.9609126135121,
+          "auc_la_enlargement": 75.49561403508773,
+          "auc_lv_dilation": 73.66124661246613,
+          "auc_lv_systolic_dysfunction": 57.72587719298245,
+          "precision": 47.721092771423926,
+          "recall": 64.84892787524366
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 100.0,
+          "recall_at_5": 100.0
+        },
+        "view_knn": {
+          "accuracy": 100.0,
+          "f1": 100.0
+        }
+      },
+      "echovlm_negation_s0": {
+        "disease_zero_shot": {
+          "auc": 61.514197927066995,
+          "auc_la_enlargement": 70.16885964912281,
+          "auc_lv_dilation": 56.39566395663957,
+          "auc_lv_systolic_dysfunction": 57.9780701754386,
+          "precision": 45.29603321269988,
+          "recall": 56.934697855750485
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 21.0,
+          "recall_at_5": 12.6
+        },
+        "view_knn": {
+          "accuracy": 94.0,
+          "f1": 93.99846360668332
+        }
+      },
+      "echovlm_view_s0": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_dim_mismatch": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_empty_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_forged_scores": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_huge_constant": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_image_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_missing_export": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_nan_outputs": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_norm_scaled": {
+        "disease_zero_shot": {
+          "auc": 55.681262777540056,
+          "auc_la_enlargement": 60.486842105263165,
+          "auc_lv_dilation": 54.48238482384824,
+          "auc_lv_systolic_dysfunction": 52.07456140350877,
+          "precision": 41.04986157586397,
+          "recall": 56.642300194931785
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 22.2,
+          "recall_at_5": 12.6
+        },
+        "view_knn": {
+          "accuracy": 97.39999999999999,
+          "f1": 97.39824121105866
+        }
+      },
+      "sc_text_only": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "sc_wrong_shape": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      },
+      "untrained": {
+        "disease_zero_shot": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "image_text_retrieval": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        },
+        "view_knn": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      }
+    },
+    "paired_ep50_minus_ep20_full": {
+      "disease_zero_shot.auc": {
+        "all_same_sign": false,
+        "diffs": [
+          -55.681,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -18.56
+      },
+      "disease_zero_shot.precision": {
+        "all_same_sign": false,
+        "diffs": [
+          -41.05,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -13.683
+      },
+      "disease_zero_shot.recall": {
+        "all_same_sign": false,
+        "diffs": [
+          -56.642,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -18.881
+      },
+      "image_text_retrieval.recall_at_10": {
+        "all_same_sign": false,
+        "diffs": [
+          -22.2,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -7.4
+      },
+      "image_text_retrieval.recall_at_5": {
+        "all_same_sign": false,
+        "diffs": [
+          -12.6,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -4.2
+      },
+      "view_knn.f1": {
+        "all_same_sign": false,
+        "diffs": [
+          -97.398,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -32.466
+      }
+    },
+    "paired_full_minus_clip_ep20": {
+      "disease_zero_shot.auc": {
+        "all_same_sign": false,
+        "diffs": [
+          -3.62,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -1.207
+      },
+      "disease_zero_shot.precision": {
+        "all_same_sign": false,
+        "diffs": [
+          -2.195,
+          0.0,
+          0.0
+        ],
+        "mean_diff": -0.732
+      },
+      "disease_zero_shot.recall": {
+        "all_same_sign": false,
+        "diffs": [
+          0.317,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.106
+      },
+      "image_text_retrieval.recall_at_10": {
+        "all_same_sign": false,
+        "diffs": [
+          3.0,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 1.0
+      },
+      "image_text_retrieval.recall_at_5": {
+        "all_same_sign": false,
+        "diffs": [
+          0.6,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.2
+      },
+      "view_knn.f1": {
+        "all_same_sign": false,
+        "diffs": [
+          6.998,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 2.333
+      }
+    },
+    "paired_full_minus_clip_ep50": {
+      "disease_zero_shot.auc": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.0
+      },
+      "disease_zero_shot.precision": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.0
+      },
+      "disease_zero_shot.recall": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.0
+      },
+      "image_text_retrieval.recall_at_10": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.0
+      },
+      "image_text_retrieval.recall_at_5": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.0
+      },
+      "view_knn.f1": {
+        "all_same_sign": false,
+        "diffs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_diff": 0.0
+      }
+    },
+    "rank_vs_reference_all_sd": {
+      "deltas": {
+        "clip_only_ep50_s0": -2.9809,
+        "clip_only_ep50_s1": -2.9809,
+        "clip_only_ep50_s2": -2.9809,
+        "clip_only_s0": 0.0479,
+        "clip_only_s1": -2.9809,
+        "clip_only_s2": -2.9809,
+        "echovlm_full_bs128_s0": 0.169,
+        "echovlm_full_ep50_s0": -2.9809,
+        "echovlm_full_ep50_s1": -2.9809,
+        "echovlm_full_ep50_s2": -2.9809,
+        "echovlm_full_ep5_s0": 0.4253,
+        "echovlm_full_s0": 0.0,
+        "echovlm_full_s1": -2.9809,
+        "echovlm_full_s2": -2.9809,
+        "echovlm_full_trainval_s0": 2.0462,
+        "echovlm_negation_s0": 0.1747,
+        "echovlm_view_s0": -2.9809,
+        "sc_constant": -2.9809,
+        "sc_dim_mismatch": -2.9809,
+        "sc_empty_outputs": -2.9809,
+        "sc_forged_scores": -2.9809,
+        "sc_huge_constant": -2.9809,
+        "sc_image_only": -2.9809,
+        "sc_missing_export": -2.9809,
+        "sc_nan_outputs": -2.9809,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": -2.9809,
+        "sc_wrong_shape": -2.9809,
+        "untrained": -2.9809
+      },
+      "sd": {
+        "disease_zero_shot.auc": 26.3491,
+        "disease_zero_shot.precision": 18.7916,
+        "disease_zero_shot.recall": 25.2989,
+        "image_text_retrieval.recall_at_10": 19.6193,
+        "image_text_retrieval.recall_at_5": 18.585,
+        "view_knn.f1": 41.2518
+      }
+    },
+    "rank_vs_reference_genuine_sd": {
+      "deltas": {
+        "clip_only_ep50_s0": -17.2654,
+        "clip_only_ep50_s1": -17.2654,
+        "clip_only_ep50_s2": -17.2654,
+        "clip_only_s0": 0.2457,
+        "clip_only_s1": -17.2654,
+        "clip_only_s2": -17.2654,
+        "echovlm_full_bs128_s0": 0.1411,
+        "echovlm_full_ep50_s0": -17.2654,
+        "echovlm_full_ep50_s1": -17.2654,
+        "echovlm_full_ep50_s2": -17.2654,
+        "echovlm_full_ep5_s0": 2.5607,
+        "echovlm_full_s0": 0.0,
+        "echovlm_full_s1": -17.2654,
+        "echovlm_full_s2": -17.2654,
+        "echovlm_full_trainval_s0": 3.5409,
+        "echovlm_negation_s0": 0.9146,
+        "echovlm_view_s0": -17.2654,
+        "sc_constant": -17.2654,
+        "sc_dim_mismatch": -17.2654,
+        "sc_empty_outputs": -17.2654,
+        "sc_forged_scores": -17.2654,
+        "sc_huge_constant": -17.2654,
+        "sc_image_only": -17.2654,
+        "sc_missing_export": -17.2654,
+        "sc_nan_outputs": -17.2654,
+        "sc_norm_scaled": 0.0,
+        "sc_text_only": -17.2654,
+        "sc_wrong_shape": -17.2654,
+        "untrained": -17.2654
+      },
+      "sd": {
+        "disease_zero_shot.auc": 5.757,
+        "disease_zero_shot.precision": 2.7156,
+        "disease_zero_shot.recall": 4.1855,
+        "image_text_retrieval.recall_at_10": 29.2873,
+        "image_text_retrieval.recall_at_5": 32.3936,
+        "view_knn.f1": 3.1356
+      }
+    },
+    "seeds": {
+      "clip_only_ep20": {
+        "disease_zero_shot.auc": {
+          "max": 59.301,
+          "mean": 19.767,
+          "min": 0.0,
+          "sd": 34.238,
+          "values": [
+            59.301,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 43.245,
+          "mean": 14.415,
+          "min": 0.0,
+          "sd": 24.967,
+          "values": [
+            43.245,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 56.326,
+          "mean": 18.775,
+          "min": 0.0,
+          "sd": 32.52,
+          "values": [
+            56.326,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 19.2,
+          "mean": 6.4,
+          "min": 0.0,
+          "sd": 11.085,
+          "values": [
+            19.2,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 12.0,
+          "mean": 4.0,
+          "min": 0.0,
+          "sd": 6.928,
+          "values": [
+            12.0,
+            0.0,
+            0.0
+          ]
+        },
+        "view_knn.f1": {
+          "max": 90.4,
+          "mean": 30.133,
+          "min": 0.0,
+          "sd": 52.192,
+          "values": [
+            90.4,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "clip_only_ep50": {
+        "disease_zero_shot.auc": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "view_knn.f1": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "echovlm_full_ep20": {
+        "disease_zero_shot.auc": {
+          "max": 55.681,
+          "mean": 18.56,
+          "min": 0.0,
+          "sd": 32.148,
+          "values": [
+            55.681,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 41.05,
+          "mean": 13.683,
+          "min": 0.0,
+          "sd": 23.7,
+          "values": [
+            41.05,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 56.642,
+          "mean": 18.881,
+          "min": 0.0,
+          "sd": 32.702,
+          "values": [
+            56.642,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 22.2,
+          "mean": 7.4,
+          "min": 0.0,
+          "sd": 12.817,
+          "values": [
+            22.2,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 12.6,
+          "mean": 4.2,
+          "min": 0.0,
+          "sd": 7.275,
+          "values": [
+            12.6,
+            0.0,
+            0.0
+          ]
+        },
+        "view_knn.f1": {
+          "max": 97.398,
+          "mean": 32.466,
+          "min": 0.0,
+          "sd": 56.233,
+          "values": [
+            97.398,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "echovlm_full_ep50": {
+        "disease_zero_shot.auc": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.precision": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "disease_zero_shot.recall": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_10": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "image_text_retrieval.recall_at_5": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "view_knn.f1": {
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "sd": 0.0,
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    "status": {
+      "clip_only_ep50_s0": "failed_task_gate",
+      "clip_only_ep50_s1": "failed_task_gate",
+      "clip_only_ep50_s2": "failed_task_gate",
+      "clip_only_s0": "ok",
+      "clip_only_s1": "failed_task_gate",
+      "clip_only_s2": "failed_task_gate",
+      "echovlm_full_bs128_s0": "ok",
+      "echovlm_full_ep50_s0": "failed_task_gate",
+      "echovlm_full_ep50_s1": "failed_task_gate",
+      "echovlm_full_ep50_s2": "failed_task_gate",
+      "echovlm_full_ep5_s0": "ok",
+      "echovlm_full_s0": "ok",
+      "echovlm_full_s1": "failed_task_gate",
+      "echovlm_full_s2": "failed_task_gate",
+      "echovlm_full_trainval_s0": "ok",
+      "echovlm_negation_s0": "ok",
+      "echovlm_view_s0": "failed_task_gate",
+      "sc_constant": "failed_task_gate",
+      "sc_dim_mismatch": "failed",
+      "sc_empty_outputs": "failed",
+      "sc_forged_scores": "failed",
+      "sc_huge_constant": "failed_task_gate",
+      "sc_image_only": "failed_task_gate",
+      "sc_missing_export": "failed",
+      "sc_nan_outputs": "failed",
+      "sc_norm_scaled": "ok",
+      "sc_text_only": "failed_task_gate",
+      "sc_wrong_shape": "failed",
+      "untrained": "failed_task_gate"
+    }
+  }
+}

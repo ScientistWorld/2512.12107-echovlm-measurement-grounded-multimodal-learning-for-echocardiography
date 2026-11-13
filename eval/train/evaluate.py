@@ -1,23 +1,30 @@
 """Visible-split evaluator (same protocol as the hidden test, visible data).
 
-Scores every method directory under the scoring root (default: checkpoints/)
-on the visible validation patients (data/downloads/camus_vlm/val_*), with the
-visible zero-shot prompts below. The hidden test uses different patients
-(150 vs 50), different prompt paraphrases and different caption wordings, but
-the same metrics, pool size (50 patients) and failure rules.
-
-Method interface (an ``export/`` folder inside each method directory):
+Every method is a directory under the scoring root (default: checkpoints/)
+that contains an ``export/`` folder:
 
     export/image_encoder.pt   TorchScript: float[B,3,112,112] in [0,1] -> float[B,D]
     export/text_encoder.pt    TorchScript: (long[B,L] input_ids, long[B,L] attention_mask) -> float[B,D]
     export/tokenizer.json     HuggingFace `tokenizers` file used to tokenize text
     export/export.json        {"max_length": L, "pad_id": int}
 
-The evaluator runs the encoders itself, one input at a time. A method whose
-export is missing, does not load, crashes, returns a non-[1,D] / non-finite /
-zero / dimension-mismatched embedding, or whose disease discrimination is not
-significantly above chance (patient-level permutation test) is scored as
-failed: worst value (0) in every metric of every experiment.
+The evaluator runs the encoders itself, one input at a time, on the visible
+validation patients (data/downloads/camus_vlm/val_*) with the visible
+zero-shot prompts below. The hidden test uses different patients (150 vs 50),
+different prompt paraphrases and different caption wordings, but the same
+metrics, pool size (50 patients) and failure rules.
+
+Encoders must be pure functions of their input:
+  * their TorchScript graphs may not read files, keep Python state between
+    calls (prim::SetAttr), fork, or call opaque functions;
+  * inputs are presented in a fixed shuffled order and a probe subset is
+    embedded again at the end; any embedding that changed is a failure.
+
+A method whose export is missing, does not load, fails these checks, crashes,
+returns a non-[1,D] / non-finite / zero / dimension-mismatched embedding, or
+whose disease discrimination is not significantly above chance (patient-level
+permutation test) is scored as failed: worst value (0) in every metric of
+every experiment.
 
 Usage:
     python eval/train/evaluate.py [--root checkpoints] [--output scoring/scores_train.json] [--only NAME ...]
@@ -60,6 +67,19 @@ N_PERMUTATIONS = 2000
 # 50 visible patients instead of 150 hidden ones: same test, looser level.
 GATE_ALPHA = 0.05
 PERMUTATION_SEED = 7
+ORDER_SEED = 11
+N_PROBES = 32
+PROBE_MIN_COSINE = 0.999
+# TorchScript node kinds an encoder may not contain (after inlining).
+FORBIDDEN_KINDS = {
+    "prim::SetAttr",  # Python-level state carried between calls
+    "prim::CallFunction",  # opaque calls that survive inlining
+    "prim::CallMethod",
+    "prim::PythonOp",
+    "prim::fork",
+    "aten::wait",
+}
+FORBIDDEN_SUBSTRINGS = ("from_file", "pickle", "rpc")  # file / remote access
 
 EXPERIMENTS = {
     "disease_zero_shot": (
@@ -97,7 +117,31 @@ def load_split(data_dir: Path) -> tuple[np.ndarray, list[dict]]:
     return images, records
 
 
-# ----------------------------------------------------------------------------- method loading / embedding
+# ----------------------------------------------------------------------------- method loading / checks
+
+
+def _graph_kinds(graph) -> set[str]:
+    kinds = set()
+    stack = [graph]
+    while stack:
+        g = stack.pop()
+        for node in g.nodes():
+            kinds.add(node.kind())
+            for block in node.blocks():
+                stack.append(block)
+    return kinds
+
+
+def check_pure(module, what: str) -> None:
+    """Reject encoders whose (inlined) forward graph can read files or keep state."""
+    try:
+        graph = module.inlined_graph
+        kinds = _graph_kinds(graph)
+    except Exception as exc:  # cannot inspect -> cannot trust
+        raise MethodFailure(f"{what}: TorchScript graph cannot be inspected ({type(exc).__name__})")
+    bad = sorted(k for k in kinds if k in FORBIDDEN_KINDS or any(s in k.lower() for s in FORBIDDEN_SUBSTRINGS))
+    if bad:
+        raise MethodFailure(f"{what}: forbidden TorchScript operations {bad[:5]}")
 
 
 def load_method(method_dir: Path, device: str):
@@ -117,6 +161,8 @@ def load_method(method_dir: Path, device: str):
     tok.enable_padding(pad_id=pad_id, length=max_length)
     image_encoder = torch.jit.load(str(export / "image_encoder.pt"), map_location=device).eval()
     text_encoder = torch.jit.load(str(export / "text_encoder.pt"), map_location=device).eval()
+    check_pure(image_encoder, "image_encoder")
+    check_pure(text_encoder, "text_encoder")
     return tok, image_encoder, text_encoder
 
 
@@ -129,32 +175,46 @@ def _row(out, what: str) -> np.ndarray:
     return row
 
 
-def embed_images(encoder, images: np.ndarray, device: str) -> np.ndarray:
-    rows = []
+def _image_input(img: np.ndarray, device: str) -> torch.Tensor:
+    x = torch.from_numpy(img).to(device=device, dtype=torch.float32).div_(255.0)
+    return x.view(1, 1, IMAGE_SIZE, IMAGE_SIZE).expand(1, 3, IMAGE_SIZE, IMAGE_SIZE).contiguous()
+
+
+def _text_input(tok, text: str, device: str) -> tuple[torch.Tensor, torch.Tensor]:
+    enc = tok.encode(text)
+    ids = torch.tensor([enc.ids], dtype=torch.long, device=device)
+    mask = torch.tensor([enc.attention_mask], dtype=torch.long, device=device)
+    return ids, mask
+
+
+def _embed(call, n: int, rng: np.random.Generator, what: str) -> np.ndarray:
+    """Embed n inputs one at a time in a fixed shuffled order, then re-embed probes."""
+    order = rng.permutation(n)
+    rows: list[np.ndarray | None] = [None] * n
     with torch.inference_mode():
-        for img in images:
-            x = torch.from_numpy(img).to(device=device, dtype=torch.float32).div_(255.0)
-            x = x.view(1, 1, IMAGE_SIZE, IMAGE_SIZE).expand(1, 3, IMAGE_SIZE, IMAGE_SIZE).contiguous()
-            rows.append(_row(encoder(x), "image_encoder"))
-    return _stack(rows, "image_encoder")
+        for i in order:
+            rows[i] = _row(call(int(i)), what)
+        dims = {r.shape[0] for r in rows}
+        if len(dims) != 1:
+            raise MethodFailure(f"{what} returned inconsistent embedding sizes {sorted(dims)}")
+        out = np.stack(rows)
+        k = min(n, N_PROBES)
+        probes = np.unique(np.concatenate([order[: k // 4], rng.choice(n, size=k, replace=False)]))
+        for i in probes:
+            again = _row(call(int(i)), what)
+            a, b = out[i], again
+            na, nb = np.linalg.norm(a), np.linalg.norm(b)
+            if na <= 0 or nb <= 0 or float(a @ b) / (na * nb) < PROBE_MIN_COSINE:
+                raise MethodFailure(f"{what} is not a pure function of its input (embedding changed on re-evaluation)")
+    return out
 
 
-def embed_texts(tok, encoder, texts: list[str], device: str) -> np.ndarray:
-    rows = []
-    with torch.inference_mode():
-        for text in texts:
-            enc = tok.encode(text)
-            ids = torch.tensor([enc.ids], dtype=torch.long, device=device)
-            mask = torch.tensor([enc.attention_mask], dtype=torch.long, device=device)
-            rows.append(_row(encoder(ids, mask), "text_encoder"))
-    return _stack(rows, "text_encoder")
+def embed_images(encoder, images: np.ndarray, device: str, rng: np.random.Generator) -> np.ndarray:
+    return _embed(lambda i: encoder(_image_input(images[i], device)), len(images), rng, "image_encoder")
 
 
-def _stack(rows: list[np.ndarray], what: str) -> np.ndarray:
-    dims = {r.shape[0] for r in rows}
-    if len(dims) != 1:
-        raise MethodFailure(f"{what} returned inconsistent embedding sizes {sorted(dims)}")
-    return np.stack(rows)
+def embed_texts(tok, encoder, texts: list[str], device: str, rng: np.random.Generator) -> np.ndarray:
+    return _embed(lambda i: encoder(*_text_input(tok, texts[i], device)), len(texts), rng, "text_encoder")
 
 
 def l2_normalize(x: np.ndarray, what: str) -> np.ndarray:
@@ -187,15 +247,21 @@ def auc_from_ranks(ranks: np.ndarray, y: np.ndarray) -> float:
     return float((ranks[y == 1].sum() - n1 * (n1 + 1) / 2.0) / (n1 * n0))
 
 
-def zero_shot(img: np.ndarray, protos: dict, records: list[dict]) -> tuple[dict, dict]:
+def disease_scores(img: np.ndarray, protos: dict) -> np.ndarray:
+    """[N, n_diseases] positive-minus-negative prompt similarity."""
+    return np.stack([img @ protos[d]["pos"] - img @ protos[d]["neg"] for d in DISEASES], axis=1)
+
+
+def zero_shot(scores: np.ndarray, records: list[dict]) -> tuple[dict, dict]:
     patients = sorted({r["patient"] for r in records})
-    pidx = np.array([patients.index(r["patient"]) for r in records])
+    index = {p: i for i, p in enumerate(patients)}
+    pidx = np.array([index[r["patient"]] for r in records])
     n_img = np.bincount(pidx, minlength=len(patients)).astype(np.float64)
     out, per_disease_ranks, patient_labels = {}, [], []
     aucs, precs, recs = [], [], []
-    for d in DISEASES:
+    for j, d in enumerate(DISEASES):
         y = np.array([int(r["labels"][d]) for r in records])
-        score = img @ protos[d]["pos"] - img @ protos[d]["neg"]
+        score = scores[:, j]
         pred = score > 0
         ranks = average_ranks(score)
         auc = auc_from_ranks(ranks, y)
@@ -280,12 +346,13 @@ def worst_scores() -> dict:
     return {exp: {m: WORST for m in metrics} for exp, metrics in EXPERIMENTS.items()}
 
 
-def score_method(method_dir: Path, images: np.ndarray, records: list[dict], device: str) -> tuple[dict, dict]:
+def score_method(method_dir: Path, images: np.ndarray, records: list[dict], device: str, dump: Path | None):
     tok, image_encoder, text_encoder = load_method(method_dir, device)
-    img = l2_normalize(embed_images(image_encoder, images, device), "image_encoder")
+    rng = np.random.default_rng(ORDER_SEED)
+    img = l2_normalize(embed_images(image_encoder, images, device, rng), "image_encoder")
     prompt_texts = [t for d in DISEASES for side in ("pos", "neg") for t in PROMPTS[d][side]]
     captions = [r["caption"] for r in records]
-    txt = embed_texts(tok, text_encoder, prompt_texts + captions, device)
+    txt = embed_texts(tok, text_encoder, prompt_texts + captions, device, rng)
     if txt.shape[1] != img.shape[1]:
         raise MethodFailure(f"image dim {img.shape[1]} != text dim {txt.shape[1]}")
     txt = l2_normalize(txt, "text_encoder")
@@ -302,7 +369,16 @@ def score_method(method_dir: Path, images: np.ndarray, records: list[dict], devi
                 raise MethodFailure("degenerate prompt embedding")
             protos[d][side] = v / norm
     pools = np.array([int(r["pool"]) for r in records])
-    zs, gate = zero_shot(img, protos, records)
+    dscores = disease_scores(img, protos)
+    zs, gate = zero_shot(dscores, records)
+    if dump is not None:
+        dump.mkdir(parents=True, exist_ok=True)
+        np.savez_compressed(
+            dump / f"{method_dir.name}.npz",
+            disease_scores=dscores.astype(np.float32),
+            image=img.astype(np.float16),
+            caption=cap.astype(np.float16),
+        )
     scores = {
         "disease_zero_shot": {m: zs[m] for m in EXPERIMENTS["disease_zero_shot"]},
         "image_text_retrieval": retrieval(img, cap, pools),
@@ -335,13 +411,15 @@ def main() -> None:
     ap.add_argument("--data-dir", default=str(DATA_DIR))
     ap.add_argument("--only", nargs="*", default=None)
     ap.add_argument("--device", default="auto")
+    ap.add_argument("--dump-dir", default=None, help="optional: write per-image scores/embeddings per method")
     args = ap.parse_args()
 
     torch.set_grad_enabled(False)
-    torch.set_num_threads(max(1, os.cpu_count() or 1))
+    torch.set_num_threads(max(1, min(8, os.cpu_count() or 1)))
     device = args.device if args.device != "auto" else ("cuda" if torch.cuda.is_available() else "cpu")
     images, records = load_split(Path(args.data_dir))
     methods = discover(Path(args.root), args.only)
+    dump = Path(args.dump_dir) if args.dump_dir else None
     results = {exp: {"results": {}} for exp in EXPERIMENTS}
     statuses = {}
     for method_dir in methods:
@@ -351,7 +429,7 @@ def main() -> None:
         scores, status = None, None
         for dev in tried:
             try:
-                scores, status = score_method(method_dir, images, records, dev)
+                scores, status = score_method(method_dir, images, records, dev, dump)
                 break
             except MethodFailure as exc:
                 scores, status = worst_scores(), {"status": "failed", "reason": str(exc)}

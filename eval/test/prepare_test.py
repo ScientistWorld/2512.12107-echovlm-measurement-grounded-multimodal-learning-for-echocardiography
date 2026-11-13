@@ -1,15 +1,18 @@
 """Build the hidden test set from raw CAMUS test patients (evaluator-owned).
 
 Reads eval/test/downloads/camus/<patient>/ (fetched by eval/test/fetch_test_data.sh)
-and writes:
+and writes one compressed archive:
 
-    eval/test/test_images.npz   uint8 [N, 112, 112] frames (key "images")
-    eval/test/test_meta.json    per-image ground truth (labels, grades, view,
-                                patient, retrieval caption) and the fixed
-                                patient pools used for retrieval / k-NN
+    eval/test/hidden_test.npz
+        images  uint8 [N, 112, 112] frames
+        meta    uint8 bytes of a JSON document: per-image ground truth (labels,
+                grades, view, patient, retrieval caption) and the fixed patient
+                pools used for retrieval / k-NN
 
-Both outputs are committed so the hidden test runs offline; this script only
-has to run when they are missing.
+The archive is committed so the hidden test runs offline; this script only has
+to run when it is missing. Ground truth is stored only inside the compressed
+archive (never as a plain-text file), so an encoder cannot read answers from
+disk while it is being evaluated.
 
 Usage:  python eval/test/prepare_test.py
 """
@@ -86,7 +89,6 @@ def main() -> None:
     pools = {p: i % N_POOLS for i, p in enumerate(order)}
     for r in records:
         r["pool"] = pools[r["patient"]]
-    np.savez_compressed(HERE / "test_images.npz", images=np.stack(images).astype(np.uint8))
     per_patient = {r["patient"]: r for r in records}
     meta = {
         "version": 1,
@@ -98,7 +100,8 @@ def main() -> None:
         },
         "records": records,
     }
-    (HERE / "test_meta.json").write_text(json.dumps(meta))
+    meta_bytes = np.frombuffer(json.dumps(meta).encode("utf-8"), dtype=np.uint8)
+    np.savez_compressed(HERE / "hidden_test.npz", images=np.stack(images).astype(np.uint8), meta=meta_bytes)
     print(json.dumps({k: v for k, v in meta.items() if k != "records"}), flush=True)
 
 

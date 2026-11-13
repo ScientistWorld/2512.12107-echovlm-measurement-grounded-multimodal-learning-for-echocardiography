@@ -116,6 +116,29 @@ def export_model(model: EchoVLM, out_dir: Path, tokenizer_json: Path, max_length
 # ----------------------------------------------------------------------------- training
 
 
+def augment(x: torch.Tensor, gen: torch.Generator) -> torch.Tensor:
+    """Size-preserving augmentation of [B,1,H,W] images in [0,1].
+
+    Small rotation (+-7 deg) and translation (+-8 px) without scaling, so chamber
+    size in pixels (1.75 mm / px) keeps its meaning; gamma / contrast / brightness
+    jitter for gain and depth variation.
+    """
+    b = x.shape[0]
+    u = torch.rand(b, 6, generator=gen).to(x.device)
+    ang = (u[:, 0] - 0.5) * 2 * math.radians(7.0)
+    tx, ty = (u[:, 1] - 0.5) * 2 * (8 / 56), (u[:, 2] - 0.5) * 2 * (8 / 56)
+    cos, sin = torch.cos(ang), torch.sin(ang)
+    theta = torch.stack([torch.stack([cos, -sin, tx], 1), torch.stack([sin, cos, ty], 1)], 1)
+    grid = F.affine_grid(theta, list(x.shape), align_corners=False)
+    x = F.grid_sample(x, grid, mode="bilinear", padding_mode="zeros", align_corners=False)
+    gamma = torch.exp((u[:, 3] - 0.5) * 2 * math.log(1.25)).view(b, 1, 1, 1)
+    contrast = (0.85 + 0.3 * u[:, 4]).view(b, 1, 1, 1)
+    bright = ((u[:, 5] - 0.5) * 0.1).view(b, 1, 1, 1)
+    x = x.clamp(0, 1).pow(gamma)
+    mean = x.mean(dim=(2, 3), keepdim=True)
+    return ((x - mean) * contrast + mean + bright).clamp(0, 1)
+
+
 def lr_at(step: int, total: int, warmup: int, base: float) -> float:
     if step < warmup:
         return base * (step + 1) / warmup
@@ -153,6 +176,7 @@ def main() -> None:
     ap.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     ap.add_argument("--limit-images", type=int, default=0, help="debug: subsample the training set")
     ap.add_argument("--no-grad-checkpointing", action="store_true")
+    ap.add_argument("--augment", action="store_true", help="size-preserving image augmentation (not in the paper)")
     args = ap.parse_args()
 
     random.seed(args.seed)
@@ -190,7 +214,7 @@ def main() -> None:
         ),
         flush=True,
     )
-    views =torch.tensor([VIEW_IDS[r["view"]] for r in records], dtype=torch.long)
+    views = torch.tensor([VIEW_IDS[r["view"]] for r in records], dtype=torch.long)
     images_t = torch.from_numpy(images)
 
     model = build_pretrained_echovlm(weights_dir).to(device)
@@ -214,7 +238,10 @@ def main() -> None:
             idx = perm[b * batch : (b + 1) * batch].to(device)
             for group in opt.param_groups:
                 group["lr"] = lr_at(step, total_steps, args.warmup_steps, args.lr)
-            x = images_dev[idx].float().div_(255.0).unsqueeze(1).expand(-1, 3, -1, -1)
+            x = images_dev[idx].float().div_(255.0).unsqueeze(1)
+            if args.augment:
+                x = augment(x, gen)
+            x = x.expand(-1, 3, -1, -1)
             with torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=use_amp):
                 zi = model.encode_image(x)
                 zt = model.encode_text(caption_dev[idx])

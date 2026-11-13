@@ -236,9 +236,13 @@ core.[0-9]*
 data/downloads/
 
 # Hardened gym (iteration 11): raw CAMUS downloads for the hidden test, run
-# outputs of the hardening audit. The preprocessed hidden test set is small and
-# committed so the hidden test runs offline.
+# outputs of the hardening audit. The preprocessed hidden test set (images +
+# ground truth, compressed) is small and committed so the hidden test runs offline.
 eval/test/downloads/
+eval/test/legacy_v1/
 redteam/hardening/runs/
-!eval/test/test_images.npz
+redteam/hardening/dumps/
+!eval/test/hidden_test.npz
 .claude.json
+redteam/hardening/runs_smoke/
+redteam/hardening/dumps_smoke/

@@ -8,10 +8,14 @@ and writes, per split, into data/downloads/camus_vlm/:
                          frame, phase, measurements, grades, labels, caption,
                          negated_caption
 
-train uses every frame of each ED->ES half-sequence; val uses 5 evenly spaced
-frames per sequence (the same sampling the hidden test uses).
+val uses 5 evenly spaced frames per ED->ES half-sequence (the same sampling the
+hidden test uses). train uses either the same 5 frames per sequence
+(--train-frames eval, ~10 image-caption pairs per patient, close to the paper's
+~12 pairs per patient in EchoGround-MIMIC) or every frame of the half-sequence
+(--train-frames all, ~38 highly redundant pairs per patient).
 
 Usage:  python -m data.prepare_camus [--raw data/downloads/camus] [--out data/downloads/camus_vlm]
+                                     [--train-frames eval|all]
 """
 
 from __future__ import annotations
@@ -36,6 +40,7 @@ from data.camus_common import (
 )
 
 CAPTION_SEED = "camus-vlm-v1"
+TRAIN_FRAMES = "all"
 
 
 def process_patient(job: tuple[str, str, bool]) -> tuple[list[np.ndarray], list[dict]]:
@@ -84,13 +89,14 @@ def main() -> None:
     ap.add_argument("--out", default="data/downloads/camus_vlm")
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--limit", type=int, default=0, help="debug: patients per split")
+    ap.add_argument("--train-frames", choices=("eval", "all"), default=TRAIN_FRAMES)
     args = ap.parse_args()
 
     split = json.loads(Path(args.split_file).read_text())
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     summary = {}
-    for name, all_frames in (("train", True), ("val", False)):
+    for name, all_frames in (("train", args.train_frames == "all"), ("val", False)):
         patients = split[name][: args.limit] if args.limit else split[name]
         jobs = [(str(Path(args.raw) / p), name, all_frames) for p in patients]
         images, records = [], []
@@ -104,6 +110,7 @@ def main() -> None:
                 f.write(json.dumps(r) + "\n")
         per_patient = {r["patient"]: r for r in records}
         summary[name] = {
+            "frames": "all" if all_frames else "eval",
             "patients": len(per_patient),
             "images": len(records),
             "prevalence_patients": {

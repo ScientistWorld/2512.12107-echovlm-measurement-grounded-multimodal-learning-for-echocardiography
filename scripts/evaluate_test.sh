@@ -5,7 +5,7 @@
 set -e
 cd "$(dirname "$0")/.."
 mkdir -p scoring
-if [ ! -f eval/test/test_meta.json ]; then
+if [ ! -f eval/test/hidden_test.npz ]; then
   python eval/test/prepare_test.py
 fi
 python eval/test/evaluate.py "$@"

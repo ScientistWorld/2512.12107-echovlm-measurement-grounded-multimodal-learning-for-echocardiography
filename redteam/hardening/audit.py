@@ -90,12 +90,15 @@ def run(cmd: list[str], logfile: Path) -> int:
 
 
 def gpu_ids() -> list[int]:
+    """Up to two visible GPUs with the most free memory (a node can expose GPUs other jobs are using)."""
     try:
         import torch
 
-        return list(range(min(2, torch.cuda.device_count())))
+        free = sorted(((torch.cuda.mem_get_info(i)[0], i) for i in range(torch.cuda.device_count())), reverse=True)
     except Exception:
         return []
+    good = [i for f, i in free if f > 30e9][:2]
+    return good or [i for _, i in free[:1]]
 
 
 def run_name(method: str, regime: str, seed: int) -> str:

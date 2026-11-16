@@ -2,16 +2,24 @@
 
 ## Research Problem
 
-The benchmark studies measurement-grounded multimodal representation learning for echocardiography. The goal is to align echo images with clinically meaningful language while preserving the ability to distinguish positive disease findings from normal or negated findings.
+Measurement-grounded vision–language learning for echocardiography. Align echo frames with clinical statements so that findings and their negations can be graded zero-shot from text, captions retrieved, and the visual representation kept faithful to echo acquisition structure.
 
-## Core Contribution
+## Core Contribution to Build On
 
-The target research direction is echo-specific multimodal learning that improves clinically grounded image-language alignment while handling normal or absent findings correctly. Future improvements should stay within this problem family: better clinical image-text representations for echocardiography under measurement-grounded and negation-sensitive evaluation.
+The reference shows that echo-specific priors in the pretraining objective improve zero-shot disease classification over plain image–text contrastive learning, and that view structure in the image space is preserved. On this benchmark, though, retrieval is not improved, and the disease ranking is far from saturated: reference macro AUC 68 on hidden patients.
 
 ## Approach Scope
 
-Agents may change model internals, text processing, augmentation, batching, or optimization. They may add related clinical supervision if it is derived from the fixed training data. Improvements should still produce image, positive-caption, and negated-caption embeddings for evaluation.
+In scope:
+- the objective, architecture and initialisation;
+- text processing and the tokenizer;
+- augmentation, sampling of frames and pairs, batching and optimisation;
+- using several frames, views or measurements from the visible records during training;
+- ensembling, and anything else that produces better stateless image and text encoders.
 
 ## Out of Bounds
 
-It is out of bounds to replace the task with supervised classification on the test labels, to evaluate on a different test split, or to bypass multimodal alignment by hardcoding disease labels from the generator. It is also out of bounds to ignore the negation constraint while optimizing only retrieval or only disease AUC.
+- Training or selecting on CAMUS patients outside the visible split, or on any copy of CAMUS (see `CONSTRAINTS.md`).
+- Encoders that read files, keep state across calls, or behave differently depending on which inputs they saw before.
+- Hard-coding the evaluator's prompts or captions, or editing the evaluator.
+- Improving retrieval or disease AUC by collapsing the visual representation. View k-NN is scored as a constraint.

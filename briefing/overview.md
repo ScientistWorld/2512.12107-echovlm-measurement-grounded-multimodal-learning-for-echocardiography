@@ -3,14 +3,27 @@
 - **Paper ID:** 2512.12107
 - **Title:** EchoVLM: Measurement-Grounded Multi-Modal Learning for Echocardiography
 - **Domain:** Medical vision-language learning
-- **TL;DR:** EchoVLM adapts CLIP-style pretraining to echocardiography using measurement-grounded captions plus view-informed and negation-aware contrastive objectives.
+- **TL;DR:** CLIP-style pretraining for echocardiography on measurement-grounded captions, plus view-informed and negation-aware contrastive objectives.
 
 ## Short Summary
 
-The paper introduces EchoGround-MIMIC, an echocardiography image-text dataset with standardized views, structured measurements, captions, and disease labels. EchoVLM trains a VLM with standard image-text contrast plus two echo-specific losses: one groups images by acquisition view and one separates positive clinical captions from negated counterparts. The reported main result is stronger zero-shot disease classification and retrieval than echo-specific and general VLM baselines, with additional transfer to view classification, segmentation, and landmark detection.
+The paper introduces EchoGround-MIMIC, an echocardiography image–text dataset with standardised views, OCR-extracted measurements, measurement-grounded captions and guideline-derived disease labels. It trains EchoVLM, a VLM with image–text contrastive learning plus two echo-specific losses. The view loss groups images by acquisition view; the negation loss separates captions from their negated counterparts. Reported gains are in zero-shot disease classification and retrieval, with transfer to view classification, segmentation and landmark detection.
+
+## This gym
+
+EchoGround-MIMIC is not released, so the gym rebuilds the paper's measurement-grounded setting from public CAMUS data. It has 500 patients with apical two- and four-chamber views, expert LV/LA masks and biplane LVEF. Three ASE-graded findings are labelled, and captions state each measurement with its interpretation. Methods export image and text encoders. A hidden evaluator embeds frames from 150 held-out patients together with hidden prompts and captions, and scores three things:
+- zero-shot disease classification (primary),
+- image-to-caption retrieval,
+- frozen k-NN view classification, a constraint on the visual representation.
 
 ## Key Results
 
-- Zero-shot disease classification on EchoGround-MIMIC: 86.5 AUC, 34.2 precision, 86.2 recall.
-- Image-text retrieval on EchoGround-MIMIC: 2.98 Recall@5 and 5.70 Recall@10.
-- Downstream view classification: 95.1 accuracy, 95.3 F1, 95.8 precision.
+Paper (EchoGround-MIMIC):
+- Zero-shot disease AUC 86.5 / precision 34.2 / recall 86.2, against CLIP-only 79.6 / 29.0 / 73.6 (Table 6).
+- Retrieval R@5 2.98, R@10 5.70.
+- k-NN view F1 on CAMUS 94.0.
+
+Gym (hidden test, 150 patients, reference seed 0):
+- EchoVLM AUC 68.0 / precision 51.2 / recall 70.2, R@10 17.1, view k-NN F1 96.4.
+- CLIP-only AUC 61.9, R@10 17.9, view k-NN F1 91.9.
+- Over 5 seeds, AUC is 68.3 ± 1.9 for EchoVLM and 64.3 ± 1.8 for CLIP-only.

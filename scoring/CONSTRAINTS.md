@@ -1,16 +1,25 @@
 # Scientist Constraints
 
-Future agents must use the fixed data split under `data/echo_toy` for the included runnable benchmark and must write artifacts in the same `test_embeddings.jsonl` format. They may change model internals and training details, but improvements must come from better echocardiography image-text representation learning rather than changing the evaluation data.
+## Data
 
-The benchmark is intentionally scaled because the paper's EchoGround-MIMIC data, private TTE view-classification data, and internal initializations are unavailable in this workspace. Do not claim comparison on the original private data unless those resources are actually acquired and wired into the same method-agnostic evaluation pipeline.
+- Train and select models only on the visible CAMUS patients listed in `data/camus_split.json` (`train`, `val`), as prepared by `scripts/prepare_data.sh`. The remaining 150 CAMUS patients are the hidden test.
+- Do **not** download, read or use any other CAMUS patient, and do not use other copies or derivatives of CAMUS. The hidden patients are part of the public release, so using them is easy, and it is a rule violation that the evaluator cannot detect. Any submission found doing so is invalid.
+- Other public data or pretrained weights are allowed if they contain no CAMUS images. Fetch them in `scripts/download.sh` and document them as deviations.
+- You may use everything in the visible records: images, captions, negated captions, measurements, grades, labels, views and phases. You may also re-derive other frames with `python -m data.prepare_camus --train-frames all`.
 
-The scored constraint surface includes negation separation because the paper's central claim depends on distinguishing affirmative clinical findings from normal or negated findings. The paper does not report a direct negation embedding cosine, so `reference.json` defines the metric without paper result values; reproduced `scores.json` must still report it from artifacts. Toy retrieval remains diagnostic only because this split has a much smaller candidate pool than the paper's retrieval benchmark.
+## Interface
 
-Do not use labels from the test split during training, generate extra test examples, or tune the evaluator. Larger external pretrained models are allowed only if they are documented in `PROGRESS.md`, downloaded through `scripts/download.sh`, and evaluated on the unchanged test split; model size and external data use must be reported as deviations.
+- Submit `checkpoints/<name>/export/` as described in `briefing/evaluation.md`. The evaluator runs the encoders itself on its own inputs.
+- Encoders must be pure functions of one input:
+  - no file access,
+  - no state carried between calls, including in-place updates of buffers,
+  - no dependence on the order or the identity of other inputs.
+- Text must be handled through your own `tokenizer.json` and text encoder. The evaluator supplies its own prompts and captions and never reveals them.
+- Do not edit `eval/`, `scripts/evaluate_*.sh` or `scoring/reference.json`.
 
-## Compliance Checklist
+## Compliance checklist
 
-- [ ] `data/echo_toy/test.jsonl` is unchanged for reported scores.
-- [ ] `scripts/evaluate.sh` reads artifacts and does not import from `method/`.
-- [ ] Test labels are not used for training or model selection.
-- [ ] Any external pretrained model or dataset is documented as a deviation.
+- [ ] Only patients in `data/camus_split.json` (train / val) were used for training and model selection.
+- [ ] Encoders are deterministic, stateless TorchScript modules that do not read files.
+- [ ] Any external data or weights are public, CAMUS-free, fetched by `scripts/download.sh` and documented.
+- [ ] Scores come from `scripts/evaluate_train.sh` / `scripts/evaluate_test.sh`, run unmodified.

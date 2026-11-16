@@ -2,7 +2,7 @@
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
 action: submit
-gpus: 2
+gpus: 1
 test: false
 milestone: core_claim
-notes: "Resubmit (previous attempt lost its worker before starting). Final hardening audit: compressed hidden test archive; smoke test of hardened evaluators; regime search (epochs / frames per sequence / batch) for CLIP-only and full EchoVLM x3 seeds selected on visible val; ablations, seeds, variants, controls, shortcuts under hardened and previous evaluator; official checkpoints + scores; summary. Resumable."
+notes: "Final checks: default data prep reproduces selected split; reference + CLIP-only retrained with default arguments and scored; rebuilt stateful / hand-written-rule shortcuts scored by hardened and previous evaluator; summary with final weights."

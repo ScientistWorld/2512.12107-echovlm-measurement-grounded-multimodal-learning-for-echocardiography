@@ -2,8 +2,8 @@
   "_meta": {
     "method_status": {
       "sc_stateful": {
-        "reason": "missing export/image_encoder.pt",
-        "seconds": 0.0,
+        "reason": "image_encoder is not a pure function of its input (embedding changed on re-evaluation)",
+        "seconds": 28.3,
         "status": "failed"
       }
     },

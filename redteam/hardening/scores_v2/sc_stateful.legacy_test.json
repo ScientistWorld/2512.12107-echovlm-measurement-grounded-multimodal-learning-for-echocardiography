@@ -2,9 +2,11 @@
   "_meta": {
     "method_status": {
       "sc_stateful": {
-        "reason": "missing export/image_encoder.pt",
-        "seconds": 0.0,
-        "status": "failed"
+        "embed_dim": 512,
+        "macro_auc": 0.7124289924883666,
+        "permutation_p_value": 0.0004997501249375312,
+        "seconds": 47.0,
+        "status": "ok"
       }
     },
     "n_images": 1500,
@@ -16,28 +18,28 @@
     "disease_zero_shot": {
       "results": {
         "sc_stateful": {
-          "auc": 0.0,
-          "auc_la_enlargement": 0.0,
-          "auc_lv_dilation": 0.0,
-          "auc_lv_systolic_dysfunction": 0.0,
-          "precision": 0.0,
-          "recall": 0.0
+          "auc": 71.24289924883665,
+          "auc_la_enlargement": 81.76661951909476,
+          "auc_lv_dilation": 67.53776004559704,
+          "auc_lv_systolic_dysfunction": 64.42431818181818,
+          "precision": 50.31238139199689,
+          "recall": 87.11366302006697
         }
       }
     },
     "image_text_retrieval": {
       "results": {
         "sc_stateful": {
-          "recall_at_10": 0.0,
-          "recall_at_5": 0.0
+          "recall_at_10": 9.733333333333334,
+          "recall_at_5": 5.2
         }
       }
     },
     "view_knn": {
       "results": {
         "sc_stateful": {
-          "accuracy": 0.0,
-          "f1": 0.0
+          "accuracy": 84.33333333333333,
+          "f1": 84.2844114973363
         }
       }
     }

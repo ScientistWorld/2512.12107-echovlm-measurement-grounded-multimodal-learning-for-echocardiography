@@ -3,10 +3,10 @@
     "method_status": {
       "sc_handcrafted": {
         "embed_dim": 512,
-        "macro_auc": 0.4850148962122877,
-        "permutation_p_value": 0.656671664167916,
-        "reason": "macro AUC 48.50 not significantly above chance (p=0.6567 > 0.01)",
-        "seconds": 32.7,
+        "macro_auc": 0.5201514929760521,
+        "permutation_p_value": 0.2708645677161419,
+        "reason": "macro AUC 52.02 not significantly above chance (p=0.2709 > 0.01)",
+        "seconds": 45.3,
         "status": "failed_task_gate"
       }
     },

@@ -44,8 +44,8 @@ M = [PY, "-m", "method.train"]
 B = [PY, "-m", "baseline.clip_finetune"]
 LEGACY_EVAL = ROOT / "eval" / "test" / "legacy_v1" / "evaluate_v1.py"
 
-DATA_ALL = "data/downloads/camus_vlm"
-DATA_F5 = "data/downloads/camus_vlm_f5"
+DATA_ALL = "data/downloads/camus_vlm_allframes"  # every frame (python -m data.prepare_camus --train-frames all)
+DATA_F5 = "data/downloads/camus_vlm"  # default since this audit: 5 frames per sequence
 REGIMES = {
     # name: (data dir, extra args). All keep the paper's lr 1e-4, wd 0.005, warmup 200, cosine,
     # lambda_view 0.5 / lambda_neg 0.1 and the paper's 512 batch unless stated.
@@ -270,13 +270,38 @@ def phase3(g: str) -> None:
         log({"official": script, "rc": rc})
 
 
+def final_checks(g: str) -> None:
+    """After the defaults were set to the selected regime: default-argument reruns + fixed shortcuts."""
+    jobs = [
+        ("repro_full_default", M + ["--seed", "0"], False),  # every other argument at its default
+        ("repro_clip_default", B + ["--seed", "0"], False),
+    ]
+    pool_run(jobs, RUNS, SCORES, DUMPS, LOGS)
+    rebuild = ["sc_stateful", "sc_handcrafted"]
+    if not (RUNS / "sc_stateful" / "export" / "image_encoder.pt").is_file() or not (RUNS / "sc_handcrafted" / "keyword_v2").is_file():
+        for name in rebuild:
+            shutil.rmtree(RUNS / name, ignore_errors=True)
+            for f in SCORES.glob(f"{name}.*.json"):
+                f.unlink()
+        rc = run([PY, str(HERE / "make_shortcuts.py"), "--ref", str(RUNS / run_name("full", g, 0)), "--out", str(RUNS),
+                  "--only", *rebuild], LOGS / "shortcuts_final.log")
+        (RUNS / "sc_handcrafted").mkdir(exist_ok=True)
+        (RUNS / "sc_handcrafted" / "keyword_v2").write_text("token-sequence keyword matching\n")
+        log({"shortcuts_rebuilt": rebuild, "rc": rc})
+    pool_run([(n, None, True) for n in rebuild], RUNS, SCORES, DUMPS, LOGS)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke-only", action="store_true")
     ap.add_argument("--skip-smoke", action="store_true")
+    ap.add_argument("--final", action="store_true", help="only the post-selection checks")
     args = ap.parse_args()
     for d in (RUNS, SCORES, DUMPS, LOGS):
         d.mkdir(parents=True, exist_ok=True)
+    if args.final:
+        final_checks(json.loads((HERE / "selected_regime.json").read_text())["selected"])
+        return
     if not args.skip_smoke and not (HERE / "smoke_report.json").is_file():
         smoke()
     if args.smoke_only:

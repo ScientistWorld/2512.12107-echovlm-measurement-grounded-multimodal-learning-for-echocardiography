@@ -2,7 +2,7 @@
   "experiments": {
     "disease_zero_shot": {
       "description": "Zero-shot disease classification from image and text embeddings (paper Sec. 4.1, Tables 1 and 6): for each disease, each image is compared with hidden positive and negative prompts; argmax gives the decision, the similarity margin the ranking. Macro-averaged over three guideline-graded findings (LV systolic dysfunction, LV dilation, LA enlargement) on 1,500 CAMUS frames of 150 held-out patients. A method whose macro AUC is not significantly above chance (patient-level permutation test, p > 0.01) is scored as failed in every experiment. Paper values are Table 6 (EchoGround-MIMIC, nine findings); the gym's scale differs (see _note).",
-      "weight": 0.6,
+      "weight": 0.65,
       "primary_metric": "auc",
       "_note": "Setup scaled: public CAMUS (500 patients, 2 apical views, 3 findings) instead of EchoGround-MIMIC (1,572 patients, 22 views, 9 findings); vision encoder initialised from OpenAI CLIP ViT-B/16 instead of an internal echo-pretrained ViT-B. The Table 6 numbers below are the paper's, kept for the direction of the comparison only; the gym is not expected to match them.",
       "metrics": {
@@ -22,7 +22,7 @@
     },
     "image_text_retrieval": {
       "description": "Image-to-text retrieval of the paired measurement-grounded caption (paper Sec. 4.1, Table 1), Recall@5/@10 within fixed pools of 50 held-out patients (500 image-caption pairs per pool, hidden caption wording), averaged over pools.",
-      "weight": 0.25,
+      "weight": 0.1,
       "primary_metric": "recall_at_10",
       "_note": "The paper's retrieval pool is the whole EchoGround-MIMIC test set (1,911 pairs) with different captions, so its numbers (kept under _paper_*) are not on the gym's scale. Gym rows carry no paper value here; their type only marks them as comparison rows.",
       "metrics": {
@@ -40,7 +40,7 @@
     },
     "view_knn": {
       "description": "Frozen-embedding k-NN view classification (A2C vs A4C, k=20, temperature-weighted votes, neighbours from other patients only) on CAMUS frames, as in the paper's App. A.8 k-NN evaluation on CAMUS. Constraint: the image representation must keep view information (paper: the objectives improve multimodal results 'without compromising vision features').",
-      "weight": 0.15,
+      "weight": 0.25,
       "primary_metric": "f1",
       "_note": "Paper App. A.8 reports k-NN (k=20) view classification on CAMUS for EchoVLM (F1 94.0) and EchoPrime (79.3). The paper does not report k-NN for its ablation rows; those gym rows carry no paper value.",
       "metrics": {

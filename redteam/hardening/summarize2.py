@@ -153,6 +153,8 @@ def main() -> None:
     parsed = {n: NAME_RE.match(n).groupdict() for n in test if NAME_RE.match(n)}
     genuine = [n for n in test if not n.startswith("sc_")]
     ranks, sds = rank_deltas(test, reference, metrics, genuine)
+    passing = [n for n in genuine if st_test.get(n, {}).get("status") == "ok"]
+    ranks_pass, sds_pass = rank_deltas(test, reference, metrics, passing)
     boot = paired_bootstrap(sorted(test), reference)
 
     def raw_auc(st: dict, n: str):
@@ -180,9 +182,9 @@ def main() -> None:
                      f"{ms(row['clip']['test'])} | {ms(diffs)} | {sum(row['full']['pass'])}/3 |")
 
     lines += ["", f"## Selected regime `{g}`: hidden-test metrics (scored values; gate failures are 0)", "",
-              "| run | status | AUC | prec | recall | R@5 | R@10 | kNN F1 | val AUC (raw) | ΔAUC vs ref [95% CI] | rank Δ |",
-              "|---|---|---|---|---|---|---|---|---|---|---|"]
-    sel_names = sorted(n for n in test if (n in parsed and parsed[n]["regime"] == g) or n.startswith("ens3_") or n == "untrained")
+              "| run | status | AUC | prec | recall | R@5 | R@10 | kNN F1 | val AUC (raw) | ΔAUC vs ref [95% CI] | rank Δ (all runs) | rank Δ (passing runs) |",
+              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    sel_names = sorted(n for n in test if (n in parsed and parsed[n]["regime"] == g) or n.startswith(("ens3_", "repro_")) or n == "untrained")
     for n in sel_names:
         t = test[n]
         b = boot.get(n, {})
@@ -191,7 +193,7 @@ def main() -> None:
         lines.append(
             f"| {n} | {st_test.get(n, {}).get('status')} | {t['disease_zero_shot']['auc']:.2f} | {t['disease_zero_shot']['precision']:.2f} | "
             f"{t['disease_zero_shot']['recall']:.2f} | {t['image_text_retrieval']['recall_at_5']:.2f} | {t['image_text_retrieval']['recall_at_10']:.2f} | "
-            f"{t['view_knn']['f1']:.2f} | {'—' if va is None else f'{va:.2f}'} | {ci} | {ranks.get(n, 0):+.3f} |")
+            f"{t['view_knn']['f1']:.2f} | {'—' if va is None else f'{va:.2f}'} | {ci} | {ranks.get(n, 0):+.3f} | {ranks_pass.get(n, 0):+.3f} |")
 
     # Per-method seed statistics in the selected regime.
     seedstats = {}
@@ -204,14 +206,16 @@ def main() -> None:
             "test_auc": ms([raw_auc(st_test, n) for n in names]),
             "val_auc": ms([raw_auc(st_val, n) for n in names]),
             "rank": ms([ranks.get(n) for n in names]),
+            "rank_pass": ms([ranks_pass.get(n) for n in names]),
             "r10": ms([test[n]["image_text_retrieval"]["recall_at_10"] for n in names]),
             "knn": ms([test[n]["view_knn"]["f1"] for n in names]),
             "gate_pass": sum(st_test.get(n, {}).get("status") == "ok" for n in names),
         }
     lines += ["", "## Selected regime: seed statistics (raw macro AUC; rank Δ vs reference)", "",
-              "| method | n | test AUC | val AUC | R@10 | kNN F1 | rank Δ | gate pass |", "|---|---|---|---|---|---|---|---|"]
+              "| method | n | test AUC | val AUC | R@10 | kNN F1 | rank Δ (all runs) | rank Δ (passing runs) | gate pass |",
+              "|---|---|---|---|---|---|---|---|---|"]
     for m, s in seedstats.items():
-        lines.append(f"| {m} | {s['n']} | {s['test_auc']} | {s['val_auc']} | {s['r10']} | {s['knn']} | {s['rank']} | {s['gate_pass']}/{s['n']} |")
+        lines.append(f"| {m} | {s['n']} | {s['test_auc']} | {s['val_auc']} | {s['r10']} | {s['knn']} | {s['rank']} | {s['rank_pass']} | {s['gate_pass']}/{s['n']} |")
 
     lines += ["", "## Shortcuts: hardened evaluator vs previous evaluator", "",
               "| shortcut | hardened status | hardened AUC / R@10 / kNN | rank Δ | previous status | previous AUC / R@10 / kNN |",
@@ -237,7 +241,9 @@ def main() -> None:
         "seed_stats": seedstats,
         "bootstrap_vs_reference": boot,
         "rank_deltas": ranks,
+        "rank_deltas_passing_cohort": ranks_pass,
         "metric_sd": sds,
+        "metric_sd_passing_cohort": sds_pass,
         "status_test": st_test,
         "status_val": st_val,
         "status_legacy": st_legacy,

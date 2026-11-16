@@ -40,7 +40,7 @@ from data.camus_common import (
 )
 
 CAPTION_SEED = "camus-vlm-v1"
-TRAIN_FRAMES = "all"
+TRAIN_FRAMES = "eval"  # selected on the visible validation split (see HARDENING.md)
 
 
 def process_patient(job: tuple[str, str, bool]) -> tuple[list[np.ndarray], list[dict]]:

@@ -44,6 +44,7 @@ from typing import List
 
 import torch
 from torch import nn
+from torch.nn import functional as F
 
 
 class Scaled(nn.Module):
@@ -184,8 +185,7 @@ class PooledImage(nn.Module):
         self.register_buffer("acc", torch.zeros(1, dim))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        z = self.inner(x)
-        z = z / z.norm(dim=-1, keepdim=True)
+        z = F.normalize(self.inner(x), dim=-1)
         c = int(self.count[0])
         if c % self.block == 0:
             self.acc.zero_()
@@ -220,9 +220,13 @@ class HandImage(nn.Module):
 
 
 class KeywordText(nn.Module):
-    """Keyword rule on token ids: which finding a phrase is about, and whether it is negated / normal."""
+    """Keyword rule on token ids: which finding a phrase is about, and whether it is negated / normal.
 
-    def __init__(self, la: List[int], ef: List[int], lv: List[int], negators: List[int], dim: int):
+    Keywords are matched as token sequences, so words the tokenizer splits into
+    several sub-word tokens (e.g. "atrial") are found too.
+    """
+
+    def __init__(self, la: List[List[int]], ef: List[List[int]], lv: List[List[int]], negators: List[List[int]], dim: int):
         super().__init__()
         self.la = la
         self.ef = ef
@@ -230,42 +234,50 @@ class KeywordText(nn.Module):
         self.negators = negators
         self.dim = dim
 
+    def _has(self, toks: List[int], seqs: List[List[int]]) -> bool:
+        for seq in seqs:
+            n = len(seq)
+            for i in range(len(toks) - n + 1):
+                ok = True
+                for j in range(n):
+                    if toks[i + j] != seq[j]:
+                        ok = False
+                        break
+                if ok:
+                    return True
+        return False
+
     def forward(self, ids: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
         toks: List[int] = ids[0].tolist()
         d = 3
-        for t in toks:
-            if t in self.la:
-                d = 2
-        if d == 3:
-            for t in toks:
-                if t in self.ef:
-                    d = 0
-        if d == 3:
-            for t in toks:
-                if t in self.lv:
-                    d = 1
+        if self._has(toks, self.la):
+            d = 2
+        elif self._has(toks, self.ef):
+            d = 0
+        elif self._has(toks, self.lv):
+            d = 1
         sign = 1.0
-        for t in toks:
-            if t in self.negators:
-                sign = -1.0
+        if self._has(toks, self.negators):
+            sign = -1.0
         out = torch.zeros(ids.shape[0], self.dim, device=ids.device)
         out[:, d] = sign
         out[:, 4] = 0.01
         return out
 
 
-def _keyword_ids(tokenizer_json: Path, words: list[str]) -> list[int]:
+def _keyword_ids(tokenizer_json: Path, words: list[str]) -> list[list[int]]:
+    """Token-id sequence of each keyword (and its capitalised / upper-case variants)."""
     from tokenizers import Tokenizer
 
     tok = Tokenizer.from_file(str(tokenizer_json))
     special = {tok.token_to_id(t) for t in ("<start_of_text>", "<end_of_text>", "<|startoftext|>", "<|endoftext|>")}
-    ids = set()
+    seqs = set()
     for w in words:
         for variant in (w, w.capitalize(), w.upper()):
-            enc = [i for i in tok.encode(variant).ids if i not in special and i != 0]
-            if len(enc) == 1:  # only words that are a single token, to avoid sub-word collisions
-                ids.add(enc[0])
-    return sorted(ids) or [-1]
+            enc = tuple(i for i in tok.encode(variant).ids if i not in special and i != 0)
+            if enc:
+                seqs.add(enc)
+    return [list(s) for s in sorted(seqs)] or [[-1]]
 
 
 def build_handcrafted(train_dir: Path, ref_export: Path, dim: int):
@@ -304,7 +316,18 @@ def build_handcrafted(train_dir: Path, ref_export: Path, dim: int):
         _keyword_ids(tj, ["normal", "no", "preserved", "not", "without"]),
         dim,
     )
-    info = {"visible_train_auc_fit": round(best[0], 4), "threshold": thr, "centres": centres}
+    from tokenizers import Tokenizer
+
+    tok = Tokenizer.from_file(str(tj))
+    probe = {}
+    for phrase in ("LA enlargement", "normal LA size", "dilated left atrium", "reduced LV systolic function",
+                   "no LV systolic dysfunction", "LV dilation", "normal LV size", "left atrial enlargement",
+                   "normal left atrial size", "left ventricular dilation", "normal left ventricular ejection fraction"):
+        ids = torch.tensor([tok.encode(phrase).ids], dtype=torch.long)
+        out = text(ids, torch.ones_like(ids))[0]
+        d = int(out[:4].abs().argmax())
+        probe[phrase] = {"finding": ["lv_systolic_dysfunction", "lv_dilation", "la_enlargement", "none"][d], "sign": float(out[d])}
+    info = {"visible_train_auc_fit": round(best[0], 4), "threshold": thr, "centres": centres, "keyword_map": probe}
     return image, text, info
 
 
@@ -342,7 +365,12 @@ def main() -> None:
     ap.add_argument("--out", required=True)
     ap.add_argument("--leak-file", default="eval/test/legacy_v1/test_meta.json")
     ap.add_argument("--train-data", default="data/downloads/camus_vlm")
+    ap.add_argument("--only", nargs="*", default=None, help="build only these shortcuts")
     args = ap.parse_args()
+
+    def want(name: str) -> bool:
+        return not args.only or name in args.only
+
     ref_export = Path(args.ref) / "export"
     root = Path(args.out)
     img = torch.jit.load(str(ref_export / "image_encoder.pt"), map_location="cpu")
@@ -351,23 +379,35 @@ def main() -> None:
 
     # Directory-level shortcuts.
     for name in ("sc_missing_export", "sc_forged_scores"):
+        if not want(name):
+            continue
         d = root / name
         if d.exists():
             shutil.rmtree(d)
         d.mkdir(parents=True)
     perfect = {m: 100.0 for m in ("auc", "precision", "recall", "recall_at_5", "recall_at_10", "f1", "accuracy")}
-    (root / "sc_forged_scores" / "scores_test.json").write_text(json.dumps({"experiments": {"all": perfect}}))
-    (root / "sc_forged_scores" / "test_embeddings.jsonl").write_text('{"auc": 100}\n')
+    if want("sc_forged_scores"):
+        (root / "sc_forged_scores" / "scores_test.json").write_text(json.dumps({"experiments": {"all": perfect}}))
+        (root / "sc_forged_scores" / "test_embeddings.jsonl").write_text('{"auc": 100}\n')
 
-    write(root, "sc_nan_outputs", Scaled(img, float("nan")), None, ref_export)
-    write(root, "sc_empty_outputs", EmptyImage(), None, ref_export)
-    write(root, "sc_wrong_shape", FlatImage(img), None, ref_export)
-    write(root, "sc_dim_mismatch", PadImage(img), None, ref_export)
-    write(root, "sc_constant", ConstImage(dim, 1.0), ConstText(dim, 1.0), ref_export)
-    write(root, "sc_norm_scaled", Scaled(img, 1e6), ScaledText(txt, 1e6), ref_export)
-    write(root, "sc_huge_constant", ConstImage(dim, 1e9), ConstText(dim, -1e9), ref_export)
-    write(root, "sc_text_only", ConstImage(dim, 1.0), None, ref_export)
-    write(root, "sc_image_only", None, ConstText(dim, 1.0), ref_export)
+    if want("sc_nan_outputs"):
+        write(root, "sc_nan_outputs", Scaled(img, float("nan")), None, ref_export)
+    if want("sc_empty_outputs"):
+        write(root, "sc_empty_outputs", EmptyImage(), None, ref_export)
+    if want("sc_wrong_shape"):
+        write(root, "sc_wrong_shape", FlatImage(img), None, ref_export)
+    if want("sc_dim_mismatch"):
+        write(root, "sc_dim_mismatch", PadImage(img), None, ref_export)
+    if want("sc_constant"):
+        write(root, "sc_constant", ConstImage(dim, 1.0), ConstText(dim, 1.0), ref_export)
+    if want("sc_norm_scaled"):
+        write(root, "sc_norm_scaled", Scaled(img, 1e6), ScaledText(txt, 1e6), ref_export)
+    if want("sc_huge_constant"):
+        write(root, "sc_huge_constant", ConstImage(dim, 1e9), ConstText(dim, -1e9), ref_export)
+    if want("sc_text_only"):
+        write(root, "sc_text_only", ConstImage(dim, 1.0), None, ref_export)
+    if want("sc_image_only"):
+        write(root, "sc_image_only", None, ConstText(dim, 1.0), ref_export)
 
     # Attacks on the encoder interface (each built independently).
     import traceback
@@ -375,6 +415,8 @@ def main() -> None:
     built = {}
     leak = Path(args.leak_file)
     try:
+        if not want("sc_file_reader"):
+            raise LookupError("skipped")
         li, lt = build_leak(leak, dim)
         write(root, "sc_file_reader", li, lt, ref_export)
         built["sc_file_reader"] = "ok"
@@ -382,12 +424,16 @@ def main() -> None:
         traceback.print_exc()
         built["sc_file_reader"] = f"{type(exc).__name__}: {exc}"[:300]
     try:
+        if not want("sc_stateful"):
+            raise LookupError("skipped")
         write(root, "sc_stateful", PooledImage(img, dim, 10), None, ref_export)
         built["sc_stateful"] = "ok"
     except Exception as exc:
         traceback.print_exc()
         built["sc_stateful"] = f"{type(exc).__name__}: {exc}"[:300]
     try:
+        if not want("sc_handcrafted"):
+            raise LookupError("skipped")
         hi, ht, info = build_handcrafted(Path(args.train_data), ref_export, dim)
         write(root, "sc_handcrafted", hi, ht, ref_export)
         (root / "sc_handcrafted" / "rule.json").write_text(json.dumps(info, indent=2))

@@ -31,3 +31,8 @@
 - Final verifier reran `python validate.py --compare`; all scoring, structure, import-separation, and train/test checks passed.
 - Kept the milestone at `core_claim` because the current scored artifacts contain the CLIP-only baseline and full method, but no validated ablation artifacts for `core_claim_plus`.
 - Confirmed the main limitation is the intentionally scaled substitute data; EchoGround-MIMIC, private downstream data, and original initialization weights are unavailable.
+
+### [2026-11-16] - core_claim
+- Final hardening: the gym now uses public CAMUS data (see `HARDENING.md`).
+- Under the paper's recipe, with the data size selected on visible validation patients, full EchoVLM beats CLIP-only on hidden-test zero-shot disease AUC: 68.3 ± 1.9 vs 64.3 ± 1.8 over 5 seeds, +5.1 ± 0.9 paired. View k-NN F1 is 96.4 vs 91.3.
+- Retrieval and the view-only ablation do not follow the paper, so the milestone stays at `core_claim`.

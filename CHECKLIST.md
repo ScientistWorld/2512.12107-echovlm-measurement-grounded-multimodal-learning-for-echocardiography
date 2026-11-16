@@ -32,9 +32,9 @@
 - [x] `environment/container.def` + `environment/setup.sh`
 
 ## Data
-- [x] Dataset generator implemented
-- [x] Deterministic toy data generated
-- [x] No external pretrained models needed for the initial smoke run
+- [x] Data preparation implemented (data/prepare_camus.py)
+- [x] CAMUS measurement-grounded splits (visible train/val; hidden test archive in eval/test/)
+- [x] Pretrained OpenAI CLIP ViT-B/16 and EchoCLIP fetched by scripts/download.sh
 
 ## Milestones
 - [x] `method_runs`

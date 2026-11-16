@@ -1,5 +1,21 @@
 # Progress
 
+> **Current state (final hardening iteration, 2026-11-16): see `HARDENING.md`.** The sections below the line describe the earlier toy-data gym and are kept for history only.
+
+## Current gym (CAMUS)
+
+- Data: public CAMUS; 300 train / 50 val visible patients and 150 hidden; 5 frames per apical sequence; measurement-grounded captions and negated captions; three ASE-graded findings.
+- Method: EchoVLM (L_CLIP + 0.5 L_view + 0.1 L_neg), ViT-B/16 (OpenAI CLIP init) + EchoCLIP text encoder, paper hyperparameters.
+- Evaluator: runs exported, stateless TorchScript encoders on hidden frames, prompts and captions. Experiments: zero-shot disease (0.65), retrieval (0.10), view k-NN (0.25).
+- Hidden test, seed 0:
+  - EchoVLM AUC 68.01 / precision 51.24 / recall 70.19, R@10 17.07, k-NN F1 96.40;
+  - CLIP-only 61.92 / 49.03 / 57.68, R@10 17.87, k-NN F1 91.86.
+- Over 5 seeds: AUC 68.3 ± 1.9 vs 64.3 ± 1.8.
+- Not reproduced: the retrieval gain, and the view-only ablation (below CLIP-only here).
+
+---
+
+
 ## What Works
 
 - Paper analysis and briefings are filled.

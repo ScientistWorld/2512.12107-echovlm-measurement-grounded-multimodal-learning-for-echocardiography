@@ -1,0 +1,308 @@
+{
+  "smoke_full": {
+    "test": {
+      "status": "ok",
+      "reason": null,
+      "macro_auc": 0.5771182576045014
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 53.27 not significantly above chance (p=0.2379 > 0.05)",
+      "macro_auc": 0.5327209622973422
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "smoke_clip": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 51.06 not significantly above chance (p=0.3458 > 0.01)",
+      "macro_auc": 0.5106088250569027
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 44.60 not significantly above chance (p=0.8871 > 0.05)",
+      "macro_auc": 0.44598910046118007
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "smoke_aug": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 52.80 not significantly above chance (p=0.1329 > 0.01)",
+      "macro_auc": 0.5279532098291718
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 52.03 not significantly above chance (p=0.3288 > 0.05)",
+      "macro_auc": 0.5202787286644797
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "smoke_ens": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 52.81 not significantly above chance (p=0.1654 > 0.01)",
+      "macro_auc": 0.5281372541089436
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 55.07 not significantly above chance (p=0.1319 > 0.05)",
+      "macro_auc": 0.5507377097893785
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_constant": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 50.00 not significantly above chance (p=1.0000 > 0.01)",
+      "macro_auc": 0.5
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 50.00 not significantly above chance (p=1.0000 > 0.05)",
+      "macro_auc": 0.5
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_dim_mismatch": {
+    "test": {
+      "status": "failed",
+      "reason": "image dim 513 != text dim 512",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "image dim 513 != text dim 512",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_empty_outputs": {
+    "test": {
+      "status": "failed",
+      "reason": "image_encoder must return a float tensor of shape [1, D]",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "image_encoder must return a float tensor of shape [1, D]",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_file_reader": {
+    "test": {
+      "status": "failed",
+      "reason": "image_encoder: forbidden TorchScript operations ['aten::from_file', 'prim::SetAttr']",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "image_encoder: forbidden TorchScript operations ['aten::from_file', 'prim::SetAttr']",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": "ok",
+      "reason": null,
+      "macro_auc": 1.0
+    }
+  },
+  "sc_forged_scores": {
+    "test": {
+      "status": "failed",
+      "reason": "missing export/image_encoder.pt",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "missing export/image_encoder.pt",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_handcrafted": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 48.50 not significantly above chance (p=0.6567 > 0.01)",
+      "macro_auc": 0.48502610839069965
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 57.84 not significantly above chance (p=0.0955 > 0.05)",
+      "macro_auc": 0.5783924071696857
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_huge_constant": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 50.00 not significantly above chance (p=1.0000 > 0.01)",
+      "macro_auc": 0.5
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 50.00 not significantly above chance (p=1.0000 > 0.05)",
+      "macro_auc": 0.5
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_image_only": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 50.00 not significantly above chance (p=1.0000 > 0.01)",
+      "macro_auc": 0.5
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 50.00 not significantly above chance (p=1.0000 > 0.05)",
+      "macro_auc": 0.5
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_missing_export": {
+    "test": {
+      "status": "failed",
+      "reason": "missing export/image_encoder.pt",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "missing export/image_encoder.pt",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_nan_outputs": {
+    "test": {
+      "status": "failed",
+      "reason": "image_encoder returned non-finite values",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "image_encoder returned non-finite values",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_norm_scaled": {
+    "test": {
+      "status": "ok",
+      "reason": null,
+      "macro_auc": 0.5771182576045014
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 53.27 not significantly above chance (p=0.2379 > 0.05)",
+      "macro_auc": 0.5327209622973422
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_stateful": {
+    "test": {
+      "status": "failed",
+      "reason": "missing export/image_encoder.pt",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "missing export/image_encoder.pt",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": "failed",
+      "reason": "missing export/image_encoder.pt",
+      "macro_auc": null
+    }
+  },
+  "sc_text_only": {
+    "test": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 49.96 not significantly above chance (p=0.5407 > 0.01)",
+      "macro_auc": 0.49960765167585786
+    },
+    "train": {
+      "status": "failed_task_gate",
+      "reason": "macro AUC 50.00 not significantly above chance (p=1.0000 > 0.05)",
+      "macro_auc": 0.5
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  },
+  "sc_wrong_shape": {
+    "test": {
+      "status": "failed",
+      "reason": "image_encoder must return a float tensor of shape [1, D]",
+      "macro_auc": null
+    },
+    "train": {
+      "status": "failed",
+      "reason": "image_encoder must return a float tensor of shape [1, D]",
+      "macro_auc": null
+    },
+    "legacy_test": {
+      "status": null,
+      "reason": null,
+      "macro_auc": null
+    }
+  }
+}

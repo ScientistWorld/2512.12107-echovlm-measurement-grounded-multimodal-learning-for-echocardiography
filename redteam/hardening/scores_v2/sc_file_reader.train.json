@@ -1,0 +1,45 @@
+{
+  "_meta": {
+    "method_status": {
+      "sc_file_reader": {
+        "reason": "image_encoder: forbidden TorchScript operations ['aten::from_file', 'prim::SetAttr']",
+        "seconds": 0.5,
+        "status": "failed"
+      }
+    },
+    "n_images": 500,
+    "n_patients": 50,
+    "root": "/home/user/redteam/hardening/runs",
+    "split": "visible_val"
+  },
+  "experiments": {
+    "disease_zero_shot": {
+      "results": {
+        "sc_file_reader": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      }
+    },
+    "image_text_retrieval": {
+      "results": {
+        "sc_file_reader": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        }
+      }
+    },
+    "view_knn": {
+      "results": {
+        "sc_file_reader": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      }
+    }
+  }
+}

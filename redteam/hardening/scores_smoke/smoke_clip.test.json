@@ -1,0 +1,48 @@
+{
+  "_meta": {
+    "method_status": {
+      "smoke_clip": {
+        "embed_dim": 512,
+        "macro_auc": 0.5106088250569027,
+        "permutation_p_value": 0.3458270864567716,
+        "reason": "macro AUC 51.06 not significantly above chance (p=0.3458 > 0.01)",
+        "seconds": 39.3,
+        "status": "failed_task_gate"
+      }
+    },
+    "n_images": 1500,
+    "n_patients": 150,
+    "root": "/home/user/redteam/hardening/runs_smoke",
+    "split": "hidden_test"
+  },
+  "experiments": {
+    "disease_zero_shot": {
+      "results": {
+        "smoke_clip": {
+          "auc": 0.0,
+          "auc_la_enlargement": 0.0,
+          "auc_lv_dilation": 0.0,
+          "auc_lv_systolic_dysfunction": 0.0,
+          "precision": 0.0,
+          "recall": 0.0
+        }
+      }
+    },
+    "image_text_retrieval": {
+      "results": {
+        "smoke_clip": {
+          "recall_at_10": 0.0,
+          "recall_at_5": 0.0
+        }
+      }
+    },
+    "view_knn": {
+      "results": {
+        "smoke_clip": {
+          "accuracy": 0.0,
+          "f1": 0.0
+        }
+      }
+    }
+  }
+}

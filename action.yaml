@@ -5,4 +5,4 @@ action: submit
 gpus: 2
 test: false
 milestone: core_claim
-notes: "Final hardening audit: build compressed hidden test archive; smoke-test hardened evaluators; regime search (epochs / frames per sequence / batch) for CLIP-only and full EchoVLM x3 seeds selected on visible val; then ablations, extra seeds, variants (augmentation, train+val, 3-seed ensembles), controls, shortcuts (incl. file-reading, stateful, hand-written rule) under hardened and previous evaluator; official checkpoints + scores_{train,test}.json; summary."
+notes: "Resubmit (previous attempt lost its worker before starting). Final hardening audit: compressed hidden test archive; smoke test of hardened evaluators; regime search (epochs / frames per sequence / batch) for CLIP-only and full EchoVLM x3 seeds selected on visible val; ablations, seeds, variants, controls, shortcuts under hardened and previous evaluator; official checkpoints + scores; summary. Resumable."

@@ -3,32 +3,31 @@
     "method_status": {
       "clip_only": {
         "embed_dim": 512,
-        "macro_auc": 0.5930122307802025,
-        "permutation_p_value": 0.020989505247376312,
-        "seconds": 13.5,
+        "macro_auc": 0.6749378357818666,
+        "permutation_p_value": 0.0004997501249375312,
+        "seconds": 11.3,
         "status": "ok"
       },
       "echovlm_full": {
         "embed_dim": 512,
-        "macro_auc": 0.5568126277754005,
-        "permutation_p_value": 0.015492253873063468,
-        "seconds": 10.8,
+        "macro_auc": 0.6858043312889269,
+        "permutation_p_value": 0.0004997501249375312,
+        "seconds": 11.0,
         "status": "ok"
       },
       "echovlm_negation": {
         "embed_dim": 512,
-        "macro_auc": 0.6151419792706699,
-        "permutation_p_value": 0.0034982508745627187,
-        "seconds": 11.1,
+        "macro_auc": 0.6795389982408596,
+        "permutation_p_value": 0.0009995002498750624,
+        "seconds": 10.9,
         "status": "ok"
       },
       "echovlm_view": {
         "embed_dim": 512,
-        "macro_auc": 0.47236687586174103,
-        "permutation_p_value": 0.8655672163918041,
-        "reason": "macro AUC 47.24 not significantly above chance (p=0.8656 > 0.05)",
-        "seconds": 9.4,
-        "status": "failed_task_gate"
+        "macro_auc": 0.6151606998526126,
+        "permutation_p_value": 0.0004997501249375312,
+        "seconds": 11.4,
+        "status": "ok"
       }
     },
     "n_images": 500,
@@ -40,76 +39,76 @@
     "disease_zero_shot": {
       "results": {
         "clip_only": {
-          "auc": 59.30122307802025,
-          "auc_la_enlargement": 68.51315789473685,
-          "auc_lv_dilation": 50.41463414634146,
-          "auc_lv_systolic_dysfunction": 58.97587719298245,
-          "precision": 43.24495476554901,
-          "recall": 56.32553606237817
+          "auc": 67.49378357818667,
+          "auc_la_enlargement": 71.52412280701755,
+          "auc_lv_dilation": 71.14363143631437,
+          "auc_lv_systolic_dysfunction": 59.81359649122807,
+          "precision": 47.56336502067053,
+          "recall": 64.1374269005848
         },
         "echovlm_full": {
-          "auc": 55.681262777540056,
-          "auc_la_enlargement": 60.486842105263165,
-          "auc_lv_dilation": 54.48238482384824,
-          "auc_lv_systolic_dysfunction": 52.07456140350877,
-          "precision": 41.04986157586397,
-          "recall": 56.642300194931785
+          "auc": 68.5804331288927,
+          "auc_la_enlargement": 87.25438596491229,
+          "auc_lv_dilation": 62.18428184281842,
+          "auc_lv_systolic_dysfunction": 56.30263157894737,
+          "precision": 49.77037466583044,
+          "recall": 63.96686159844055
         },
         "echovlm_negation": {
-          "auc": 61.514197927066995,
-          "auc_la_enlargement": 70.16885964912281,
-          "auc_lv_dilation": 56.39566395663957,
-          "auc_lv_systolic_dysfunction": 57.9780701754386,
-          "precision": 45.29603321269988,
-          "recall": 56.934697855750485
+          "auc": 67.95389982408597,
+          "auc_la_enlargement": 79.33991228070175,
+          "auc_lv_dilation": 65.96476964769647,
+          "auc_lv_systolic_dysfunction": 58.557017543859644,
+          "precision": 47.724409718522125,
+          "recall": 58.88401559454191
         },
         "echovlm_view": {
-          "auc": 0.0,
-          "auc_la_enlargement": 0.0,
-          "auc_lv_dilation": 0.0,
-          "auc_lv_systolic_dysfunction": 0.0,
-          "precision": 0.0,
-          "recall": 0.0
+          "auc": 61.516069985261254,
+          "auc_la_enlargement": 69.97587719298247,
+          "auc_lv_dilation": 56.57452574525745,
+          "auc_lv_systolic_dysfunction": 57.997807017543856,
+          "precision": 45.5328943044547,
+          "recall": 58.05555555555556
         }
       }
     },
     "image_text_retrieval": {
       "results": {
         "clip_only": {
-          "recall_at_10": 19.2,
-          "recall_at_5": 12.0
+          "recall_at_10": 20.8,
+          "recall_at_5": 13.8
         },
         "echovlm_full": {
-          "recall_at_10": 22.2,
-          "recall_at_5": 12.6
+          "recall_at_10": 16.8,
+          "recall_at_5": 9.0
         },
         "echovlm_negation": {
-          "recall_at_10": 21.0,
-          "recall_at_5": 12.6
+          "recall_at_10": 17.4,
+          "recall_at_5": 8.799999999999999
         },
         "echovlm_view": {
-          "recall_at_10": 0.0,
-          "recall_at_5": 0.0
+          "recall_at_10": 19.0,
+          "recall_at_5": 9.8
         }
       }
     },
     "view_knn": {
       "results": {
         "clip_only": {
-          "accuracy": 90.4,
-          "f1": 90.39984639754236
+          "accuracy": 87.2,
+          "f1": 87.19979519672314
         },
         "echovlm_full": {
-          "accuracy": 97.39999999999999,
-          "f1": 97.39824121105866
+          "accuracy": 96.39999999999999,
+          "f1": 96.39855942376951
         },
         "echovlm_negation": {
-          "accuracy": 94.0,
-          "f1": 93.99846360668332
+          "accuracy": 87.8,
+          "f1": 87.7529222330639
         },
         "echovlm_view": {
-          "accuracy": 0.0,
-          "f1": 0.0
+          "accuracy": 96.2,
+          "f1": 96.19961996199619
         }
       }
     }

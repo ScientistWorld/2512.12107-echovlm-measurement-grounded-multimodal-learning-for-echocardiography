@@ -1,0 +1,30 @@
+{
+  "selected": "R20f5",
+  "rule": "max mean visible-val macro AUC of the full objective over seeds 0-2",
+  "table": {
+    "R20all": {
+      "full_val_macro_auc_mean": 0.5370155232254077,
+      "n": 3
+    },
+    "R10all": {
+      "full_val_macro_auc_mean": 0.6150009310765623,
+      "n": 3
+    },
+    "R5all": {
+      "full_val_macro_auc_mean": 0.6779203315424966,
+      "n": 3
+    },
+    "R3all": {
+      "full_val_macro_auc_mean": 0.667028399816162,
+      "n": 3
+    },
+    "R20f5": {
+      "full_val_macro_auc_mean": 0.7057739821550263,
+      "n": 3
+    },
+    "R20f5b128": {
+      "full_val_macro_auc_mean": 0.6147013423350608,
+      "n": 3
+    }
+  }
+}

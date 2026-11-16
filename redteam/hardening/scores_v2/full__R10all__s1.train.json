@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "method_status": {
+      "full__R10all__s1": {
+        "embed_dim": 512,
+        "macro_auc": 0.5673241453905767,
+        "permutation_p_value": 0.041979010494752625,
+        "seconds": 7.5,
+        "status": "ok"
+      }
+    },
+    "n_images": 500,
+    "n_patients": 50,
+    "root": "/home/user/redteam/hardening/runs",
+    "split": "visible_val"
+  },
+  "experiments": {
+    "disease_zero_shot": {
+      "results": {
+        "full__R10all__s1": {
+          "auc": 56.73241453905767,
+          "auc_la_enlargement": 72.94956140350877,
+          "auc_lv_dilation": 43.67750677506775,
+          "auc_lv_systolic_dysfunction": 53.57017543859649,
+          "precision": 42.06987212668131,
+          "recall": 52.470760233918135
+        }
+      }
+    },
+    "image_text_retrieval": {
+      "results": {
+        "full__R10all__s1": {
+          "recall_at_10": 22.8,
+          "recall_at_5": 14.2
+        }
+      }
+    },
+    "view_knn": {
+      "results": {
+        "full__R10all__s1": {
+          "accuracy": 96.39999999999999,
+          "f1": 96.39532834553582
+        }
+      }
+    }
+  }
+}

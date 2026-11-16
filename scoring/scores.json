@@ -1,18 +1,114 @@
 {
+  "_meta": {
+    "method_status": {
+      "clip_only": {
+        "embed_dim": 512,
+        "macro_auc": 0.6749378357818666,
+        "permutation_p_value": 0.0004997501249375312,
+        "seconds": 11.9,
+        "status": "ok"
+      },
+      "echovlm_full": {
+        "embed_dim": 512,
+        "macro_auc": 0.6858043312889269,
+        "permutation_p_value": 0.0004997501249375312,
+        "seconds": 11.3,
+        "status": "ok"
+      },
+      "echovlm_negation": {
+        "embed_dim": 512,
+        "macro_auc": 0.6795389982408596,
+        "permutation_p_value": 0.0009995002498750624,
+        "seconds": 11.3,
+        "status": "ok"
+      },
+      "echovlm_view": {
+        "embed_dim": 512,
+        "macro_auc": 0.6151606998526126,
+        "permutation_p_value": 0.0004997501249375312,
+        "seconds": 11.3,
+        "status": "ok"
+      }
+    },
+    "n_images": 500,
+    "n_patients": 50,
+    "root": "checkpoints",
+    "split": "visible_val"
+  },
   "experiments": {
-    "toy_disease_zero_shot": {
+    "disease_zero_shot": {
       "results": {
         "clip_only": {
-          "auc": 43.75,
-          "negation_cosine": 0.4712423897365647,
-          "precision": 45.45454545454545,
-          "recall": 83.33333333333334
+          "auc": 67.49378357818667,
+          "auc_la_enlargement": 71.52412280701755,
+          "auc_lv_dilation": 71.14363143631437,
+          "auc_lv_systolic_dysfunction": 59.81359649122807,
+          "precision": 47.56336502067053,
+          "recall": 64.1374269005848
         },
         "echovlm_full": {
-          "auc": 75.0,
-          "negation_cosine": -0.7724672360469613,
-          "precision": 42.857142857142854,
-          "recall": 100.0
+          "auc": 68.5804331288927,
+          "auc_la_enlargement": 87.25438596491229,
+          "auc_lv_dilation": 62.18428184281842,
+          "auc_lv_systolic_dysfunction": 56.30263157894737,
+          "precision": 49.77037466583044,
+          "recall": 63.96686159844055
+        },
+        "echovlm_negation": {
+          "auc": 67.95389982408597,
+          "auc_la_enlargement": 79.33991228070175,
+          "auc_lv_dilation": 65.96476964769647,
+          "auc_lv_systolic_dysfunction": 58.557017543859644,
+          "precision": 47.724409718522125,
+          "recall": 58.88401559454191
+        },
+        "echovlm_view": {
+          "auc": 61.516069985261254,
+          "auc_la_enlargement": 69.97587719298247,
+          "auc_lv_dilation": 56.57452574525745,
+          "auc_lv_systolic_dysfunction": 57.997807017543856,
+          "precision": 45.5328943044547,
+          "recall": 58.05555555555556
+        }
+      }
+    },
+    "image_text_retrieval": {
+      "results": {
+        "clip_only": {
+          "recall_at_10": 20.8,
+          "recall_at_5": 13.8
+        },
+        "echovlm_full": {
+          "recall_at_10": 16.8,
+          "recall_at_5": 9.0
+        },
+        "echovlm_negation": {
+          "recall_at_10": 17.4,
+          "recall_at_5": 8.799999999999999
+        },
+        "echovlm_view": {
+          "recall_at_10": 19.0,
+          "recall_at_5": 9.8
+        }
+      }
+    },
+    "view_knn": {
+      "results": {
+        "clip_only": {
+          "accuracy": 87.2,
+          "f1": 87.19979519672314
+        },
+        "echovlm_full": {
+          "accuracy": 96.39999999999999,
+          "f1": 96.39855942376951
+        },
+        "echovlm_negation": {
+          "accuracy": 87.8,
+          "f1": 87.7529222330639
+        },
+        "echovlm_view": {
+          "accuracy": 96.2,
+          "f1": 96.19961996199619
         }
       }
     }

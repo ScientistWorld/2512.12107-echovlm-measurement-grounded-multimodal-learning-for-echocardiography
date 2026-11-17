@@ -5,4 +5,4 @@ action: submit
 gpus: 1
 test: false
 milestone: core_claim
-notes: "Final checks: default data prep reproduces selected split; reference + CLIP-only retrained with default arguments and scored; rebuilt stateful / hand-written-rule shortcuts scored by hardened and previous evaluator; summary with final weights."
+notes: "Last check: retrain reference (EchoVLM) and CLIP-only with all default arguments (previous attempt OOM'd on a GPU occupied by another process; now picks GPUs by free memory), score with hardened + previous evaluator, refresh summary."

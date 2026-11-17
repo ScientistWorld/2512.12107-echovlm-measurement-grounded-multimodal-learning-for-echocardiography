@@ -1,8 +1,6 @@
 # Once you set action to 'submit' or 'done', STOP immediately.
 # Do NOT sleep, poll, or wait for jobs. The system reads this file
 # only after your turn ends.
-action: submit
-gpus: 1
-test: false
+action: done
 milestone: core_claim
-notes: "Last check: retrain reference (EchoVLM) and CLIP-only with all default arguments (previous attempt OOM'd on a GPU occupied by another process; now picks GPUs by free memory), score with hardened + previous evaluator, refresh summary."
+notes: "Hardened CAMUS gym: paper's recipe at paper-like data scale gives EchoVLM > CLIP-only on hidden zero-shot AUC (68.3±1.9 vs 64.3±1.8, 5 seeds), augmentation/ensemble variants beat the reference beyond paired noise, file-reading and stateful encoder shortcuts closed, hand-written rule fails the gate; weights 0.65/0.10/0.25; see HARDENING.md."

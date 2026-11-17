@@ -32,7 +32,7 @@ The code is in `redteam/hardening/audit.py`, `make_shortcuts.py`, `make_variants
 
 ## 3. Do better results score higher? (variants before → after)
 
-Rank Δ is relative to the reference row, under the stated rule with the final weights. It is shown for two cohorts that set the per-metric spread: "all" = every genuine run, including gate failures (57 runs); "pass" = only runs that pass the gate.
+Rank Δ is relative to the reference row, under the stated rule with the final weights. It is shown for two cohorts that set the per-metric spread: "all" = every genuine run, including gate failures (57 runs, among them the two default-argument reruns); "pass" = only runs that pass the gate.
 
 **Before.** In the toy gym (REDTEAM.md), the reference AUC ranged from 0 to 75 across seeds and longer training lowered scores. In the first CAMUS version (`redteam/hardening/scores/`, same 1,500 hidden frames):
 - reference seed 0: AUC 53.9; seeds 1 and 2 failed the gate and scored 0;
@@ -45,21 +45,21 @@ Rank Δ is relative to the reference row, under the stated rule with the final w
 | run (seeds) | test AUC | val AUC | R@10 | view k-NN F1 | gate | rank Δ all | rank Δ pass |
 |---|---|---|---|---|---|---|---|
 | **reference** (full, seed 0) | 68.01 | 68.58 | 17.07 | 96.40 | pass | 0 | 0 |
-| full EchoVLM (5 seeds) | 68.32 ± 1.93 | 70.75 ± 2.53 | 14.47 ± 1.89 | 96.36 ± 0.27 | 5/5 | −0.08 ± 0.12 | −0.17 ± 0.33 |
-| CLIP-only baseline (5) | 64.32 ± 1.82 | 68.98 ± 1.08 | 17.35 ± 0.65 | 91.25 ± 0.58 | 5/5 | −0.24 ± 0.09 | −1.37 ± 0.44 |
-| + L_neg only (3) | 68.46 ± 0.59 | 69.60 ± 1.44 | 12.58 ± 0.27 | 91.02 ± 0.61 | 3/3 | −0.13 ± 0.02 | −0.54 ± 0.12 |
-| + L_view only (3) | 61.03 ± 2.15 | 63.41 ± 2.33 | 17.80 ± 0.35 | 96.07 ± 0.12 | 3/3 | −0.35 ± 0.10 | −1.64 ± 0.45 |
-| untrained towers (control) | 49.8 (raw) | 49.8 | — | — | fail | −4.98 | −28.4 |
-| **better:** full + size-preserving augmentation (3) | **71.33 ± 0.41** | 71.82 ± 1.05 | 25.87 ± 0.85 | 96.56 ± 0.30 | 3/3 | **+0.43 ± 0.01** | **+1.25 ± 0.11** |
-| **better:** 3-seed ensemble of full | **71.21** | 72.34 | 19.40 | 96.73 | pass | **+0.20** | **+0.67** |
-| full trained on train+val (3) | 66.12 ± 2.00 | (trained on val) | 17.98 ± 0.37 | 96.78 ± 0.41 | 3/3 | −0.09 ± 0.09 | −0.38 ± 0.49 |
-| 3-seed ensemble of CLIP-only | 65.04 | 70.36 | 18.73 | 91.46 | pass | −0.18 | −1.16 |
+| full EchoVLM (5 seeds) | 68.32 ± 1.93 | 70.75 ± 2.53 | 14.47 ± 1.89 | 96.36 ± 0.27 | 5/5 | −0.09 ± 0.14 | −0.18 ± 0.33 |
+| CLIP-only baseline (5) | 64.32 ± 1.82 | 68.98 ± 1.08 | 17.35 ± 0.65 | 91.25 ± 0.58 | 5/5 | −0.29 ± 0.11 | −1.38 ± 0.45 |
+| + L_neg only (3) | 68.46 ± 0.59 | 69.60 ± 1.44 | 12.58 ± 0.27 | 91.02 ± 0.61 | 3/3 | −0.14 ± 0.03 | −0.53 ± 0.12 |
+| + L_view only (3) | 61.03 ± 2.15 | 63.41 ± 2.33 | 17.80 ± 0.35 | 96.07 ± 0.12 | 3/3 | −0.42 ± 0.12 | −1.66 ± 0.46 |
+| untrained towers (control) | 49.8 (raw) | 49.8 | — | — | fail | −5.90 | −28.6 |
+| **better:** full + size-preserving augmentation (3) | **71.33 ± 0.41** | 71.82 ± 1.05 | 25.87 ± 0.85 | 96.56 ± 0.30 | 3/3 | **+0.49 ± 0.02** | **+1.27 ± 0.12** |
+| **better:** 3-seed ensemble of full | **71.21** | 72.34 | 19.40 | 96.73 | pass | **+0.23** | **+0.68** |
+| full trained on train+val (3) | 66.12 ± 2.00 | (trained on val) | 17.98 ± 0.37 | 96.78 ± 0.41 | 3/3 | −0.11 ± 0.11 | −0.38 ± 0.50 |
+| 3-seed ensemble of CLIP-only | 65.04 | 70.36 | 18.73 | 91.46 | pass | −0.21 | −1.16 |
 
 **Paper's effect versus seed noise.**
 - AUC: full − CLIP-only = +4.0 (5-seed means), and +5.1 ± 0.9 paired on seeds 0–2. Seed SD is ≈1.9.
-- Composite rank: full − CLIP = +0.16 (all-runs cohort; full-seed SD 0.12) or +1.20 (passing cohort; SD 0.33).
+- Composite rank: full − CLIP = +0.20 (all-runs cohort; full-seed SD 0.14) or +1.20 (passing cohort; SD 0.33).
 - CLIP-only ranks below the reference for all 5 seeds in both cohorts.
-- In the all-runs cohort the separation is only ≈1.3 seed SDs. Gate failures inflate the AUC and k-NN spreads (SD 20 and 29), which compresses differences between genuine methods. See §8.
+- In the all-runs cohort the separation is only ≈1.4 seed SDs. Gate failures inflate the AUC and k-NN spreads (SD 17 and 24, against 4.4 and 2.1 among passing runs), which compresses differences between genuine methods. See §8.
 
 **Better than the reference beyond paired noise.** The paired patient-level bootstrap (2,000 resamples of the 150 patients; every method scored on the same frames) gives these ΔAUC against the reference:
 
@@ -80,8 +80,8 @@ Train/test agreement: full EchoVLM scores 70.8 on val and 68.3 on test (5 seeds)
 
 | shortcut | before | fix | after |
 |---|---|---|---|
-| **Read test answers from disk** (`sc_file_reader`: `torch.from_file` on the plaintext test metadata, plus call counters) | **AUC 100, precision 100, recall 100, k-NN 100** (rank +1.92 all / +10.05 pass) | Answers live only inside the compressed archive; graph inspection rejects `from_file` and `SetAttr`; shuffled order | failed (forbidden ops), all 0, rank −4.98 |
-| **Stateful pooling over consecutive calls** (`sc_stateful`: in-place buffers average each patient's consecutive frames) | AUC **71.24** (> reference 68.01), R@10 9.7, k-NN 84.3 (rank −0.05 / −1.01) | Shuffled order + probe re-embedding | failed ("not a pure function"), all 0 |
+| **Read test answers from disk** (`sc_file_reader`: `torch.from_file` on the plaintext test metadata, plus call counters) | **AUC 100, precision 100, recall 100, k-NN 100** (rank +2.31 all / +10.17 pass) | Answers live only inside the compressed archive; graph inspection rejects `from_file` and `SetAttr`; shuffled order | failed (forbidden ops), all 0, rank −5.90 |
+| **Stateful pooling over consecutive calls** (`sc_stateful`: in-place buffers average each patient's consecutive frames) | AUC **71.24** (> reference 68.01), R@10 9.7, k-NN 84.3 (rank −0.06 / −1.01) | Shuffled order + probe re-embedding | failed ("not a pure function"), all 0 |
 | **Short hand-written rule** (`sc_handcrafted`: dark-pixel fractions in fixed LV / LA regions, 3 thresholds fit on visible train, keyword text encoder) | failed gate (AUC 48.5) | none needed. A first version mis-mapped multi-token keywords; with that fixed and the mapping verified (`runs/sc_handcrafted/rule.json`) it still fails | failed gate (AUC 52.0, p = 0.27) |
 | Toy-gym answer leaks (REDTEAM: visible answers, generator, brute force, forged labels, row selection), rank +1.86 / +1.78 | rank +1.86 | CAMUS redesign: the evaluator owns frames, labels, prompts, captions and pools, and runs the encoders itself | no such channel: the evaluator reads nothing a method writes besides the encoders |
 | Text-only (REDTEAM: caption reading, +1.86) | +1.86 | Prompts and captions are embedded separately from the image | `sc_text_only`: failed gate (50.0) |
@@ -117,10 +117,15 @@ Train/test agreement: full EchoVLM scores 70.8 on val and 68.3 on test (5 seeds)
 
 - **Retrieval is not reproduced.** Full EchoVLM retrieves worse than CLIP-only (R@10 14.5 ± 1.9 vs 17.4 ± 0.7). The negation term is the cause (+L_neg alone: 12.6), whereas the paper reports a retrieval gain.
 - **Ablation ordering differs from Table 6.** +L_view alone is below CLIP-only on disease AUC (61.0 vs 64.3), though it raises view k-NN to 96. +L_neg alone matches the full objective on AUC (68.5 vs 68.3). The full objective is best overall only because it combines both: negation-only drops view k-NN to 91.
-- **Composite-rank separation is modest in the all-runs cohort.** The spread of each metric is taken over all attempts, including gate failures that score 0. That inflates the AUC and k-NN spreads, so the full-vs-CLIP gap is ≈1.3 full-seed SDs in that cohort and ≈3.6 in the passing cohort. A future method needs ≳ +2 AUC to clear seed noise.
+- **Composite-rank separation is modest in the all-runs cohort.** The spread of each metric is taken over all attempts, including gate failures that score 0. That inflates the AUC and k-NN spreads, so the full-vs-CLIP gap is ≈1.4 full-seed SDs in that cohort and ≈3.6 in the passing cohort. A future method needs ≳ +2 AUC to clear seed noise.
 - **Schedule.** With 3,000 pairs and the paper's batch 512, 20 epochs are 100 steps. The paper's 200-step warm-up therefore never completes. This was kept rather than changing the paper's warm-up; it is a consequence of the dataset's size.
 - **Substitutions.** These remain: CAMUS (3 findings, 2 views, 500 patients) instead of EchoGround-MIMIC (9 findings, 22 views); OpenAI CLIP ViT-B/16 instead of the internal echo-pretrained ViT-B; multi-sentence measurement-grounded captions from guideline rules instead of LLM-curated report sentences.
 
-## 9. Default-argument rerun
+## 9. Default-argument rerun (fresh-clone check)
 
-(filled in after the last job)
+- `python -m data.prepare_camus` with defaults rebuilds the selected training and validation splits byte for byte.
+- `python -m method.train` and `python -m baseline.clip_finetune` were rerun with every argument at its default, into `redteam/hardening/runs/repro_{full,clip}_default`.
+- Both reproduce the reference and the CLIP-only rows exactly on the hidden test and the visible split:
+  - EchoVLM: 68.01 / 51.24 / 70.19, R@10 17.07, k-NN 96.40;
+  - CLIP-only: 61.92 / 49.03 / 57.68, R@10 17.87, k-NN 91.86.
+- Official artifacts: `checkpoints/` holds seed 0 of the four Table 6 rows, and `scoring/scores_{train,test}.json` and `scoring/scores.json` were regenerated from those reference runs only. `bash scripts/run.sh` reruns the whole pipeline (data → baseline → ablations → method → all evaluators).
